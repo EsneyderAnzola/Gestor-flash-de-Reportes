@@ -1,0 +1,945 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>Alquería · Gestión de Campo</title>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;900&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --red: #C62828;
+    --red-deep: #8B0000;
+    --wine: #6D1A36;
+    --wine-light: #9C2747;
+    --rose: #FFCDD2;
+    --rose-soft: #FFEEF0;
+    --cream: #FFF8F8;
+    --white: #FFFFFF;
+    --gray: #8C7B7D;
+    --dark: #1A0A0D;
+    --border: rgba(198,40,40,0.15);
+    --glass: rgba(255,255,255,0.7);
+    --shadow: 0 8px 32px rgba(139,0,0,0.12);
+    --shadow-sm: 0 2px 12px rgba(139,0,0,0.08);
+  }
+
+  * { margin:0; padding:0; box-sizing:border-box; }
+
+  body {
+    font-family: 'Outfit', sans-serif;
+    background: var(--cream);
+    color: var(--dark);
+    min-height: 100vh;
+    background-image:
+      radial-gradient(ellipse at 0% 0%, rgba(198,40,40,0.08) 0%, transparent 50%),
+      radial-gradient(ellipse at 100% 100%, rgba(109,26,54,0.08) 0%, transparent 50%);
+  }
+
+  /* ─── HEADER ─── */
+  .header {
+    background: linear-gradient(135deg, var(--red-deep) 0%, var(--wine) 60%, var(--red) 100%);
+    padding: 2rem 1.5rem 1.5rem;
+    position: relative;
+    overflow: hidden;
+  }
+  .header::before {
+    content:'';
+    position:absolute; inset:0;
+    background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+  }
+  .header-inner { position:relative; z-index:1; max-width:480px; margin:0 auto; }
+  .logo-wrap { display:flex; align-items:center; gap:12px; margin-bottom:0.75rem; }
+  .logo-icon {
+    width:48px; height:48px;
+    background:rgba(255,255,255,0.15);
+    border-radius:14px;
+    display:flex; align-items:center; justify-content:center;
+    border:1px solid rgba(255,255,255,0.2);
+    backdrop-filter:blur(10px);
+    font-size:22px;
+  }
+  .logo-text { color:white; }
+  .logo-text h1 { font-size:1.6rem; font-weight:900; letter-spacing:-0.03em; line-height:1; }
+  .logo-text p { font-size:0.65rem; font-weight:600; letter-spacing:0.25em; opacity:0.7; text-transform:uppercase; margin-top:2px; }
+  .header-subtitle {
+    background:rgba(255,255,255,0.1);
+    border-radius:10px;
+    padding:8px 12px;
+    font-size:0.7rem;
+    color:rgba(255,255,255,0.85);
+    font-weight:500;
+    display:flex; align-items:center; gap:6px;
+    border:1px solid rgba(255,255,255,0.12);
+  }
+
+  /* ─── TAB SWITCHER ─── */
+  .tab-bar {
+    max-width:480px; margin:0 auto;
+    padding: 1rem 1rem 0;
+  }
+  .tab-pills {
+    display:grid; grid-template-columns:1fr 1fr;
+    background:rgba(139,0,0,0.06);
+    border-radius:14px;
+    padding:4px;
+    border:1px solid var(--border);
+  }
+  .tab-btn {
+    padding:10px;
+    border:none; background:transparent;
+    border-radius:10px;
+    font-family:'Outfit',sans-serif;
+    font-size:0.8rem; font-weight:700;
+    color:var(--gray);
+    cursor:pointer; transition:all 0.25s;
+    display:flex; align-items:center; justify-content:center; gap:6px;
+    letter-spacing:0.02em;
+  }
+  .tab-btn.active {
+    background:white;
+    color:var(--red);
+    box-shadow:var(--shadow-sm);
+  }
+  .tab-icon { font-size:14px; }
+
+  /* ─── MAIN CONTENT ─── */
+  .main { max-width:480px; margin:0 auto; padding:1rem; }
+
+  /* ─── CARD ─── */
+  .card {
+    background:white;
+    border-radius:20px;
+    border:1px solid var(--border);
+    padding:1.25rem;
+    margin-bottom:0.875rem;
+    box-shadow:var(--shadow-sm);
+    position:relative;
+    overflow:hidden;
+  }
+  .card::before {
+    content:'';
+    position:absolute; left:0; top:0; bottom:0;
+    width:3px;
+    background:linear-gradient(to bottom, var(--red), var(--wine));
+    border-radius:0 0 0 0;
+  }
+  .card-label {
+    font-size:0.6rem; font-weight:800;
+    text-transform:uppercase; letter-spacing:0.18em;
+    color:var(--red); margin-bottom:0.875rem;
+    display:flex; align-items:center; gap:6px;
+  }
+  .card-label span { font-size:14px; }
+
+  /* ─── INPUTS ─── */
+  .field { margin-bottom:0.75rem; }
+  .field:last-child { margin-bottom:0; }
+  .field-label {
+    font-size:0.65rem; font-weight:700;
+    color:var(--gray); text-transform:uppercase;
+    letter-spacing:0.1em; margin-bottom:4px; display:block;
+  }
+
+  .inp, .sel {
+    width:100%; padding:12px 14px;
+    background:var(--rose-soft);
+    border:1.5px solid var(--border);
+    border-radius:12px;
+    font-family:'Outfit',sans-serif;
+    font-size:0.875rem; font-weight:600;
+    color:var(--dark);
+    outline:none;
+    transition:all 0.2s;
+    appearance:none;
+    -webkit-appearance:none;
+  }
+  .inp:focus, .sel:focus {
+    border-color:var(--red);
+    background:white;
+    box-shadow:0 0 0 3px rgba(198,40,40,0.08);
+  }
+  .sel-wrap { position:relative; }
+  .sel-wrap::after {
+    content:'';
+    position:absolute; right:14px; top:50%; transform:translateY(-50%);
+    width:0; height:0;
+    border-left:5px solid transparent;
+    border-right:5px solid transparent;
+    border-top:6px solid var(--red);
+    pointer-events:none;
+  }
+
+  /* loading state */
+  .sel.loading { color:var(--gray); font-style:italic; }
+
+  /* ─── PRODUCT ROWS ─── */
+  .product-block { margin-bottom:1rem; }
+  .product-header {
+    font-size:0.7rem; font-weight:700;
+    color:var(--wine); margin-bottom:4px;
+    text-transform:uppercase; letter-spacing:0.08em;
+    padding-left:4px;
+    display:flex; align-items:center; gap:6px;
+  }
+  .product-row {
+    display:grid; grid-template-columns:1fr auto;
+    gap:8px; align-items:center;
+    padding:10px 12px;
+    background:var(--rose-soft);
+    border-radius:12px;
+    border:1.5px solid var(--border);
+    margin-bottom:4px;
+  }
+  .product-name { font-size:0.75rem; font-weight:700; color:var(--dark); }
+  .product-sub { font-size:0.6rem; color:var(--gray); font-weight:500; }
+  .qty-wrap { display:flex; align-items:center; gap:6px; }
+  .qty-btn {
+    width:28px; height:28px; border-radius:8px;
+    border:none; cursor:pointer;
+    font-size:16px; font-weight:900; font-family:'Outfit',sans-serif;
+    display:flex; align-items:center; justify-content:center;
+    transition:all 0.15s;
+  }
+  .qty-btn.minus { background:var(--rose); color:var(--red); }
+  .qty-btn.plus { background:var(--red); color:white; }
+  .qty-btn:active { transform:scale(0.9); }
+  .qty-num {
+    width:36px; text-align:center;
+    font-family:'DM Mono',monospace; font-weight:500;
+    font-size:0.875rem; color:var(--dark);
+    background:white; border:1.5px solid var(--border);
+    border-radius:8px; padding:3px 0;
+  }
+
+  /* ─── TEXTAREA ─── */
+  .ta {
+    width:100%; padding:12px 14px;
+    background:var(--rose-soft);
+    border:1.5px solid var(--border);
+    border-radius:12px;
+    font-family:'Outfit',sans-serif;
+    font-size:0.8rem; font-weight:500;
+    color:var(--dark);
+    outline:none; resize:vertical;
+    min-height:80px;
+    transition:all 0.2s;
+  }
+  .ta:focus { border-color:var(--red); background:white; box-shadow:0 0 0 3px rgba(198,40,40,0.08); }
+
+  /* ─── DIVIDER ─── */
+  .divider {
+    display:flex; align-items:center; gap:8px;
+    margin:1rem 0 0.75rem;
+    font-size:0.6rem; font-weight:800;
+    text-transform:uppercase; letter-spacing:0.15em;
+    color:var(--gray);
+  }
+  .divider::before, .divider::after {
+    content:''; flex:1;
+    height:1px; background:var(--border);
+  }
+
+  /* ─── SUBMIT BUTTON ─── */
+  .btn-primary {
+    width:100%;
+    background:linear-gradient(135deg, var(--red) 0%, var(--wine) 100%);
+    color:white;
+    border:none; border-radius:16px;
+    padding:16px;
+    font-family:'Outfit',sans-serif;
+    font-size:1rem; font-weight:800;
+    letter-spacing:0.04em; text-transform:uppercase;
+    cursor:pointer;
+    box-shadow:0 8px 24px rgba(139,0,0,0.3);
+    transition:all 0.2s;
+    display:flex; align-items:center; justify-content:center; gap:8px;
+    margin-bottom:0.5rem;
+  }
+  .btn-primary:hover { transform:translateY(-1px); box-shadow:0 12px 28px rgba(139,0,0,0.35); }
+  .btn-primary:active { transform:translateY(0); }
+  .btn-primary:disabled { opacity:0.6; cursor:not-allowed; transform:none; }
+
+  .btn-reset {
+    width:100%; background:transparent;
+    border:none; color:var(--gray);
+    font-family:'Outfit',sans-serif;
+    font-size:0.7rem; font-weight:700;
+    letter-spacing:0.1em; text-transform:uppercase;
+    cursor:pointer; padding:8px;
+    text-decoration:underline;
+  }
+
+  /* ─── LOCATION CHIP ─── */
+  .loc-chip {
+    display:inline-flex; align-items:center; gap:5px;
+    background:rgba(198,40,40,0.06);
+    border:1px solid var(--border);
+    border-radius:20px;
+    padding:5px 10px;
+    font-size:0.65rem; font-weight:600; color:var(--wine);
+    margin-top:6px;
+  }
+  .loc-chip.success { background:rgba(0,150,50,0.06); border-color:rgba(0,150,50,0.2); color:#2e7d32; }
+  .loc-chip.error { background:rgba(198,40,40,0.06); border-color:var(--border); color:var(--red); }
+
+  /* ─── MODAL ─── */
+  .modal-overlay {
+    position:fixed; inset:0;
+    background:rgba(26,10,13,0.85);
+    backdrop-filter:blur(12px);
+    display:none; align-items:center; justify-content:center;
+    padding:1rem; z-index:100;
+  }
+  .modal-overlay.show { display:flex; }
+  .modal-box {
+    background:white;
+    border-radius:28px;
+    padding:1.5rem;
+    width:100%; max-width:420px;
+    border-top:4px solid var(--red);
+    box-shadow:0 24px 80px rgba(0,0,0,0.4);
+    animation:slideUp 0.3s ease;
+  }
+  @keyframes slideUp {
+    from { opacity:0; transform:translateY(30px); }
+    to { opacity:1; transform:translateY(0); }
+  }
+  .modal-title {
+    font-size:1.1rem; font-weight:900;
+    color:var(--dark); margin-bottom:2px;
+    display:flex; align-items:center; gap:8px;
+  }
+  .modal-sub { font-size:0.65rem; color:var(--gray); font-weight:600; text-transform:uppercase; letter-spacing:0.1em; margin-bottom:1rem; }
+  .preview-box {
+    background:var(--rose-soft);
+    border:1.5px solid var(--border);
+    border-radius:14px;
+    padding:12px;
+    font-family:'DM Mono',monospace;
+    font-size:0.7rem; line-height:1.7;
+    color:var(--dark);
+    max-height:280px; overflow-y:auto;
+    margin-bottom:1rem;
+    white-space:pre-wrap;
+  }
+  .btn-copy {
+    width:100%;
+    background:linear-gradient(135deg, #25d366 0%, #128c7e 100%);
+    color:white; border:none; border-radius:14px;
+    padding:14px;
+    font-family:'Outfit',sans-serif;
+    font-size:0.9rem; font-weight:800;
+    cursor:pointer; letter-spacing:0.04em;
+    display:flex; align-items:center; justify-content:center; gap:8px;
+    box-shadow:0 6px 20px rgba(37,211,102,0.3);
+    margin-bottom:8px;
+  }
+  .btn-close {
+    width:100%; background:transparent; border:none;
+    color:var(--gray); font-family:'Outfit',sans-serif;
+    font-size:0.7rem; font-weight:700;
+    cursor:pointer; padding:8px;
+    text-transform:uppercase; letter-spacing:0.1em;
+    text-decoration:underline;
+  }
+
+  /* ─── SPINNER ─── */
+  .spinner {
+    width:14px; height:14px;
+    border:2px solid rgba(255,255,255,0.4);
+    border-top-color:white;
+    border-radius:50%;
+    animation:spin 0.7s linear infinite;
+    display:inline-block;
+  }
+  @keyframes spin { to { transform:rotate(360deg); } }
+
+  /* ─── RESPONSIVE ─── */
+  @media(max-width:360px) {
+    .header { padding:1.5rem 1rem 1rem; }
+    .main { padding:0.75rem; }
+  }
+
+  /* ─── SVG ICONS ─── */
+  .ico { display:inline-flex; }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<div class="header">
+  <div class="header-inner">
+    <div class="logo-wrap">
+      <div class="logo-icon">
+        <svg width="26" height="26" viewBox="0 0 24 24" fill="none">
+          <path d="M12 2C9 2 6 4 5 7L3 18h18l-2-11c-1-3-4-5-7-5z" stroke="white" stroke-width="1.5" fill="rgba(255,255,255,0.2)"/>
+          <path d="M8 18v2a2 2 0 004 0v-2" stroke="white" stroke-width="1.5" stroke-linecap="round"/>
+          <circle cx="9" cy="10" r="1.5" fill="white" opacity="0.7"/>
+          <circle cx="15" cy="10" r="1.5" fill="white" opacity="0.7"/>
+        </svg>
+      </div>
+      <div class="logo-text">
+        <h1>Alquería</h1>
+        <p>Gestión de Campo · Colombia</p>
+      </div>
+    </div>
+    <div class="header-subtitle">
+      <svg width="12" height="12" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" stroke="rgba(255,255,255,0.8)" stroke-width="2"/><path d="M12 6v6l4 2" stroke="rgba(255,255,255,0.8)" stroke-width="2" stroke-linecap="round"/></svg>
+      Reportes en tiempo real · Sincronizado con Google Sheets
+    </div>
+  </div>
+</div>
+
+<!-- TAB SWITCHER -->
+<div class="tab-bar">
+  <div class="tab-pills">
+    <button class="tab-btn active" id="tab-ingreso" onclick="switchTab('ingreso')">
+      <span class="tab-icon">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M12 2L2 7l10 5 10-5-10-5z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><path d="M2 17l10 5 10-5" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><path d="M2 12l10 5 10-5" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>
+      </span>
+      Reporte Ingreso
+    </button>
+    <button class="tab-btn" id="tab-gestion" onclick="switchTab('gestion')">
+      <span class="tab-icon">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><rect x="3" y="3" width="7" height="7" rx="1" stroke="currentColor" stroke-width="2"/><rect x="14" y="3" width="7" height="7" rx="1" stroke="currentColor" stroke-width="2"/><rect x="3" y="14" width="7" height="7" rx="1" stroke="currentColor" stroke-width="2"/><rect x="14" y="14" width="7" height="7" rx="1" stroke="currentColor" stroke-width="2"/></svg>
+      </span>
+      Inventario & Venta
+    </button>
+  </div>
+</div>
+
+<!-- MAIN -->
+<div class="main">
+
+  <!-- ═══ FORM INGRESO ═══ -->
+  <form id="form-ingreso" onsubmit="submitForm(event,'ingreso')">
+
+    <div class="card">
+      <div class="card-label">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2" stroke="var(--red)" stroke-width="2" stroke-linecap="round"/><circle cx="12" cy="7" r="4" stroke="var(--red)" stroke-width="2"/></svg>
+        Datos del Impulsador
+      </div>
+      <div class="field">
+        <label class="field-label">Nombre completo</label>
+        <input class="inp" id="i-nombre" placeholder="Ej: Robinson Esneyder Zapata" required>
+      </div>
+      <div class="field">
+        <label class="field-label">Ciudad</label>
+        <div class="sel-wrap">
+          <select class="sel loading" id="i-ciudad" onchange="loadPDV('i-ciudad','i-pdv')" required>
+            <option value="">Cargando ciudades...</option>
+          </select>
+        </div>
+      </div>
+      <div class="field">
+        <label class="field-label">Punto de Venta</label>
+        <div class="sel-wrap">
+          <select class="sel" id="i-pdv" required>
+            <option value="">Selecciona ciudad primero</option>
+          </select>
+        </div>
+      </div>
+      <div id="i-loc-status"></div>
+    </div>
+
+    <div class="card" style="--border:rgba(198,40,40,0.12)">
+      <div class="card-label">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" stroke="var(--red)" stroke-width="2" stroke-linejoin="round"/></svg>
+        Observación de Ingreso
+      </div>
+      <textarea class="ta" id="i-obs" placeholder="Novedades al inicio del turno, estado de la nevera, surtido..."></textarea>
+    </div>
+
+    <button class="btn-primary" type="submit" id="btn-ingreso">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M22 2L11 13" stroke="white" stroke-width="2" stroke-linecap="round"/><path d="M22 2L15 22l-4-9-9-4 20-7z" stroke="white" stroke-width="2" stroke-linejoin="round"/></svg>
+      Generar Reporte de Ingreso
+    </button>
+    <button type="button" class="btn-reset" onclick="resetForm('ingreso')">↺ Reiniciar</button>
+
+  </form>
+
+  <!-- ═══ FORM GESTIÓN ═══ -->
+  <form id="form-gestion" style="display:none" onsubmit="submitForm(event,'gestion')">
+
+    <div class="card">
+      <div class="card-label">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2" stroke="var(--red)" stroke-width="2" stroke-linecap="round"/><circle cx="12" cy="7" r="4" stroke="var(--red)" stroke-width="2"/></svg>
+        Datos del Impulsador
+      </div>
+      <div class="field">
+        <label class="field-label">Nombre completo</label>
+        <input class="inp" id="g-nombre" placeholder="Ej: Robinson Esneyder Zapata" required>
+      </div>
+      <div class="field">
+        <label class="field-label">Ciudad</label>
+        <div class="sel-wrap">
+          <select class="sel loading" id="g-ciudad" onchange="loadPDV('g-ciudad','g-pdv')" required>
+            <option value="">Cargando ciudades...</option>
+          </select>
+        </div>
+      </div>
+      <div class="field">
+        <label class="field-label">Punto de Venta</label>
+        <div class="sel-wrap">
+          <select class="sel" id="g-pdv" required>
+            <option value="">Selecciona ciudad primero</option>
+          </select>
+        </div>
+      </div>
+      <div id="g-loc-status"></div>
+    </div>
+
+    <div class="card">
+      <div class="card-label">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M4 6h16M4 10h16M4 14h8M4 18h5" stroke="var(--red)" stroke-width="2" stroke-linecap="round"/></svg>
+        Inventario Inicial & Venta
+      </div>
+      <p style="font-size:0.65rem;color:var(--gray);margin-bottom:12px;font-weight:500;">
+        Registra el inventario inicial y las unidades vendidas de cada producto.
+      </p>
+
+      <!-- Products will be rendered here -->
+      <div id="products-container"></div>
+    </div>
+
+    <div class="card">
+      <div class="card-label">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" stroke="var(--red)" stroke-width="2"/><path d="M12 8v4l3 3" stroke="var(--red)" stroke-width="2" stroke-linecap="round"/></svg>
+        Degustación & Observaciones
+      </div>
+
+      <div class="field">
+        <label class="field-label">Observación general</label>
+        <textarea class="ta" id="g-obs" placeholder="Estado nevera, surtido, novedades del día..."></textarea>
+      </div>
+      <div class="field">
+        <label class="field-label">Degustación</label>
+        <textarea class="ta" id="g-deg" placeholder="Describe qué se degustó..."></textarea>
+      </div>
+      <div class="field">
+        <label class="field-label">Cant. que Dio — Copas</label>
+        <input class="inp" id="g-copas" type="number" min="0" placeholder="0" style="max-width:120px">
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-label">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" stroke="var(--red)" stroke-width="2" stroke-linejoin="round"/></svg>
+        Premios & Inventario Final
+      </div>
+
+      <div class="field">
+        <label class="field-label">Premios · Cucharones (Inventario Inicial)</label>
+        <input class="inp" id="g-cuch-ini" type="number" min="0" placeholder="0" style="max-width:120px">
+      </div>
+      <div class="field">
+        <label class="field-label">Cucharones Entregados</label>
+        <input class="inp" id="g-cuch-ent" type="number" min="0" placeholder="0" style="max-width:120px">
+      </div>
+
+      <div class="divider">Opiniones de Clientes</div>
+      <div class="field">
+        <label class="field-label">Opinión 1</label>
+        <input class="inp" id="g-op1" placeholder="¿Qué dijo el cliente?">
+      </div>
+      <div class="field">
+        <label class="field-label">Opinión 2</label>
+        <input class="inp" id="g-op2" placeholder="¿Qué dijo otro cliente?">
+      </div>
+    </div>
+
+    <button class="btn-primary" type="submit" id="btn-gestion">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M22 2L11 13" stroke="white" stroke-width="2" stroke-linecap="round"/><path d="M22 2L15 22l-4-9-9-4 20-7z" stroke="white" stroke-width="2" stroke-linejoin="round"/></svg>
+      Generar Reporte de Gestión
+    </button>
+    <button type="button" class="btn-reset" onclick="resetForm('gestion')">↺ Reiniciar</button>
+
+  </form>
+
+</div><!-- /main -->
+
+<!-- MODAL -->
+<div class="modal-overlay" id="modal">
+  <div class="modal-box">
+    <div class="modal-title">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M22 11.08V12a10 10 0 11-5.93-9.14" stroke="var(--red)" stroke-width="2" stroke-linecap="round"/><path d="M22 4L12 14.01l-3-3" stroke="var(--red)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      ¡Reporte listo!
+    </div>
+    <div class="modal-sub">Datos guardados · Copia para WhatsApp</div>
+    <div class="preview-box" id="modal-preview"></div>
+    <button class="btn-copy" onclick="copyReport()">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2v10z" stroke="white" stroke-width="2" stroke-linejoin="round"/></svg>
+      Copiar para WhatsApp
+    </button>
+    <button class="btn-close" onclick="closeModal()">Cerrar</button>
+  </div>
+</div>
+
+<script>
+// ──────────────────────────────────────────────
+// CONFIG
+// ──────────────────────────────────────────────
+const SHEET_ID = '1z5t2swVTq8IDN-1btvAvFDIHkkvwrSo78ShRqo9e87U';
+const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbz7oTXrm_wlz9_gWHFiZ1sureyDQsp5v-vvIUurg9IroxpsSx8Sl0VWZxyaXeroZWy_WQ/exec';
+
+const PRODUCTS = [
+  { id:'crl125',  name:'Crema de Leche Tradicional Roja', size:'X 125', emoji:'🔴' },
+  { id:'crl180',  name:'Crema de Leche Tradicional Roja', size:'X 180', emoji:'🔴' },
+  { id:'crl400',  name:'Crema de Leche Tradicional Roja', size:'X 400', emoji:'🔴' },
+  { id:'crl900',  name:'Crema de Leche Tradicional Roja', size:'X 900', emoji:'🔴' },
+  { id:'cc125',   name:'Crema Culinaria', size:'X 125',  emoji:'🧋' },
+  { id:'cc170',   name:'Crema Culinaria', size:'X 170',  emoji:'🧋' },
+  { id:'cc400',   name:'Crema Culinaria', size:'X 400',  emoji:'🧋' },
+  { id:'sc200',   name:'Suero Costeño',   size:'X 200',  emoji:'🥛' },
+  { id:'sc400',   name:'Suero Costeño',   size:'X 400',  emoji:'🥛' },
+];
+
+// ──────────────────────────────────────────────
+// STATE
+// ──────────────────────────────────────────────
+let sheetData = {};   // { ciudad: [pdv1, pdv2...] }
+let currentReport = '';
+let userLocation = null;
+
+// ──────────────────────────────────────────────
+// LOAD SHEET DATA (via public JSON API)
+// ──────────────────────────────────────────────
+async function loadSheetData() {
+  const url = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json&sheet=Puntos%20de%20Venta`;
+  try {
+    const res = await fetch(url);
+    const text = await res.text();
+    const json = JSON.parse(text.substring(47).slice(0,-2));
+    const rows = json.table.rows;
+
+    rows.forEach(r => {
+      if (!r.c[0] || !r.c[1]) return;
+      const ciudad = r.c[0].v?.trim();
+      const pdv    = r.c[1].v?.trim();
+      if (!ciudad || !pdv) return;
+      if (!sheetData[ciudad]) sheetData[ciudad] = [];
+      sheetData[ciudad][pdv] = true;
+    });
+
+    // Clean up (convert sets to arrays)
+    Object.keys(sheetData).forEach(c => {
+      sheetData[c] = Object.keys(sheetData[c]);
+    });
+
+    populateCities('i-ciudad');
+    populateCities('g-ciudad');
+  } catch(e) {
+    console.error('Sheet load error', e);
+    fallbackCities();
+  }
+}
+
+function populateCities(selId) {
+  const sel = document.getElementById(selId);
+  sel.innerHTML = '<option value="">Selecciona ciudad</option>';
+  sel.classList.remove('loading');
+  Object.keys(sheetData).sort().forEach(c => {
+    sel.innerHTML += `<option value="${c}">${c}</option>`;
+  });
+}
+
+function fallbackCities() {
+  const cities = ['Bogotá','Medellín','Cali','Barranquilla','Pereira','Bucaramanga'];
+  ['i-ciudad','g-ciudad'].forEach(id => {
+    const sel = document.getElementById(id);
+    sel.innerHTML = '<option value="">Selecciona ciudad</option>';
+    sel.classList.remove('loading');
+    cities.forEach(c => sel.innerHTML += `<option value="${c}">${c}</option>`);
+  });
+}
+
+function loadPDV(ciudadId, pdvId) {
+  const ciudad = document.getElementById(ciudadId).value;
+  const pdvSel = document.getElementById(pdvId);
+  pdvSel.innerHTML = '<option value="">Selecciona PDV</option>';
+
+  const list = sheetData[ciudad] || [];
+  if (list.length === 0) {
+    pdvSel.innerHTML += '<option value="" disabled>Sin puntos registrados</option>';
+    return;
+  }
+  list.forEach(p => pdvSel.innerHTML += `<option value="${p}">${p}</option>`);
+}
+
+// ──────────────────────────────────────────────
+// GEOLOCATION
+// ──────────────────────────────────────────────
+function requestLocation(statusId) {
+  const el = document.getElementById(statusId);
+  if (!navigator.geolocation) {
+    el.innerHTML = `<span class="loc-chip error">📍 Ubicación no disponible</span>`;
+    return;
+  }
+  el.innerHTML = `<span class="loc-chip">📍 Obteniendo ubicación...</span>`;
+  navigator.geolocation.getCurrentPosition(pos => {
+    userLocation = { lat: pos.coords.latitude, lng: pos.coords.longitude };
+    el.innerHTML = `<span class="loc-chip success">📍 Ubicación capturada ✓</span>`;
+  }, () => {
+    el.innerHTML = `<span class="loc-chip error">📍 Permiso de ubicación denegado</span>`;
+  });
+}
+
+// ──────────────────────────────────────────────
+// RENDER PRODUCTS
+// ──────────────────────────────────────────────
+function renderProducts() {
+  const c = document.getElementById('products-container');
+  let html = '';
+  PRODUCTS.forEach(p => {
+    html += `
+    <div class="product-block">
+      <div class="product-header">${p.emoji} ${p.name} ${p.size}</div>
+      <div class="product-row">
+        <div>
+          <div class="product-name">Inventario Inicial</div>
+          <div class="product-sub">Unidades al inicio</div>
+        </div>
+        <div class="qty-wrap">
+          <button type="button" class="qty-btn minus" onclick="adjustQty('ini-${p.id}',-1)">−</button>
+          <div class="qty-num" id="ini-${p.id}">0</div>
+          <button type="button" class="qty-btn plus" onclick="adjustQty('ini-${p.id}',1)">+</button>
+        </div>
+      </div>
+      <div class="product-row">
+        <div>
+          <div class="product-name">👉 Venta</div>
+          <div class="product-sub">Unidades vendidas</div>
+        </div>
+        <div class="qty-wrap">
+          <button type="button" class="qty-btn minus" onclick="adjustQty('vta-${p.id}',-1)">−</button>
+          <div class="qty-num" id="vta-${p.id}">0</div>
+          <button type="button" class="qty-btn plus" onclick="adjustQty('vta-${p.id}',1)">+</button>
+        </div>
+      </div>
+    </div>`;
+  });
+  c.innerHTML = html;
+}
+
+function adjustQty(id, delta) {
+  const el = document.getElementById(id);
+  const current = parseInt(el.textContent) || 0;
+  el.textContent = Math.max(0, current + delta);
+}
+
+// ──────────────────────────────────────────────
+// TAB SWITCH
+// ──────────────────────────────────────────────
+function switchTab(tab) {
+  document.getElementById('form-ingreso').style.display = tab === 'ingreso' ? '' : 'none';
+  document.getElementById('form-gestion').style.display = tab === 'gestion'  ? '' : 'none';
+  document.getElementById('tab-ingreso').classList.toggle('active', tab === 'ingreso');
+  document.getElementById('tab-gestion').classList.toggle('active', tab === 'gestion');
+
+  if (tab === 'gestion') requestLocation('g-loc-status');
+  else requestLocation('i-loc-status');
+}
+
+// ──────────────────────────────────────────────
+// FORMAT DATE
+// ──────────────────────────────────────────────
+function formatDate() {
+  const now = new Date();
+  return now.toLocaleDateString('es-CO', { weekday:'long', year:'numeric', month:'long', day:'numeric' }) +
+         ' · ' + now.toLocaleTimeString('es-CO', { hour:'2-digit', minute:'2-digit' });
+}
+
+// ──────────────────────────────────────────────
+// BUILD REPORTS
+// ──────────────────────────────────────────────
+function buildIngresoReport() {
+  const nombre = document.getElementById('i-nombre').value;
+  const ciudad = document.getElementById('i-ciudad').value;
+  const pdv    = document.getElementById('i-pdv').value;
+  const obs    = document.getElementById('i-obs').value || '(Sin novedad)';
+  const locStr = userLocation ? `📍 ${userLocation.lat.toFixed(5)}, ${userLocation.lng.toFixed(5)}` : '📍 Sin ubicación';
+
+  return `REPORTE INGRESO
+ALQUERÍA 🥛🧋🥗
+${'─'.repeat(30)}
+
+📅 ${formatDate()}
+👤 NOMBRE: ${nombre}
+🏙 CIUDAD: ${ciudad}
+🏪 PDV: ${pdv}
+
+📋 OBSERVACIÓN:
+${obs}
+
+${locStr}
+${'─'.repeat(30)}
+#Alquería #ReporteIngreso`;
+}
+
+function buildGestionReport() {
+  const nombre = document.getElementById('g-nombre').value;
+  const ciudad = document.getElementById('g-ciudad').value;
+  const pdv    = document.getElementById('g-pdv').value;
+  const obs    = document.getElementById('g-obs').value || '(Sin novedad)';
+  const deg    = document.getElementById('g-deg').value || '(Sin degustación)';
+  const copas  = document.getElementById('g-copas').value || '0';
+  const cuchIni = document.getElementById('g-cuch-ini').value || '0';
+  const cuchEnt = document.getElementById('g-cuch-ent').value || '0';
+  const op1 = document.getElementById('g-op1').value || '—';
+  const op2 = document.getElementById('g-op2').value || '—';
+  const locStr = userLocation ? `📍 ${userLocation.lat.toFixed(5)}, ${userLocation.lng.toFixed(5)}` : '📍 Sin ubicación';
+
+  let productsStr = '';
+  let totalVenta = 0;
+  PRODUCTS.forEach(p => {
+    const ini = parseInt(document.getElementById(`ini-${p.id}`).textContent) || 0;
+    const vta = parseInt(document.getElementById(`vta-${p.id}`).textContent) || 0;
+    totalVenta += vta;
+    productsStr += `\n   = ${p.name} ${p.size}\n   🔸 INV. INICIAL = ${ini}\n   👉 VENTA = ${vta}\n`;
+  });
+
+  return `REPORTE INVENTARIO INICIAL Y VENTA
+ALQUERÍA 🥛🧋🥗🌈
+${'─'.repeat(30)}
+
+📅 ${formatDate()}
+👤 NOMBRE: ${nombre}
+🏙 CIUDAD: ${ciudad}
+🏪 PDV: ${pdv}
+
+${'─'.repeat(30)}
+📦 PRODUCTOS
+${'─'.repeat(30)}
+${productsStr}
+${'─'.repeat(30)}
+🛒 TOTAL VENTA: ${totalVenta} unidades
+
+${'─'.repeat(30)}
+📋 OBSERVACIÓN:
+${obs}
+
+🍽 DEGUSTACIÓN:
+${deg}
+CANT QUE DIO · COPAS = ${copas}
+
+${'─'.repeat(30)}
+🏆 PREMIOS
+CUCHARONES · INVENTARIO INICIAL: ${cuchIni}
+CUCHARONES ENTREGADOS: ${cuchEnt}
+
+${'─'.repeat(30)}
+💬 OPINIONES:
+1. ${op1}
+2. ${op2}
+
+${locStr}
+${'─'.repeat(30)}
+#Alquería #ReporteGestión`;
+}
+
+// ──────────────────────────────────────────────
+// SUBMIT
+// ──────────────────────────────────────────────
+async function submitForm(e, type) {
+  e.preventDefault();
+  const btnId = type === 'ingreso' ? 'btn-ingreso' : 'btn-gestion';
+  const btn = document.getElementById(btnId);
+  btn.disabled = true;
+  btn.innerHTML = `<span class="spinner"></span> Guardando...`;
+
+  currentReport = type === 'ingreso' ? buildIngresoReport() : buildGestionReport();
+
+  // Gather form data for Sheets
+  const formData = new FormData();
+  const sheetName = type === 'ingreso' ? 'Logs' : 'Gestion';
+
+  if (type === 'ingreso') {
+    formData.append('hoja', sheetName);
+    formData.append('fecha', new Date().toLocaleString('es-CO'));
+    formData.append('nombre', document.getElementById('i-nombre').value);
+    formData.append('ciudad', document.getElementById('i-ciudad').value);
+    formData.append('pdv', document.getElementById('i-pdv').value);
+    formData.append('observacion', document.getElementById('i-obs').value);
+    formData.append('ubicacion', userLocation ? `${userLocation.lat},${userLocation.lng}` : '');
+    formData.append('reporte', currentReport);
+  } else {
+    formData.append('hoja', sheetName);
+    formData.append('fecha', new Date().toLocaleString('es-CO'));
+    formData.append('nombre', document.getElementById('g-nombre').value);
+    formData.append('ciudad', document.getElementById('g-ciudad').value);
+    formData.append('pdv', document.getElementById('g-pdv').value);
+    PRODUCTS.forEach(p => {
+      formData.append(`ini_${p.id}`, document.getElementById(`ini-${p.id}`).textContent);
+      formData.append(`vta_${p.id}`, document.getElementById(`vta-${p.id}`).textContent);
+    });
+    formData.append('observacion', document.getElementById('g-obs').value);
+    formData.append('degustacion', document.getElementById('g-deg').value);
+    formData.append('copas', document.getElementById('g-copas').value);
+    formData.append('cuch_ini', document.getElementById('g-cuch-ini').value);
+    formData.append('cuch_ent', document.getElementById('g-cuch-ent').value);
+    formData.append('op1', document.getElementById('g-op1').value);
+    formData.append('op2', document.getElementById('g-op2').value);
+    formData.append('ubicacion', userLocation ? `${userLocation.lat},${userLocation.lng}` : '');
+    formData.append('reporte', currentReport);
+  }
+
+  try {
+    await fetch(APPS_SCRIPT_URL, { method:'POST', body:formData, mode:'no-cors' });
+  } catch(err) {
+    // no-cors won't throw but can silently fail — still show modal
+  }
+
+  document.getElementById('modal-preview').textContent = currentReport;
+  document.getElementById('modal').classList.add('show');
+
+  btn.disabled = false;
+  btn.innerHTML = `<svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M22 2L11 13" stroke="white" stroke-width="2" stroke-linecap="round"/><path d="M22 2L15 22l-4-9-9-4 20-7z" stroke="white" stroke-width="2" stroke-linejoin="round"/></svg> Generar Reporte`;
+}
+
+function copyReport() {
+  navigator.clipboard.writeText(currentReport).then(() => {
+    const btn = document.querySelector('.btn-copy');
+    btn.textContent = '✅ ¡Copiado! Pégalo en WhatsApp';
+    setTimeout(() => btn.innerHTML = `<svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2v10z" stroke="white" stroke-width="2" stroke-linejoin="round"/></svg> Copiar para WhatsApp`, 3000);
+  }).catch(() => {
+    // Fallback
+    const ta = document.createElement('textarea');
+    ta.value = currentReport;
+    document.body.appendChild(ta); ta.select();
+    document.execCommand('copy'); document.body.removeChild(ta);
+    alert('✅ ¡Copiado! Pégalo en el grupo de WhatsApp.');
+  });
+}
+
+function closeModal() {
+  document.getElementById('modal').classList.remove('show');
+}
+
+function resetForm(type) {
+  if (!confirm('¿Seguro que deseas reiniciar el formulario?')) return;
+  if (type === 'ingreso') {
+    document.getElementById('form-ingreso').reset();
+    document.getElementById('i-loc-status').innerHTML = '';
+  } else {
+    document.getElementById('form-gestion').reset();
+    PRODUCTS.forEach(p => {
+      document.getElementById(`ini-${p.id}`).textContent = '0';
+      document.getElementById(`vta-${p.id}`).textContent = '0';
+    });
+    document.getElementById('g-loc-status').innerHTML = '';
+  }
+  userLocation = null;
+}
+
+// ──────────────────────────────────────────────
+// INIT
+// ──────────────────────────────────────────────
+document.addEventListener('DOMContentLoaded', () => {
+  renderProducts();
+  loadSheetData();
+  requestLocation('i-loc-status');
+});
+</script>
+
+</body>
+</html>
