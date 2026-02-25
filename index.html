@@ -121,7 +121,6 @@
     position:absolute; left:0; top:0; bottom:0;
     width:3px;
     background:linear-gradient(to bottom, var(--red), var(--wine));
-    border-radius:0 0 0 0;
   }
   .card-label {
     font-size:0.6rem; font-weight:800;
@@ -169,7 +168,6 @@
     pointer-events:none;
   }
 
-  /* loading state */
   .sel.loading { color:var(--gray); font-style:italic; }
 
   /* ─── PRODUCT ROWS ─── */
@@ -192,23 +190,40 @@
   }
   .product-name { font-size:0.75rem; font-weight:700; color:var(--dark); }
   .product-sub { font-size:0.6rem; color:var(--gray); font-weight:500; }
-  .qty-wrap { display:flex; align-items:center; gap:6px; }
+
+  /* ─── QTY CONTROL: botones + input editable ─── */
+  .qty-wrap { display:flex; align-items:center; gap:4px; }
   .qty-btn {
-    width:28px; height:28px; border-radius:8px;
+    width:30px; height:30px; border-radius:8px;
     border:none; cursor:pointer;
-    font-size:16px; font-weight:900; font-family:'Outfit',sans-serif;
+    font-size:18px; font-weight:900; font-family:'Outfit',sans-serif;
     display:flex; align-items:center; justify-content:center;
     transition:all 0.15s;
+    flex-shrink:0;
+    line-height:1;
   }
   .qty-btn.minus { background:var(--rose); color:var(--red); }
-  .qty-btn.plus { background:var(--red); color:white; }
-  .qty-btn:active { transform:scale(0.9); }
-  .qty-num {
-    width:36px; text-align:center;
+  .qty-btn.plus  { background:var(--red);  color:white; }
+  .qty-btn:active { transform:scale(0.88); }
+
+  /* input editable en medio */
+  .qty-inp {
+    width:44px; height:30px;
+    text-align:center;
     font-family:'DM Mono',monospace; font-weight:500;
-    font-size:0.875rem; color:var(--dark);
-    background:white; border:1.5px solid var(--border);
-    border-radius:8px; padding:3px 0;
+    font-size:0.9rem; color:var(--dark);
+    background:white;
+    border:1.5px solid var(--border);
+    border-radius:8px;
+    outline:none;
+    -moz-appearance:textfield;
+    transition:border-color 0.2s, box-shadow 0.2s;
+  }
+  .qty-inp::-webkit-outer-spin-button,
+  .qty-inp::-webkit-inner-spin-button { -webkit-appearance:none; margin:0; }
+  .qty-inp:focus {
+    border-color:var(--red);
+    box-shadow:0 0 0 2px rgba(198,40,40,0.1);
   }
 
   /* ─── TEXTAREA ─── */
@@ -280,7 +295,7 @@
     margin-top:6px;
   }
   .loc-chip.success { background:rgba(0,150,50,0.06); border-color:rgba(0,150,50,0.2); color:#2e7d32; }
-  .loc-chip.error { background:rgba(198,40,40,0.06); border-color:var(--border); color:var(--red); }
+  .loc-chip.error   { background:rgba(198,40,40,0.06); border-color:var(--border); color:var(--red); }
 
   /* ─── MODAL ─── */
   .modal-overlay {
@@ -302,7 +317,7 @@
   }
   @keyframes slideUp {
     from { opacity:0; transform:translateY(30px); }
-    to { opacity:1; transform:translateY(0); }
+    to   { opacity:1; transform:translateY(0); }
   }
   .modal-title {
     font-size:1.1rem; font-weight:900;
@@ -354,14 +369,10 @@
   }
   @keyframes spin { to { transform:rotate(360deg); } }
 
-  /* ─── RESPONSIVE ─── */
   @media(max-width:360px) {
     .header { padding:1.5rem 1rem 1rem; }
     .main { padding:0.75rem; }
   }
-
-  /* ─── SVG ICONS ─── */
-  .ico { display:inline-flex; }
 </style>
 </head>
 <body>
@@ -403,7 +414,7 @@
       <span class="tab-icon">
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><rect x="3" y="3" width="7" height="7" rx="1" stroke="currentColor" stroke-width="2"/><rect x="14" y="3" width="7" height="7" rx="1" stroke="currentColor" stroke-width="2"/><rect x="3" y="14" width="7" height="7" rx="1" stroke="currentColor" stroke-width="2"/><rect x="14" y="14" width="7" height="7" rx="1" stroke="currentColor" stroke-width="2"/></svg>
       </span>
-      Inventario & Venta
+      Inventario &amp; Venta
     </button>
   </div>
 </div>
@@ -442,7 +453,7 @@
       <div id="i-loc-status"></div>
     </div>
 
-    <div class="card" style="--border:rgba(198,40,40,0.12)">
+    <div class="card">
       <div class="card-label">
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" stroke="var(--red)" stroke-width="2" stroke-linejoin="round"/></svg>
         Observación de Ingreso
@@ -492,22 +503,19 @@
     <div class="card">
       <div class="card-label">
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M4 6h16M4 10h16M4 14h8M4 18h5" stroke="var(--red)" stroke-width="2" stroke-linecap="round"/></svg>
-        Inventario Inicial & Venta
+        Inventario Inicial &amp; Venta
       </div>
       <p style="font-size:0.65rem;color:var(--gray);margin-bottom:12px;font-weight:500;">
-        Registra el inventario inicial y las unidades vendidas de cada producto.
+        Usa los botones o escribe directo la cantidad 👆
       </p>
-
-      <!-- Products will be rendered here -->
       <div id="products-container"></div>
     </div>
 
     <div class="card">
       <div class="card-label">
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" stroke="var(--red)" stroke-width="2"/><path d="M12 8v4l3 3" stroke="var(--red)" stroke-width="2" stroke-linecap="round"/></svg>
-        Degustación & Observaciones
+        Degustación &amp; Observaciones
       </div>
-
       <div class="field">
         <label class="field-label">Observación general</label>
         <textarea class="ta" id="g-obs" placeholder="Estado nevera, surtido, novedades del día..."></textarea>
@@ -525,9 +533,8 @@
     <div class="card">
       <div class="card-label">
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" stroke="var(--red)" stroke-width="2" stroke-linejoin="round"/></svg>
-        Premios & Inventario Final
+        Premios &amp; Inventario Final
       </div>
-
       <div class="field">
         <label class="field-label">Premios · Cucharones (Inventario Inicial)</label>
         <input class="inp" id="g-cuch-ini" type="number" min="0" placeholder="0" style="max-width:120px">
@@ -536,7 +543,6 @@
         <label class="field-label">Cucharones Entregados</label>
         <input class="inp" id="g-cuch-ent" type="number" min="0" placeholder="0" style="max-width:120px">
       </div>
-
       <div class="divider">Opiniones de Clientes</div>
       <div class="field">
         <label class="field-label">Opinión 1</label>
@@ -556,7 +562,7 @@
 
   </form>
 
-</div><!-- /main -->
+</div>
 
 <!-- MODAL -->
 <div class="modal-overlay" id="modal">
@@ -576,370 +582,250 @@
 </div>
 
 <script>
-// ──────────────────────────────────────────────
-// CONFIG
-// ──────────────────────────────────────────────
-const SHEET_ID = '1z5t2swVTq8IDN-1btvAvFDIHkkvwrSo78ShRqo9e87U';
-const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbz7oTXrm_wlz9_gWHFiZ1sureyDQsp5v-vvIUurg9IroxpsSx8Sl0VWZxyaXeroZWy_WQ/exec';
+  const SHEET_ID        = '1z5t2swVTq8IDN-1btvAvFDIHkkvwrSo78ShRqo9e87U';
+  const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbz7oTXrm_wlz9_gWHFiZ1sureyDQsp5v-vvIUurg9IroxpsSx8Sl0VWZxyaXeroZWy_WQ/exec';
 
-const PRODUCTS = [
-  { id:'crl125',  name:'Crema de Leche Tradicional Roja', size:'X 125', emoji:'🔴' },
-  { id:'crl180',  name:'Crema de Leche Tradicional Roja', size:'X 180', emoji:'🔴' },
-  { id:'crl400',  name:'Crema de Leche Tradicional Roja', size:'X 400', emoji:'🔴' },
-  { id:'crl900',  name:'Crema de Leche Tradicional Roja', size:'X 900', emoji:'🔴' },
-  { id:'cc125',   name:'Crema Culinaria', size:'X 125',  emoji:'🧋' },
-  { id:'cc170',   name:'Crema Culinaria', size:'X 170',  emoji:'🧋' },
-  { id:'cc400',   name:'Crema Culinaria', size:'X 400',  emoji:'🧋' },
-  { id:'sc200',   name:'Suero Costeño',   size:'X 200',  emoji:'🥛' },
-  { id:'sc400',   name:'Suero Costeño',   size:'X 400',  emoji:'🥛' },
-];
+  const PRODUCTS = [
+    { id:'crl125', name:'Crema de Leche Tradicional Roja', size:'X 125', emoji:'🔴' },
+    { id:'crl180', name:'Crema de Leche Tradicional Roja', size:'X 180', emoji:'🔴' },
+    { id:'crl400', name:'Crema de Leche Tradicional Roja', size:'X 400', emoji:'🔴' },
+    { id:'crl900', name:'Crema de Leche Tradicional Roja', size:'X 900', emoji:'🔴' },
+    { id:'cc125',  name:'Crema Culinaria', size:'X 125', emoji:'🧋' },
+    { id:'cc170',  name:'Crema Culinaria', size:'X 170', emoji:'🧋' },
+    { id:'cc400',  name:'Crema Culinaria', size:'X 400', emoji:'🧋' },
+    { id:'sc200',  name:'Suero Costeño',   size:'X 200', emoji:'🥛' },
+    { id:'sc400',  name:'Suero Costeño',   size:'X 400', emoji:'🥛' },
+  ];
 
-// ──────────────────────────────────────────────
-// STATE
-// ──────────────────────────────────────────────
-let sheetData = {};   // { ciudad: [pdv1, pdv2...] }
-let currentReport = '';
-let userLocation = null;
+  let sheetData = {};
+  let currentReport = '';
+  let userLocation = null;
 
-// ──────────────────────────────────────────────
-// LOAD SHEET DATA (via public JSON API)
-// ──────────────────────────────────────────────
-async function loadSheetData() {
-  const url = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json&sheet=Puntos%20de%20Venta`;
-  try {
-    const res = await fetch(url);
-    const text = await res.text();
-    const json = JSON.parse(text.substring(47).slice(0,-2));
-    const rows = json.table.rows;
-
-    rows.forEach(r => {
-      if (!r.c[0] || !r.c[1]) return;
-      const ciudad = r.c[0].v?.trim();
-      const pdv    = r.c[1].v?.trim();
-      if (!ciudad || !pdv) return;
-      if (!sheetData[ciudad]) sheetData[ciudad] = [];
-      sheetData[ciudad][pdv] = true;
-    });
-
-    // Clean up (convert sets to arrays)
-    Object.keys(sheetData).forEach(c => {
-      sheetData[c] = Object.keys(sheetData[c]);
-    });
-
-    populateCities('i-ciudad');
-    populateCities('g-ciudad');
-  } catch(e) {
-    console.error('Sheet load error', e);
-    fallbackCities();
+  /* ── SHEETS ── */
+  async function loadSheetData() {
+    const url = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json&sheet=Puntos%20de%20Venta`;
+    try {
+      const res  = await fetch(url);
+      const text = await res.text();
+      const json = JSON.parse(text.substring(47).slice(0,-2));
+      json.table.rows.forEach(r => {
+        if (!r.c[0] || !r.c[1]) return;
+        const ciudad = r.c[0].v?.trim();
+        const pdv    = r.c[1].v?.trim();
+        if (!ciudad || !pdv) return;
+        if (!sheetData[ciudad]) sheetData[ciudad] = [];
+        sheetData[ciudad][pdv] = true;
+      });
+      Object.keys(sheetData).forEach(c => { sheetData[c] = Object.keys(sheetData[c]); });
+      populateCities('i-ciudad');
+      populateCities('g-ciudad');
+    } catch(e) { fallbackCities(); }
   }
-}
 
-function populateCities(selId) {
-  const sel = document.getElementById(selId);
-  sel.innerHTML = '<option value="">Selecciona ciudad</option>';
-  sel.classList.remove('loading');
-  Object.keys(sheetData).sort().forEach(c => {
-    sel.innerHTML += `<option value="${c}">${c}</option>`;
-  });
-}
-
-function fallbackCities() {
-  const cities = ['Bogotá','Medellín','Cali','Barranquilla','Pereira','Bucaramanga'];
-  ['i-ciudad','g-ciudad'].forEach(id => {
-    const sel = document.getElementById(id);
+  function populateCities(selId) {
+    const sel = document.getElementById(selId);
     sel.innerHTML = '<option value="">Selecciona ciudad</option>';
     sel.classList.remove('loading');
-    cities.forEach(c => sel.innerHTML += `<option value="${c}">${c}</option>`);
-  });
-}
-
-function loadPDV(ciudadId, pdvId) {
-  const ciudad = document.getElementById(ciudadId).value;
-  const pdvSel = document.getElementById(pdvId);
-  pdvSel.innerHTML = '<option value="">Selecciona PDV</option>';
-
-  const list = sheetData[ciudad] || [];
-  if (list.length === 0) {
-    pdvSel.innerHTML += '<option value="" disabled>Sin puntos registrados</option>';
-    return;
+    Object.keys(sheetData).sort().forEach(c => sel.innerHTML += `<option value="${c}">${c}</option>`);
   }
-  list.forEach(p => pdvSel.innerHTML += `<option value="${p}">${p}</option>`);
-}
 
-// ──────────────────────────────────────────────
-// GEOLOCATION
-// ──────────────────────────────────────────────
-function requestLocation(statusId) {
-  const el = document.getElementById(statusId);
-  if (!navigator.geolocation) {
-    el.innerHTML = `<span class="loc-chip error">📍 Ubicación no disponible</span>`;
-    return;
-  }
-  el.innerHTML = `<span class="loc-chip">📍 Obteniendo ubicación...</span>`;
-  navigator.geolocation.getCurrentPosition(pos => {
-    userLocation = { lat: pos.coords.latitude, lng: pos.coords.longitude };
-    el.innerHTML = `<span class="loc-chip success">📍 Ubicación capturada ✓</span>`;
-  }, () => {
-    el.innerHTML = `<span class="loc-chip error">📍 Permiso de ubicación denegado</span>`;
-  });
-}
-
-// ──────────────────────────────────────────────
-// RENDER PRODUCTS
-// ──────────────────────────────────────────────
-function renderProducts() {
-  const c = document.getElementById('products-container');
-  let html = '';
-  PRODUCTS.forEach(p => {
-    html += `
-    <div class="product-block">
-      <div class="product-header">${p.emoji} ${p.name} ${p.size}</div>
-      <div class="product-row">
-        <div>
-          <div class="product-name">Inventario Inicial</div>
-          <div class="product-sub">Unidades al inicio</div>
-        </div>
-        <div class="qty-wrap">
-          <button type="button" class="qty-btn minus" onclick="adjustQty('ini-${p.id}',-1)">−</button>
-          <div class="qty-num" id="ini-${p.id}">0</div>
-          <button type="button" class="qty-btn plus" onclick="adjustQty('ini-${p.id}',1)">+</button>
-        </div>
-      </div>
-      <div class="product-row">
-        <div>
-          <div class="product-name">👉 Venta</div>
-          <div class="product-sub">Unidades vendidas</div>
-        </div>
-        <div class="qty-wrap">
-          <button type="button" class="qty-btn minus" onclick="adjustQty('vta-${p.id}',-1)">−</button>
-          <div class="qty-num" id="vta-${p.id}">0</div>
-          <button type="button" class="qty-btn plus" onclick="adjustQty('vta-${p.id}',1)">+</button>
-        </div>
-      </div>
-    </div>`;
-  });
-  c.innerHTML = html;
-}
-
-function adjustQty(id, delta) {
-  const el = document.getElementById(id);
-  const current = parseInt(el.textContent) || 0;
-  el.textContent = Math.max(0, current + delta);
-}
-
-// ──────────────────────────────────────────────
-// TAB SWITCH
-// ──────────────────────────────────────────────
-function switchTab(tab) {
-  document.getElementById('form-ingreso').style.display = tab === 'ingreso' ? '' : 'none';
-  document.getElementById('form-gestion').style.display = tab === 'gestion'  ? '' : 'none';
-  document.getElementById('tab-ingreso').classList.toggle('active', tab === 'ingreso');
-  document.getElementById('tab-gestion').classList.toggle('active', tab === 'gestion');
-
-  if (tab === 'gestion') requestLocation('g-loc-status');
-  else requestLocation('i-loc-status');
-}
-
-// ──────────────────────────────────────────────
-// FORMAT DATE
-// ──────────────────────────────────────────────
-function formatDate() {
-  const now = new Date();
-  return now.toLocaleDateString('es-CO', { weekday:'long', year:'numeric', month:'long', day:'numeric' }) +
-         ' · ' + now.toLocaleTimeString('es-CO', { hour:'2-digit', minute:'2-digit' });
-}
-
-// ──────────────────────────────────────────────
-// BUILD REPORTS
-// ──────────────────────────────────────────────
-function buildIngresoReport() {
-  const nombre = document.getElementById('i-nombre').value;
-  const ciudad = document.getElementById('i-ciudad').value;
-  const pdv    = document.getElementById('i-pdv').value;
-  const obs    = document.getElementById('i-obs').value || '(Sin novedad)';
-  const locStr = userLocation ? `📍 ${userLocation.lat.toFixed(5)}, ${userLocation.lng.toFixed(5)}` : '📍 Sin ubicación';
-
-  return `REPORTE INGRESO
-ALQUERÍA 🥛🧋🥗
-${'─'.repeat(30)}
-
-📅 ${formatDate()}
-👤 NOMBRE: ${nombre}
-🏙 CIUDAD: ${ciudad}
-🏪 PDV: ${pdv}
-
-📋 OBSERVACIÓN:
-${obs}
-
-${locStr}
-${'─'.repeat(30)}
-#Alquería #ReporteIngreso`;
-}
-
-function buildGestionReport() {
-  const nombre = document.getElementById('g-nombre').value;
-  const ciudad = document.getElementById('g-ciudad').value;
-  const pdv    = document.getElementById('g-pdv').value;
-  const obs    = document.getElementById('g-obs').value || '(Sin novedad)';
-  const deg    = document.getElementById('g-deg').value || '(Sin degustación)';
-  const copas  = document.getElementById('g-copas').value || '0';
-  const cuchIni = document.getElementById('g-cuch-ini').value || '0';
-  const cuchEnt = document.getElementById('g-cuch-ent').value || '0';
-  const op1 = document.getElementById('g-op1').value || '—';
-  const op2 = document.getElementById('g-op2').value || '—';
-  const locStr = userLocation ? `📍 ${userLocation.lat.toFixed(5)}, ${userLocation.lng.toFixed(5)}` : '📍 Sin ubicación';
-
-  let productsStr = '';
-  let totalVenta = 0;
-  PRODUCTS.forEach(p => {
-    const ini = parseInt(document.getElementById(`ini-${p.id}`).textContent) || 0;
-    const vta = parseInt(document.getElementById(`vta-${p.id}`).textContent) || 0;
-    totalVenta += vta;
-    productsStr += `\n   = ${p.name} ${p.size}\n   🔸 INV. INICIAL = ${ini}\n   👉 VENTA = ${vta}\n`;
-  });
-
-  return `REPORTE INVENTARIO INICIAL Y VENTA
-ALQUERÍA 🥛🧋🥗🌈
-${'─'.repeat(30)}
-
-📅 ${formatDate()}
-👤 NOMBRE: ${nombre}
-🏙 CIUDAD: ${ciudad}
-🏪 PDV: ${pdv}
-
-${'─'.repeat(30)}
-📦 PRODUCTOS
-${'─'.repeat(30)}
-${productsStr}
-${'─'.repeat(30)}
-🛒 TOTAL VENTA: ${totalVenta} unidades
-
-${'─'.repeat(30)}
-📋 OBSERVACIÓN:
-${obs}
-
-🍽 DEGUSTACIÓN:
-${deg}
-CANT QUE DIO · COPAS = ${copas}
-
-${'─'.repeat(30)}
-🏆 PREMIOS
-CUCHARONES · INVENTARIO INICIAL: ${cuchIni}
-CUCHARONES ENTREGADOS: ${cuchEnt}
-
-${'─'.repeat(30)}
-💬 OPINIONES:
-1. ${op1}
-2. ${op2}
-
-${locStr}
-${'─'.repeat(30)}
-#Alquería #ReporteGestión`;
-}
-
-// ──────────────────────────────────────────────
-// SUBMIT
-// ──────────────────────────────────────────────
-async function submitForm(e, type) {
-  e.preventDefault();
-  const btnId = type === 'ingreso' ? 'btn-ingreso' : 'btn-gestion';
-  const btn = document.getElementById(btnId);
-  btn.disabled = true;
-  btn.innerHTML = `<span class="spinner"></span> Guardando...`;
-
-  currentReport = type === 'ingreso' ? buildIngresoReport() : buildGestionReport();
-
-  // Gather form data for Sheets
-  const formData = new FormData();
-  const sheetName = type === 'ingreso' ? 'Logs' : 'Gestion';
-
-  if (type === 'ingreso') {
-    formData.append('hoja', sheetName);
-    formData.append('fecha', new Date().toLocaleString('es-CO'));
-    formData.append('nombre', document.getElementById('i-nombre').value);
-    formData.append('ciudad', document.getElementById('i-ciudad').value);
-    formData.append('pdv', document.getElementById('i-pdv').value);
-    formData.append('observacion', document.getElementById('i-obs').value);
-    formData.append('ubicacion', userLocation ? `${userLocation.lat},${userLocation.lng}` : '');
-    formData.append('reporte', currentReport);
-  } else {
-    formData.append('hoja', sheetName);
-    formData.append('fecha', new Date().toLocaleString('es-CO'));
-    formData.append('nombre', document.getElementById('g-nombre').value);
-    formData.append('ciudad', document.getElementById('g-ciudad').value);
-    formData.append('pdv', document.getElementById('g-pdv').value);
-    PRODUCTS.forEach(p => {
-      formData.append(`ini_${p.id}`, document.getElementById(`ini-${p.id}`).textContent);
-      formData.append(`vta_${p.id}`, document.getElementById(`vta-${p.id}`).textContent);
+  function fallbackCities() {
+    ['Bogotá','Medellín','Cali','Barranquilla','Pereira','Bucaramanga'].forEach(c => {
+      ['i-ciudad','g-ciudad'].forEach(id => {
+        const sel = document.getElementById(id);
+        sel.classList.remove('loading');
+        sel.innerHTML = sel.innerHTML.replace('Cargando ciudades...','Selecciona ciudad');
+        sel.innerHTML += `<option value="${c}">${c}</option>`;
+      });
     });
-    formData.append('observacion', document.getElementById('g-obs').value);
-    formData.append('degustacion', document.getElementById('g-deg').value);
-    formData.append('copas', document.getElementById('g-copas').value);
-    formData.append('cuch_ini', document.getElementById('g-cuch-ini').value);
-    formData.append('cuch_ent', document.getElementById('g-cuch-ent').value);
-    formData.append('op1', document.getElementById('g-op1').value);
-    formData.append('op2', document.getElementById('g-op2').value);
-    formData.append('ubicacion', userLocation ? `${userLocation.lat},${userLocation.lng}` : '');
-    formData.append('reporte', currentReport);
   }
 
-  try {
-    await fetch(APPS_SCRIPT_URL, { method:'POST', body:formData, mode:'no-cors' });
-  } catch(err) {
-    // no-cors won't throw but can silently fail — still show modal
+  function loadPDV(ciudadId, pdvId) {
+    const ciudad = document.getElementById(ciudadId).value;
+    const pdvSel = document.getElementById(pdvId);
+    pdvSel.innerHTML = '<option value="">Selecciona PDV</option>';
+    const list = sheetData[ciudad] || [];
+    if (!list.length) { pdvSel.innerHTML += '<option value="" disabled>Sin puntos registrados</option>'; return; }
+    list.forEach(p => pdvSel.innerHTML += `<option value="${p}">${p}</option>`);
   }
 
-  document.getElementById('modal-preview').textContent = currentReport;
-  document.getElementById('modal').classList.add('show');
+  /* ── GEOLOCATION ── */
+  function requestLocation(statusId) {
+    const el = document.getElementById(statusId);
+    if (!navigator.geolocation) { el.innerHTML = `<span class="loc-chip error">📍 Ubicación no disponible</span>`; return; }
+    el.innerHTML = `<span class="loc-chip">📍 Obteniendo ubicación...</span>`;
+    navigator.geolocation.getCurrentPosition(
+      pos => { userLocation = { lat: pos.coords.latitude, lng: pos.coords.longitude }; el.innerHTML = `<span class="loc-chip success">📍 Ubicación capturada ✓</span>`; },
+      ()  => { el.innerHTML = `<span class="loc-chip error">📍 Permiso denegado</span>`; }
+    );
+  }
 
-  btn.disabled = false;
-  btn.innerHTML = `<svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M22 2L11 13" stroke="white" stroke-width="2" stroke-linecap="round"/><path d="M22 2L15 22l-4-9-9-4 20-7z" stroke="white" stroke-width="2" stroke-linejoin="round"/></svg> Generar Reporte`;
-}
+  /* ── RENDER PRODUCTS — input editable + botones ── */
+  function renderProducts() {
+    const c = document.getElementById('products-container');
+    c.innerHTML = PRODUCTS.map(p => `
+      <div class="product-block">
+        <div class="product-header">${p.emoji} ${p.name} ${p.size}</div>
 
-function copyReport() {
-  navigator.clipboard.writeText(currentReport).then(() => {
-    const btn = document.querySelector('.btn-copy');
-    btn.textContent = '✅ ¡Copiado! Pégalo en WhatsApp';
-    setTimeout(() => btn.innerHTML = `<svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2v10z" stroke="white" stroke-width="2" stroke-linejoin="round"/></svg> Copiar para WhatsApp`, 3000);
-  }).catch(() => {
-    // Fallback
-    const ta = document.createElement('textarea');
-    ta.value = currentReport;
-    document.body.appendChild(ta); ta.select();
-    document.execCommand('copy'); document.body.removeChild(ta);
-    alert('✅ ¡Copiado! Pégalo en el grupo de WhatsApp.');
-  });
-}
+        <div class="product-row">
+          <div>
+            <div class="product-name">Inventario Inicial</div>
+            <div class="product-sub">Unidades al inicio</div>
+          </div>
+          <div class="qty-wrap">
+            <button type="button" class="qty-btn minus" onclick="adjustQty('ini-${p.id}',-1)">−</button>
+            <input class="qty-inp" id="ini-${p.id}"
+              type="number" inputmode="numeric" pattern="[0-9]*"
+              min="0" value="0"
+              onfocus="this.select()"
+              oninput="this.value=Math.max(0,parseInt(this.value)||0)">
+            <button type="button" class="qty-btn plus" onclick="adjustQty('ini-${p.id}',1)">+</button>
+          </div>
+        </div>
 
-function closeModal() {
-  document.getElementById('modal').classList.remove('show');
-}
+        <div class="product-row">
+          <div>
+            <div class="product-name">👉 Venta</div>
+            <div class="product-sub">Unidades vendidas</div>
+          </div>
+          <div class="qty-wrap">
+            <button type="button" class="qty-btn minus" onclick="adjustQty('vta-${p.id}',-1)">−</button>
+            <input class="qty-inp" id="vta-${p.id}"
+              type="number" inputmode="numeric" pattern="[0-9]*"
+              min="0" value="0"
+              onfocus="this.select()"
+              oninput="this.value=Math.max(0,parseInt(this.value)||0)">
+            <button type="button" class="qty-btn plus" onclick="adjustQty('vta-${p.id}',1)">+</button>
+          </div>
+        </div>
+      </div>`).join('');
+  }
 
-function resetForm(type) {
-  if (!confirm('¿Seguro que deseas reiniciar el formulario?')) return;
-  if (type === 'ingreso') {
-    document.getElementById('form-ingreso').reset();
-    document.getElementById('i-loc-status').innerHTML = '';
-  } else {
-    document.getElementById('form-gestion').reset();
+  function adjustQty(id, delta) {
+    const el  = document.getElementById(id);
+    el.value  = Math.max(0, (parseInt(el.value) || 0) + delta);
+  }
+
+  function getQty(id) { return parseInt(document.getElementById(id).value) || 0; }
+
+  /* ── TABS ── */
+  function switchTab(tab) {
+    document.getElementById('form-ingreso').style.display = tab === 'ingreso' ? '' : 'none';
+    document.getElementById('form-gestion').style.display = tab === 'gestion'  ? '' : 'none';
+    document.getElementById('tab-ingreso').classList.toggle('active', tab === 'ingreso');
+    document.getElementById('tab-gestion').classList.toggle('active', tab === 'gestion');
+    if (tab === 'gestion') requestLocation('g-loc-status');
+    else requestLocation('i-loc-status');
+  }
+
+  /* ── DATE ── */
+  function formatDate() {
+    const now = new Date();
+    return now.toLocaleDateString('es-CO',{weekday:'long',year:'numeric',month:'long',day:'numeric'})
+         + ' · ' + now.toLocaleTimeString('es-CO',{hour:'2-digit',minute:'2-digit'});
+  }
+
+  /* ── REPORTS ── */
+  function buildIngresoReport() {
+    const loc = userLocation ? `📍 ${userLocation.lat.toFixed(5)}, ${userLocation.lng.toFixed(5)}` : '📍 Sin ubicación';
+    return `REPORTE INGRESO\nALQUERÍA 🥛🧋🥗\n${'─'.repeat(30)}\n\n📅 ${formatDate()}\n👤 NOMBRE: ${document.getElementById('i-nombre').value}\n🏙 CIUDAD: ${document.getElementById('i-ciudad').value}\n🏪 PDV: ${document.getElementById('i-pdv').value}\n\n📋 OBSERVACIÓN:\n${document.getElementById('i-obs').value||'(Sin novedad)'}\n\n${loc}\n${'─'.repeat(30)}\n#Alquería #ReporteIngreso`;
+  }
+
+  function buildGestionReport() {
+    const loc = userLocation ? `📍 ${userLocation.lat.toFixed(5)}, ${userLocation.lng.toFixed(5)}` : '📍 Sin ubicación';
+    let productsStr = '', totalVenta = 0;
     PRODUCTS.forEach(p => {
-      document.getElementById(`ini-${p.id}`).textContent = '0';
-      document.getElementById(`vta-${p.id}`).textContent = '0';
+      const ini = getQty(`ini-${p.id}`);
+      const vta = getQty(`vta-${p.id}`);
+      totalVenta += vta;
+      productsStr += `\n   = ${p.name} ${p.size}\n   🔸 INV. INICIAL = ${ini}\n   👉 VENTA = ${vta}\n`;
     });
-    document.getElementById('g-loc-status').innerHTML = '';
+    return `REPORTE INVENTARIO INICIAL Y VENTA\nALQUERÍA 🥛🧋🥗🌈\n${'─'.repeat(30)}\n\n📅 ${formatDate()}\n👤 NOMBRE: ${document.getElementById('g-nombre').value}\n🏙 CIUDAD: ${document.getElementById('g-ciudad').value}\n🏪 PDV: ${document.getElementById('g-pdv').value}\n\n${'─'.repeat(30)}\n📦 PRODUCTOS\n${'─'.repeat(30)}\n${productsStr}\n${'─'.repeat(30)}\n🛒 TOTAL VENTA: ${totalVenta} unidades\n\n${'─'.repeat(30)}\n📋 OBSERVACIÓN:\n${document.getElementById('g-obs').value||'(Sin novedad)'}\n\n🍽 DEGUSTACIÓN:\n${document.getElementById('g-deg').value||'(Sin degustación)'}\nCANT QUE DIO · COPAS = ${document.getElementById('g-copas').value||'0'}\n\n${'─'.repeat(30)}\n🏆 PREMIOS\nCUCHARONES · INVENTARIO INICIAL: ${document.getElementById('g-cuch-ini').value||'0'}\nCUCHARONES ENTREGADOS: ${document.getElementById('g-cuch-ent').value||'0'}\n\n${'─'.repeat(30)}\n💬 OPINIONES:\n1. ${document.getElementById('g-op1').value||'—'}\n2. ${document.getElementById('g-op2').value||'—'}\n\n${loc}\n${'─'.repeat(30)}\n#Alquería #ReporteGestión`;
   }
-  userLocation = null;
-}
 
-// ──────────────────────────────────────────────
-// INIT
-// ──────────────────────────────────────────────
-document.addEventListener('DOMContentLoaded', () => {
-  renderProducts();
-  loadSheetData();
-  requestLocation('i-loc-status');
-});
+  /* ── SUBMIT ── */
+  async function submitForm(e, type) {
+    e.preventDefault();
+    const btn = document.getElementById(`btn-${type}`);
+    btn.disabled = true;
+    btn.innerHTML = `<span class="spinner"></span> Guardando...`;
+
+    currentReport = type === 'ingreso' ? buildIngresoReport() : buildGestionReport();
+
+    const fd = new FormData();
+    fd.append('hoja', type === 'ingreso' ? 'Logs' : 'Gestion');
+    fd.append('fecha', new Date().toLocaleString('es-CO'));
+    fd.append('ubicacion', userLocation ? `${userLocation.lat},${userLocation.lng}` : '');
+    fd.append('reporte', currentReport);
+
+    if (type === 'ingreso') {
+      fd.append('nombre',      document.getElementById('i-nombre').value);
+      fd.append('ciudad',      document.getElementById('i-ciudad').value);
+      fd.append('pdv',         document.getElementById('i-pdv').value);
+      fd.append('observacion', document.getElementById('i-obs').value);
+    } else {
+      fd.append('nombre',      document.getElementById('g-nombre').value);
+      fd.append('ciudad',      document.getElementById('g-ciudad').value);
+      fd.append('pdv',         document.getElementById('g-pdv').value);
+      PRODUCTS.forEach(p => {
+        fd.append(`ini_${p.id}`, getQty(`ini-${p.id}`));
+        fd.append(`vta_${p.id}`, getQty(`vta-${p.id}`));
+      });
+      fd.append('observacion', document.getElementById('g-obs').value);
+      fd.append('degustacion', document.getElementById('g-deg').value);
+      fd.append('copas',       document.getElementById('g-copas').value||'0');
+      fd.append('cuch_ini',    document.getElementById('g-cuch-ini').value||'0');
+      fd.append('cuch_ent',    document.getElementById('g-cuch-ent').value||'0');
+      fd.append('op1',         document.getElementById('g-op1').value);
+      fd.append('op2',         document.getElementById('g-op2').value);
+    }
+
+    try { await fetch(APPS_SCRIPT_URL, { method:'POST', body:fd, mode:'no-cors' }); } catch(_) {}
+
+    document.getElementById('modal-preview').textContent = currentReport;
+    document.getElementById('modal').classList.add('show');
+    btn.disabled = false;
+    btn.innerHTML = `<svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M22 2L11 13" stroke="white" stroke-width="2" stroke-linecap="round"/><path d="M22 2L15 22l-4-9-9-4 20-7z" stroke="white" stroke-width="2" stroke-linejoin="round"/></svg> Generar Reporte`;
+  }
+
+  /* ── MODAL ── */
+  function copyReport() {
+    navigator.clipboard.writeText(currentReport).then(() => {
+      const btn = document.querySelector('.btn-copy');
+      btn.textContent = '✅ ¡Copiado! Pégalo en WhatsApp';
+      setTimeout(() => btn.innerHTML = `<svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2v10z" stroke="white" stroke-width="2" stroke-linejoin="round"/></svg> Copiar para WhatsApp`, 3000);
+    }).catch(() => {
+      const ta = document.createElement('textarea'); ta.value = currentReport;
+      document.body.appendChild(ta); ta.select(); document.execCommand('copy'); document.body.removeChild(ta);
+      alert('✅ ¡Copiado! Pégalo en el grupo de WhatsApp.');
+    });
+  }
+
+  function closeModal() { document.getElementById('modal').classList.remove('show'); }
+
+  /* ── RESET ── */
+  function resetForm(type) {
+    if (!confirm('¿Seguro que deseas reiniciar el formulario?')) return;
+    if (type === 'ingreso') {
+      document.getElementById('form-ingreso').reset();
+      document.getElementById('i-loc-status').innerHTML = '';
+    } else {
+      document.getElementById('form-gestion').reset();
+      PRODUCTS.forEach(p => {
+        document.getElementById(`ini-${p.id}`).value = '0';
+        document.getElementById(`vta-${p.id}`).value = '0';
+      });
+      document.getElementById('g-loc-status').innerHTML = '';
+    }
+    userLocation = null;
+  }
+
+  /* ── INIT ── */
+  document.addEventListener('DOMContentLoaded', () => {
+    renderProducts();
+    loadSheetData();
+    requestLocation('i-loc-status');
+  });
 </script>
-
 </body>
 </html>
