@@ -14,6 +14,7 @@
     --shadow-sm:0 2px 12px rgba(139,0,0,0.08);
     --vitad:#E65100; --vitad-soft:#FFF3E0; --vitad-border:rgba(230,81,0,0.18);
     --vecchio:#4E342E; --vecchio-soft:#EFEBE9; --vecchio-border:rgba(78,52,46,0.2);
+    --mug:#2A5C8A; --mug-soft:#E3F2FD; --mug-border:rgba(42,92,138,0.2);
   }
   *{margin:0;padding:0;box-sizing:border-box;}
   body{font-family:'Outfit',sans-serif;background:var(--cream);color:var(--dark);min-height:100vh;
@@ -84,19 +85,23 @@
   .cat-alqueria{background:linear-gradient(135deg,rgba(198,40,40,.12),rgba(109,26,54,.08));border:1.5px solid var(--border);}
   .cat-vitad{background:linear-gradient(135deg,rgba(230,81,0,.12),rgba(230,81,0,.05));border:1.5px solid var(--vitad-border);}
   .cat-vecchio{background:linear-gradient(135deg,rgba(78,52,46,.12),rgba(78,52,46,.05));border:1.5px solid var(--vecchio-border);}
+  .cat-mug{background:linear-gradient(135deg,rgba(42,92,138,.12),rgba(42,92,138,.05));border:1.5px solid var(--mug-border);}
   .cat-header-left{display:flex;align-items:center;gap:8px;}
   .cat-badge{font-size:1.2rem;width:36px;height:36px;display:flex;align-items:center;justify-content:center;border-radius:10px;}
   .cat-badge-alqueria{background:rgba(198,40,40,.1);}
   .cat-badge-vitad{background:rgba(230,81,0,.12);}
   .cat-badge-vecchio{background:rgba(78,52,46,.1);}
+  .cat-badge-mug{background:rgba(42,92,138,.1);}
   .cat-title{font-size:.8rem;font-weight:900;}
   .cat-title-alqueria{color:var(--red-deep);}
   .cat-title-vitad{color:var(--vitad);}
   .cat-title-vecchio{color:var(--vecchio);}
+  .cat-title-mug{color:var(--mug);}
   .cat-count{font-size:.58rem;font-weight:700;padding:2px 7px;border-radius:10px;margin-top:1px;}
   .cat-count-alqueria{background:rgba(198,40,40,.1);color:var(--red);}
   .cat-count-vitad{background:rgba(230,81,0,.1);color:var(--vitad);}
   .cat-count-vecchio{background:rgba(78,52,46,.1);color:var(--vecchio);}
+  .cat-count-mug{background:rgba(42,92,138,.1);color:var(--mug);}
   .cat-chev{font-size:18px;transition:transform .3s;line-height:1;}
   .cat-chev.open{transform:rotate(180deg);}
   .cat-body{border:1.5px solid;border-top:none;border-radius:0 0 14px 14px;overflow:hidden;}
@@ -104,6 +109,7 @@
   .cat-body-alqueria{border-color:var(--border);}
   .cat-body-vitad{border-color:var(--vitad-border);}
   .cat-body-vecchio{border-color:var(--vecchio-border);}
+  .cat-body-mug{border-color:var(--mug-border);}
 
   /* PRODUCTOS */
   .product-block{padding:10px 12px;border-bottom:1px dashed rgba(0,0,0,.06);}
@@ -112,11 +118,13 @@
   .product-header-alqueria{color:var(--wine);}
   .product-header-vitad{color:var(--vitad);}
   .product-header-vecchio{color:var(--vecchio);}
+  .product-header-mug{color:var(--mug);}
   .product-row{display:grid;grid-template-columns:1fr auto;gap:8px;align-items:center;padding:8px 10px;border-radius:10px;margin-bottom:4px;}
   .product-row:last-child{margin-bottom:0;}
   .product-row-alqueria{background:var(--rose-soft);border:1.5px solid var(--border);}
   .product-row-vitad{background:var(--vitad-soft);border:1.5px solid var(--vitad-border);}
   .product-row-vecchio{background:var(--vecchio-soft);border:1.5px solid var(--vecchio-border);}
+  .product-row-mug{background:var(--mug-soft);border:1.5px solid var(--mug-border);}
   .product-name{font-size:.72rem;font-weight:700;color:var(--dark);}
   .product-sub{font-size:.58rem;color:var(--gray);font-weight:500;}
 
@@ -129,12 +137,23 @@
   .qty-btn-vitad-plus{background:var(--vitad);color:white;}
   .qty-btn-vecchio-minus{background:#D7CCC8;color:var(--vecchio);}
   .qty-btn-vecchio-plus{background:var(--vecchio);color:white;}
+  .qty-btn-mug-minus{background:var(--mug-soft);color:var(--mug);}
+  .qty-btn-mug-plus{background:var(--mug);color:white;}
   .qty-btn:active{transform:scale(.88);}
   .qty-inp{width:42px;height:28px;text-align:center;font-family:'DM Mono',monospace;font-weight:500;font-size:.88rem;color:var(--dark);background:white;border:1.5px solid var(--border);border-radius:7px;outline:none;-moz-appearance:textfield;transition:border-color .2s;}
   .qty-inp::-webkit-outer-spin-button,.qty-inp::-webkit-inner-spin-button{-webkit-appearance:none;margin:0;}
   .qty-inp:focus{border-color:var(--red);box-shadow:0 0 0 2px rgba(198,40,40,.1);}
 
-  /* REDENCIONES */
+  /* PREMIOS */
+  .premios-box{display:flex;flex-direction:column;gap:8px;margin-top:4px;}
+  .premio-item{display:flex;align-items:center;justify-content:space-between;background:linear-gradient(135deg,rgba(42,92,138,.07),rgba(42,92,138,.02));border:1.5px solid var(--mug-border);border-radius:12px;padding:12px 14px;}
+  .premio-info{flex:1;}
+  .premio-title{font-size:.75rem;font-weight:800;color:var(--mug);display:flex;align-items:center;gap:5px;}
+  .premio-sub{font-size:.6rem;color:var(--gray);font-weight:500;margin-top:2px;}
+  .premio-input{width:72px;height:40px;text-align:center;font-family:'DM Mono',monospace;font-weight:700;font-size:1rem;color:var(--mug);background:white;border:2px solid var(--mug-border);border-radius:10px;outline:none;-moz-appearance:textfield;transition:all .2s;}
+  .premio-input:focus{border-color:var(--mug);box-shadow:0 0 0 3px rgba(42,92,138,.1);}
+  .premio-input::-webkit-outer-spin-button,.premio-input::-webkit-inner-spin-button{-webkit-appearance:none;margin:0;}
+  
   .redencion-box{display:flex;align-items:center;justify-content:space-between;background:linear-gradient(135deg,var(--vecchio-soft),rgba(78,52,46,.03));border:1.5px solid var(--vecchio-border);border-radius:12px;padding:12px 14px;margin-top:4px;}
   .redencion-title{font-size:.75rem;font-weight:800;color:var(--vecchio);}
   .redencion-sub{font-size:.6rem;color:var(--gray);font-weight:500;margin-top:2px;}
@@ -160,6 +179,8 @@
   .deg-chip-vitad.on{background:var(--vitad);border-color:var(--vitad);color:white;box-shadow:0 2px 8px rgba(230,81,0,.3);}
   .deg-chip-vecchio{background:var(--vecchio-soft);border-color:var(--vecchio-border);color:var(--vecchio);}
   .deg-chip-vecchio.on{background:var(--vecchio);border-color:var(--vecchio);color:white;box-shadow:0 2px 8px rgba(78,52,46,.3);}
+  .deg-chip-mug{background:var(--mug-soft);border-color:var(--mug-border);color:var(--mug);}
+  .deg-chip-mug.on{background:var(--mug);border-color:var(--mug);color:white;box-shadow:0 2px 8px rgba(42,92,138,.3);}
   
   /* Campos de cantidad para degustaciones */
   .deg-qty-item{display:flex;align-items:center;justify-content:space-between;background:var(--rose-soft);border:1px solid var(--border);border-radius:10px;padding:8px 12px;margin-bottom:6px;}
@@ -366,11 +387,42 @@
       <div class="summary-item"><div class="summary-val" id="sum-vta">0</div><div class="summary-lbl">Total Venta</div></div>
       <div class="summary-sep"></div>
       <div class="summary-item"><div class="summary-val" id="sum-red" style="color:var(--vecchio)">0</div><div class="summary-lbl">Redenciones</div></div>
+      <div class="summary-sep"></div>
+      <div class="summary-item"><div class="summary-val" id="sum-mug" style="color:var(--mug)">0</div><div class="summary-lbl">Mugs ($60k)</div></div>
     </div>
     <div id="products-container"></div>
   </div>
 
-  <!-- DEGUSTACIONES CON CANTIDADES -->
+  <!-- PREMIOS ESPECIALES -->
+  <div class="card">
+    <div class="card-label">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" stroke="var(--red)" stroke-width="2" stroke-linejoin="round"/></svg>
+      Premios Especiales
+    </div>
+    <div class="premios-box">
+      <!-- Mug por $60k -->
+      <div class="premio-item">
+        <div class="premio-info">
+          <div class="premio-title">☕ Mugs Entregados ($60.000)</div>
+          <div class="premio-sub">Termos promocionales por compras ≥ $60.000</div>
+        </div>
+        <input type="number" inputmode="numeric" min="0" value="0" class="premio-input" id="mug-entregados"
+          onfocus="this.select()" oninput="this.value=Math.max(0,parseInt(this.value)||0);updSum()">
+      </div>
+      
+      <!-- Redenciones Del Vecchio ($15k) - Se mantiene -->
+      <div class="redencion-box">
+        <div>
+          <div class="redencion-title">🏆 Redenciones Del Vecchio ($15.000)</div>
+          <div class="redencion-sub">Cucharas entregadas por compras ≥ $15.000</div>
+        </div>
+        <input type="number" inputmode="numeric" min="0" value="0" class="redencion-input" id="vc-red"
+          onfocus="this.select()" oninput="this.value=Math.max(0,parseInt(this.value)||0);updSum()">
+      </div>
+    </div>
+  </div>
+
+  <!-- DEGUSTACIONES CON CANTIDADES (INCLUYE SUERO COSTEÑO) -->
   <div class="card">
     <div class="card-label">
       <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M18 8h1a4 4 0 010 8h-1M2 8h16v9a4 4 0 01-4 4H6a4 4 0 01-4-4V8z" stroke="var(--red)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M6 1v3M10 1v3M14 1v3" stroke="var(--red)" stroke-width="2" stroke-linecap="round"/></svg>
@@ -412,7 +464,7 @@
     <textarea class="ta" id="g-obs" placeholder="Estado nevera, surtido, novedades del día, incidentes..."></textarea>
   </div>
 
-  <!-- PREMIOS & OPINIONES -->
+  <!-- PREMIOS ALQUERÍA & OPINIONES -->
   <div class="card">
     <div class="card-label">
       <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" stroke="var(--red)" stroke-width="2" stroke-linejoin="round"/></svg>
@@ -467,7 +519,7 @@
    CONFIG
 ══════════════════════════════════════════ */
 const SHEET_ID        = '1z5t2swVTq8IDN-1btvAvFDIHkkvwrSo78ShRqo9e87U';
-const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxVklIkqVhjnyRIZ9GJoVKpkc7Bd3LztI4X9zBi0d6MYvWdJeG8JGUl0nzkK6ArVGqWFw/exec';
+const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxJgk6OQGkA2ErUzn0IF9djWL4EH-7_hE-ftM5ME6FN7osWbBK6DE4FVDAAq7ycIUgfxQ/exec';
 
 /* ══════════════════════════════════════════
    CATÁLOGO
@@ -685,18 +737,6 @@ function renderProds() {
             </div>
           </div>
         `).join('')}
-        ${cat.redenciones ? `
-          <div class="product-block">
-            <div class="redencion-box">
-              <div>
-                <div class="redencion-title">🏆 Redenciones Generadas</div>
-                <div class="redencion-sub">Cucharas entregadas por compras ≥ $15.000</div>
-              </div>
-              <input type="number" inputmode="numeric" min="0" value="0" class="redencion-input" id="vc-red"
-                onfocus="this.select()" oninput="this.value=Math.max(0,parseInt(this.value)||0);updSum()">
-            </div>
-          </div>
-        ` : ''}
       </div>
     </div>`;
   }).join('');
@@ -724,6 +764,7 @@ function updSum() {
   document.getElementById('sum-ini').textContent = ini;
   document.getElementById('sum-vta').textContent = vta;
   document.getElementById('sum-red').textContent = gq('vc-red');
+  document.getElementById('sum-mug').textContent = gq('mug-entregados');
 }
 
 /* ══════════════════════════════════════════
@@ -897,8 +938,7 @@ function buildGestion() {
       totalVta += vta;
       return `   ${p.e} ${p.name}${p.size?' '+p.size:''}\n      🔸 INI: ${ini}  ·  👉 VTA: ${vta}`;
     }).join('\n');
-    const redLine = cat.redenciones ? `\n   🏆 Redenciones (cucharas ≥$15k): ${gq('vc-red')}` : '';
-    return `\n${'─'.repeat(32)}\n${cat.emoji} ${cat.name.toUpperCase()}\n${'─'.repeat(32)}\n${rows}${redLine}`;
+    return `\n${'─'.repeat(32)}\n${cat.emoji} ${cat.name.toUpperCase()}\n${'─'.repeat(32)}\n${rows}`;
   }).join('');
 
   // Construir string de degustaciones CON CANTIDADES
@@ -924,6 +964,11 @@ function buildGestion() {
     `🏪 PDV: ${document.getElementById('g-pdv').value}`,
     `🪑 MUEBLE: ${mueble}`,
     catBlock,
+    ``,
+    `${'─'.repeat(32)}`,
+    `🏆 PREMIOS ESPECIALES:`,
+    `   💰 Redenciones Del Vecchio ($15k): ${gq('vc-red')}`,
+    `   ☕ Mugs entregados ($60k): ${gq('mug-entregados')}`,
     ``,
     `${'─'.repeat(32)}`,
     `🛒 TOTAL VENTA: ${totalVta} uds`,
@@ -990,7 +1035,9 @@ async function submitForm(e, type) {
       fd.append(`vta_${p.id}`,gq(`vta-${p.id}`)); 
     });
     
+    // Premios especiales
     fd.append('vc_redenciones', gq('vc-red'));
+    fd.append('mug_entregados', gq('mug-entregados'));
     
     // Degustaciones CON CANTIDADES - Formato: "Producto: X und, Producto2: Y und"
     const degString = Array.from(selDegs).map(id => {
@@ -1051,6 +1098,7 @@ function resetForm(type) {
       if(a)a.value='0'; if(b)b.value='0';
     });
     const r=document.getElementById('vc-red'); if(r) r.value='0';
+    const m=document.getElementById('mug-entregados'); if(m) m.value='0';
     
     // Reset degustaciones
     selDegs.clear();
@@ -1096,9 +1144,6 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }, 100);
 });
-</script>
-</body>
-</html>
 </script>
 </body>
 </html>
