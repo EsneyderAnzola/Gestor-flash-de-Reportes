@@ -7,377 +7,211 @@
 <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;900&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
   :root {
-    --red: #C62828;
-    --red-deep: #8B0000;
-    --wine: #6D1A36;
-    --wine-light: #9C2747;
-    --rose: #FFCDD2;
-    --rose-soft: #FFEEF0;
-    --cream: #FFF8F8;
-    --white: #FFFFFF;
-    --gray: #8C7B7D;
-    --dark: #1A0A0D;
-    --border: rgba(198,40,40,0.15);
-    --glass: rgba(255,255,255,0.7);
-    --shadow: 0 8px 32px rgba(139,0,0,0.12);
-    --shadow-sm: 0 2px 12px rgba(139,0,0,0.08);
+    --red:#C62828; --red-deep:#8B0000; --wine:#6D1A36;
+    --rose:#FFCDD2; --rose-soft:#FFEEF0; --cream:#FFF8F8;
+    --gray:#8C7B7D; --dark:#1A0A0D;
+    --border:rgba(198,40,40,0.15);
+    --shadow-sm:0 2px 12px rgba(139,0,0,0.08);
+    --vitad:#E65100; --vitad-soft:#FFF3E0; --vitad-border:rgba(230,81,0,0.18);
+    --vecchio:#4E342E; --vecchio-soft:#EFEBE9; --vecchio-border:rgba(78,52,46,0.2);
   }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{font-family:'Outfit',sans-serif;background:var(--cream);color:var(--dark);min-height:100vh;
+    background-image:radial-gradient(ellipse at 0% 0%,rgba(198,40,40,.08) 0%,transparent 50%),radial-gradient(ellipse at 100% 100%,rgba(109,26,54,.08) 0%,transparent 50%);}
 
-  * { margin:0; padding:0; box-sizing:border-box; }
+  /* HEADER */
+  .header{background:linear-gradient(135deg,var(--red-deep) 0%,var(--wine) 60%,var(--red) 100%);padding:2rem 1.5rem 1.5rem;position:relative;overflow:hidden;}
+  .header::before{content:'';position:absolute;inset:0;background:url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none'%3E%3Cg fill='%23ffffff' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");}
+  .header-inner{position:relative;z-index:1;max-width:480px;margin:0 auto;}
+  .logo-wrap{display:flex;align-items:center;gap:12px;margin-bottom:.75rem;}
+  .logo-icon{width:48px;height:48px;background:rgba(255,255,255,.15);border-radius:14px;display:flex;align-items:center;justify-content:center;border:1px solid rgba(255,255,255,.2);backdrop-filter:blur(10px);font-size:22px;}
+  .logo-text{color:white;}
+  .logo-text h1{font-size:1.6rem;font-weight:900;letter-spacing:-.03em;line-height:1;}
+  .logo-text p{font-size:.65rem;font-weight:600;letter-spacing:.25em;opacity:.7;text-transform:uppercase;margin-top:2px;}
+  .header-sub{background:rgba(255,255,255,.1);border-radius:10px;padding:8px 12px;font-size:.7rem;color:rgba(255,255,255,.85);font-weight:500;display:flex;align-items:center;gap:6px;border:1px solid rgba(255,255,255,.12);}
+  .brand-chips{display:flex;gap:6px;margin-top:8px;flex-wrap:wrap;}
+  .brand-chip{background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.2);border-radius:20px;padding:3px 10px;font-size:.6rem;font-weight:700;color:rgba(255,255,255,.9);letter-spacing:.08em;}
 
-  body {
-    font-family: 'Outfit', sans-serif;
-    background: var(--cream);
-    color: var(--dark);
-    min-height: 100vh;
-    background-image:
-      radial-gradient(ellipse at 0% 0%, rgba(198,40,40,0.08) 0%, transparent 50%),
-      radial-gradient(ellipse at 100% 100%, rgba(109,26,54,0.08) 0%, transparent 50%);
-  }
+  /* TABS */
+  .tab-bar{max-width:480px;margin:0 auto;padding:1rem 1rem 0;}
+  .tab-pills{display:grid;grid-template-columns:1fr 1fr;background:rgba(139,0,0,.06);border-radius:14px;padding:4px;border:1px solid var(--border);}
+  .tab-btn{padding:10px;border:none;background:transparent;border-radius:10px;font-family:'Outfit',sans-serif;font-size:.8rem;font-weight:700;color:var(--gray);cursor:pointer;transition:all .25s;display:flex;align-items:center;justify-content:center;gap:6px;}
+  .tab-btn.active{background:white;color:var(--red);box-shadow:var(--shadow-sm);}
 
-  /* ─── HEADER ─── */
-  .header {
-    background: linear-gradient(135deg, var(--red-deep) 0%, var(--wine) 60%, var(--red) 100%);
-    padding: 2rem 1.5rem 1.5rem;
-    position: relative;
-    overflow: hidden;
-  }
-  .header::before {
-    content:'';
-    position:absolute; inset:0;
-    background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
-  }
-  .header-inner { position:relative; z-index:1; max-width:480px; margin:0 auto; }
-  .logo-wrap { display:flex; align-items:center; gap:12px; margin-bottom:0.75rem; }
-  .logo-icon {
-    width:48px; height:48px;
-    background:rgba(255,255,255,0.15);
-    border-radius:14px;
-    display:flex; align-items:center; justify-content:center;
-    border:1px solid rgba(255,255,255,0.2);
-    backdrop-filter:blur(10px);
-    font-size:22px;
-  }
-  .logo-text { color:white; }
-  .logo-text h1 { font-size:1.6rem; font-weight:900; letter-spacing:-0.03em; line-height:1; }
-  .logo-text p { font-size:0.65rem; font-weight:600; letter-spacing:0.25em; opacity:0.7; text-transform:uppercase; margin-top:2px; }
-  .header-subtitle {
-    background:rgba(255,255,255,0.1);
-    border-radius:10px;
-    padding:8px 12px;
-    font-size:0.7rem;
-    color:rgba(255,255,255,0.85);
-    font-weight:500;
-    display:flex; align-items:center; gap:6px;
-    border:1px solid rgba(255,255,255,0.12);
-  }
+  /* MAIN */
+  .main{max-width:480px;margin:0 auto;padding:1rem;}
 
-  /* ─── TAB SWITCHER ─── */
-  .tab-bar {
-    max-width:480px; margin:0 auto;
-    padding: 1rem 1rem 0;
-  }
-  .tab-pills {
-    display:grid; grid-template-columns:1fr 1fr;
-    background:rgba(139,0,0,0.06);
-    border-radius:14px;
-    padding:4px;
-    border:1px solid var(--border);
-  }
-  .tab-btn {
-    padding:10px;
-    border:none; background:transparent;
-    border-radius:10px;
-    font-family:'Outfit',sans-serif;
-    font-size:0.8rem; font-weight:700;
-    color:var(--gray);
-    cursor:pointer; transition:all 0.25s;
-    display:flex; align-items:center; justify-content:center; gap:6px;
-    letter-spacing:0.02em;
-  }
-  .tab-btn.active {
-    background:white;
-    color:var(--red);
-    box-shadow:var(--shadow-sm);
-  }
-  .tab-icon { font-size:14px; }
+  /* CARD */
+  .card{background:white;border-radius:20px;border:1px solid var(--border);padding:1.25rem;margin-bottom:.875rem;box-shadow:var(--shadow-sm);position:relative;overflow:hidden;}
+  .card::before{content:'';position:absolute;left:0;top:0;bottom:0;width:3px;background:linear-gradient(to bottom,var(--red),var(--wine));}
+  .card-label{font-size:.6rem;font-weight:800;text-transform:uppercase;letter-spacing:.18em;color:var(--red);margin-bottom:.875rem;display:flex;align-items:center;gap:6px;}
 
-  /* ─── MAIN CONTENT ─── */
-  .main { max-width:480px; margin:0 auto; padding:1rem; }
+  /* INPUTS */
+  .field{margin-bottom:.75rem;}
+  .field:last-child{margin-bottom:0;}
+  .field-label{font-size:.65rem;font-weight:700;color:var(--gray);text-transform:uppercase;letter-spacing:.1em;margin-bottom:4px;display:block;}
+  .inp,.sel{width:100%;padding:12px 14px;background:var(--rose-soft);border:1.5px solid var(--border);border-radius:12px;font-family:'Outfit',sans-serif;font-size:.875rem;font-weight:600;color:var(--dark);outline:none;transition:all .2s;appearance:none;-webkit-appearance:none;}
+  .inp:focus,.sel:focus{border-color:var(--red);background:white;box-shadow:0 0 0 3px rgba(198,40,40,.08);}
+  .sel-wrap{position:relative;}
+  .sel-wrap::after{content:'';position:absolute;right:14px;top:50%;transform:translateY(-50%);border-left:5px solid transparent;border-right:5px solid transparent;border-top:6px solid var(--red);pointer-events:none;}
+  .sel.loading{color:var(--gray);font-style:italic;}
 
-  /* ─── CARD ─── */
-  .card {
-    background:white;
-    border-radius:20px;
-    border:1px solid var(--border);
-    padding:1.25rem;
-    margin-bottom:0.875rem;
-    box-shadow:var(--shadow-sm);
-    position:relative;
-    overflow:hidden;
-  }
-  .card::before {
-    content:'';
-    position:absolute; left:0; top:0; bottom:0;
-    width:3px;
-    background:linear-gradient(to bottom, var(--red), var(--wine));
-  }
-  .card-label {
-    font-size:0.6rem; font-weight:800;
-    text-transform:uppercase; letter-spacing:0.18em;
-    color:var(--red); margin-bottom:0.875rem;
-    display:flex; align-items:center; gap:6px;
-  }
-  .card-label span { font-size:14px; }
+  /* PDV SEARCH */
+  .pdv-search-box{position:relative;display:none;}
+  .pdv-search-box.visible{display:block;}
+  .pdv-si{position:absolute;left:12px;top:50%;transform:translateY(-50%);font-size:13px;pointer-events:none;}
+  .pdv-search{width:100%;padding:10px 14px 10px 34px;background:white;border:1.5px solid var(--red);border-radius:12px 12px 0 0;border-bottom:1px dashed var(--border);font-family:'Outfit',sans-serif;font-size:.82rem;font-weight:500;color:var(--dark);outline:none;}
+  .pdv-search::placeholder{color:var(--gray);}
+  .pdv-search-box.visible+.sel-wrap .sel{border-radius:0 0 12px 12px;border-top:none;}
+  .pdv-count{font-size:.58rem;color:var(--gray);font-weight:600;margin-top:3px;text-align:right;}
 
-  /* ─── INPUTS ─── */
-  .field { margin-bottom:0.75rem; }
-  .field:last-child { margin-bottom:0; }
-  .field-label {
-    font-size:0.65rem; font-weight:700;
-    color:var(--gray); text-transform:uppercase;
-    letter-spacing:0.1em; margin-bottom:4px; display:block;
-  }
+  /* TOGGLE */
+  .toggle-row{display:flex;align-items:center;justify-content:space-between;background:var(--rose-soft);border:1.5px solid var(--border);border-radius:12px;padding:12px 14px;}
+  .toggle-label{font-size:.85rem;font-weight:700;color:var(--dark);}
+  .toggle-sub{font-size:.6rem;color:var(--gray);font-weight:500;}
+  .switch{position:relative;display:inline-block;width:48px;height:26px;flex-shrink:0;}
+  .switch input{opacity:0;width:0;height:0;}
+  .slider{position:absolute;cursor:pointer;inset:0;background:rgba(0,0,0,.12);border-radius:34px;transition:.3s;}
+  .slider:before{content:'';position:absolute;height:20px;width:20px;left:3px;bottom:3px;background:white;border-radius:50%;transition:.3s;box-shadow:0 1px 4px rgba(0,0,0,.2);}
+  input:checked+.slider{background:var(--red);}
+  input:checked+.slider:before{transform:translateX(22px);}
 
-  .inp, .sel {
-    width:100%; padding:12px 14px;
-    background:var(--rose-soft);
-    border:1.5px solid var(--border);
-    border-radius:12px;
-    font-family:'Outfit',sans-serif;
-    font-size:0.875rem; font-weight:600;
-    color:var(--dark);
-    outline:none;
-    transition:all 0.2s;
-    appearance:none;
-    -webkit-appearance:none;
-  }
-  .inp:focus, .sel:focus {
-    border-color:var(--red);
-    background:white;
-    box-shadow:0 0 0 3px rgba(198,40,40,0.08);
-  }
-  .sel-wrap { position:relative; }
-  .sel-wrap::after {
-    content:'';
-    position:absolute; right:14px; top:50%; transform:translateY(-50%);
-    width:0; height:0;
-    border-left:5px solid transparent;
-    border-right:5px solid transparent;
-    border-top:6px solid var(--red);
-    pointer-events:none;
-  }
+  /* CATEGORÍAS ACORDEÓN */
+  .cat-section{margin-bottom:10px;}
+  .cat-header{display:flex;align-items:center;justify-content:space-between;padding:10px 14px;border-radius:14px 14px 0 0;cursor:pointer;user-select:none;transition:opacity .15s;}
+  .cat-header.cat-collapsed{border-radius:14px;}
+  .cat-header:active{opacity:.8;}
+  .cat-alqueria{background:linear-gradient(135deg,rgba(198,40,40,.12),rgba(109,26,54,.08));border:1.5px solid var(--border);}
+  .cat-vitad{background:linear-gradient(135deg,rgba(230,81,0,.12),rgba(230,81,0,.05));border:1.5px solid var(--vitad-border);}
+  .cat-vecchio{background:linear-gradient(135deg,rgba(78,52,46,.12),rgba(78,52,46,.05));border:1.5px solid var(--vecchio-border);}
+  .cat-header-left{display:flex;align-items:center;gap:8px;}
+  .cat-badge{font-size:1.2rem;width:36px;height:36px;display:flex;align-items:center;justify-content:center;border-radius:10px;}
+  .cat-badge-alqueria{background:rgba(198,40,40,.1);}
+  .cat-badge-vitad{background:rgba(230,81,0,.12);}
+  .cat-badge-vecchio{background:rgba(78,52,46,.1);}
+  .cat-title{font-size:.8rem;font-weight:900;}
+  .cat-title-alqueria{color:var(--red-deep);}
+  .cat-title-vitad{color:var(--vitad);}
+  .cat-title-vecchio{color:var(--vecchio);}
+  .cat-count{font-size:.58rem;font-weight:700;padding:2px 7px;border-radius:10px;margin-top:1px;}
+  .cat-count-alqueria{background:rgba(198,40,40,.1);color:var(--red);}
+  .cat-count-vitad{background:rgba(230,81,0,.1);color:var(--vitad);}
+  .cat-count-vecchio{background:rgba(78,52,46,.1);color:var(--vecchio);}
+  .cat-chev{font-size:18px;transition:transform .3s;line-height:1;}
+  .cat-chev.open{transform:rotate(180deg);}
+  .cat-body{border:1.5px solid;border-top:none;border-radius:0 0 14px 14px;overflow:hidden;}
+  .cat-body.collapsed{display:none;}
+  .cat-body-alqueria{border-color:var(--border);}
+  .cat-body-vitad{border-color:var(--vitad-border);}
+  .cat-body-vecchio{border-color:var(--vecchio-border);}
 
-  .sel.loading { color:var(--gray); font-style:italic; }
+  /* PRODUCTOS */
+  .product-block{padding:10px 12px;border-bottom:1px dashed rgba(0,0,0,.06);}
+  .product-block:last-child{border-bottom:none;}
+  .product-header{font-size:.7rem;font-weight:800;margin-bottom:6px;display:flex;align-items:center;gap:5px;}
+  .product-header-alqueria{color:var(--wine);}
+  .product-header-vitad{color:var(--vitad);}
+  .product-header-vecchio{color:var(--vecchio);}
+  .product-row{display:grid;grid-template-columns:1fr auto;gap:8px;align-items:center;padding:8px 10px;border-radius:10px;margin-bottom:4px;}
+  .product-row:last-child{margin-bottom:0;}
+  .product-row-alqueria{background:var(--rose-soft);border:1.5px solid var(--border);}
+  .product-row-vitad{background:var(--vitad-soft);border:1.5px solid var(--vitad-border);}
+  .product-row-vecchio{background:var(--vecchio-soft);border:1.5px solid var(--vecchio-border);}
+  .product-name{font-size:.72rem;font-weight:700;color:var(--dark);}
+  .product-sub{font-size:.58rem;color:var(--gray);font-weight:500;}
 
-  /* ─── PRODUCT ROWS ─── */
-  .product-block { margin-bottom:1rem; }
-  .product-header {
-    font-size:0.7rem; font-weight:700;
-    color:var(--wine); margin-bottom:4px;
-    text-transform:uppercase; letter-spacing:0.08em;
-    padding-left:4px;
-    display:flex; align-items:center; gap:6px;
-  }
-  .product-row {
-    display:grid; grid-template-columns:1fr auto;
-    gap:8px; align-items:center;
-    padding:10px 12px;
-    background:var(--rose-soft);
-    border-radius:12px;
-    border:1.5px solid var(--border);
-    margin-bottom:4px;
-  }
-  .product-name { font-size:0.75rem; font-weight:700; color:var(--dark); }
-  .product-sub { font-size:0.6rem; color:var(--gray); font-weight:500; }
+  /* QTY */
+  .qty-wrap{display:flex;align-items:center;gap:4px;}
+  .qty-btn{width:28px;height:28px;border-radius:8px;border:none;cursor:pointer;font-size:16px;font-weight:900;display:flex;align-items:center;justify-content:center;transition:all .15s;flex-shrink:0;line-height:1;}
+  .qty-btn-alqueria-minus{background:var(--rose);color:var(--red);}
+  .qty-btn-alqueria-plus{background:var(--red);color:white;}
+  .qty-btn-vitad-minus{background:#FFE0B2;color:var(--vitad);}
+  .qty-btn-vitad-plus{background:var(--vitad);color:white;}
+  .qty-btn-vecchio-minus{background:#D7CCC8;color:var(--vecchio);}
+  .qty-btn-vecchio-plus{background:var(--vecchio);color:white;}
+  .qty-btn:active{transform:scale(.88);}
+  .qty-inp{width:42px;height:28px;text-align:center;font-family:'DM Mono',monospace;font-weight:500;font-size:.88rem;color:var(--dark);background:white;border:1.5px solid var(--border);border-radius:7px;outline:none;-moz-appearance:textfield;transition:border-color .2s;}
+  .qty-inp::-webkit-outer-spin-button,.qty-inp::-webkit-inner-spin-button{-webkit-appearance:none;margin:0;}
+  .qty-inp:focus{border-color:var(--red);box-shadow:0 0 0 2px rgba(198,40,40,.1);}
 
-  /* ─── QTY CONTROL: botones + input editable ─── */
-  .qty-wrap { display:flex; align-items:center; gap:4px; }
-  .qty-btn {
-    width:30px; height:30px; border-radius:8px;
-    border:none; cursor:pointer;
-    font-size:18px; font-weight:900; font-family:'Outfit',sans-serif;
-    display:flex; align-items:center; justify-content:center;
-    transition:all 0.15s;
-    flex-shrink:0;
-    line-height:1;
-  }
-  .qty-btn.minus { background:var(--rose); color:var(--red); }
-  .qty-btn.plus  { background:var(--red);  color:white; }
-  .qty-btn:active { transform:scale(0.88); }
+  /* REDENCIONES */
+  .redencion-box{display:flex;align-items:center;justify-content:space-between;background:linear-gradient(135deg,var(--vecchio-soft),rgba(78,52,46,.03));border:1.5px solid var(--vecchio-border);border-radius:12px;padding:12px 14px;margin-top:4px;}
+  .redencion-title{font-size:.75rem;font-weight:800;color:var(--vecchio);}
+  .redencion-sub{font-size:.6rem;color:var(--gray);font-weight:500;margin-top:2px;}
+  .redencion-input{width:72px;height:40px;text-align:center;font-family:'DM Mono',monospace;font-weight:700;font-size:1rem;color:var(--vecchio);background:white;border:2px solid var(--vecchio-border);border-radius:10px;outline:none;-moz-appearance:textfield;transition:all .2s;}
+  .redencion-input:focus{border-color:var(--vecchio);box-shadow:0 0 0 3px rgba(78,52,46,.1);}
+  .redencion-input::-webkit-outer-spin-button,.redencion-input::-webkit-inner-spin-button{-webkit-appearance:none;margin:0;}
 
-  /* input editable en medio */
-  .qty-inp {
-    width:44px; height:30px;
-    text-align:center;
-    font-family:'DM Mono',monospace; font-weight:500;
-    font-size:0.9rem; color:var(--dark);
-    background:white;
-    border:1.5px solid var(--border);
-    border-radius:8px;
-    outline:none;
-    -moz-appearance:textfield;
-    transition:border-color 0.2s, box-shadow 0.2s;
-  }
-  .qty-inp::-webkit-outer-spin-button,
-  .qty-inp::-webkit-inner-spin-button { -webkit-appearance:none; margin:0; }
-  .qty-inp:focus {
-    border-color:var(--red);
-    box-shadow:0 0 0 2px rgba(198,40,40,0.1);
-  }
+  /* SUMMARY */
+  .summary-bar{background:linear-gradient(135deg,rgba(198,40,40,.06),rgba(109,26,54,.04));border:1px solid var(--border);border-radius:12px;padding:10px 14px;margin-bottom:.875rem;display:flex;gap:12px;flex-wrap:wrap;}
+  .summary-item{text-align:center;flex:1;min-width:55px;}
+  .summary-val{font-family:'DM Mono',monospace;font-size:1.1rem;font-weight:700;color:var(--red);line-height:1;}
+  .summary-lbl{font-size:.52rem;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--gray);margin-top:2px;}
+  .summary-sep{width:1px;background:var(--border);align-self:stretch;}
 
-  /* ─── TEXTAREA ─── */
-  .ta {
-    width:100%; padding:12px 14px;
-    background:var(--rose-soft);
-    border:1.5px solid var(--border);
-    border-radius:12px;
-    font-family:'Outfit',sans-serif;
-    font-size:0.8rem; font-weight:500;
-    color:var(--dark);
-    outline:none; resize:vertical;
-    min-height:80px;
-    transition:all 0.2s;
-  }
-  .ta:focus { border-color:var(--red); background:white; box-shadow:0 0 0 3px rgba(198,40,40,0.08); }
+  /* DEGUSTACIONES — CHIPS */
+  .deg-section-lbl{font-size:.58rem;font-weight:800;text-transform:uppercase;letter-spacing:.12em;color:var(--gray);padding:6px 2px 2px;width:100%;}
+  .deg-grid{display:flex;flex-wrap:wrap;gap:6px;margin-top:4px;}
+  .deg-chip{display:flex;align-items:center;gap:5px;padding:6px 11px;border-radius:20px;cursor:pointer;font-size:.7rem;font-weight:700;transition:all .18s;border:1.5px solid;user-select:none;}
+  .deg-chip:active{transform:scale(.93);}
+  .deg-chip-alqueria{background:var(--rose-soft);border-color:var(--border);color:var(--wine);}
+  .deg-chip-alqueria.on{background:var(--red);border-color:var(--red);color:white;box-shadow:0 2px 8px rgba(198,40,40,.3);}
+  .deg-chip-vitad{background:var(--vitad-soft);border-color:var(--vitad-border);color:var(--vitad);}
+  .deg-chip-vitad.on{background:var(--vitad);border-color:var(--vitad);color:white;box-shadow:0 2px 8px rgba(230,81,0,.3);}
+  .deg-chip-vecchio{background:var(--vecchio-soft);border-color:var(--vecchio-border);color:var(--vecchio);}
+  .deg-chip-vecchio.on{background:var(--vecchio);border-color:var(--vecchio);color:white;box-shadow:0 2px 8px rgba(78,52,46,.3);}
+  .deg-selected-bar{background:var(--rose-soft);border:1px dashed var(--border);border-radius:10px;padding:8px 12px;margin-top:8px;font-size:.68rem;color:var(--dark);font-weight:600;line-height:1.7;display:none;}
+  .deg-selected-bar.show{display:block;}
+  .deg-count-pill{display:inline-flex;align-items:center;gap:4px;background:rgba(198,40,40,.08);border-radius:20px;padding:3px 10px;font-size:.62rem;font-weight:700;color:var(--red);margin-top:6px;display:none;}
+  .deg-count-pill.show{display:inline-flex;}
 
-  /* ─── DIVIDER ─── */
-  .divider {
-    display:flex; align-items:center; gap:8px;
-    margin:1rem 0 0.75rem;
-    font-size:0.6rem; font-weight:800;
-    text-transform:uppercase; letter-spacing:0.15em;
-    color:var(--gray);
-  }
-  .divider::before, .divider::after {
-    content:''; flex:1;
-    height:1px; background:var(--border);
-  }
+  /* BOCADILLO */
+  .bocadillo-box{background:linear-gradient(135deg,rgba(78,52,46,.07),rgba(78,52,46,.02));border:1.5px solid var(--vecchio-border);border-radius:12px;padding:12px 14px;margin-top:10px;display:none;}
+  .bocadillo-box.show{display:block;}
+  .bocadillo-title{font-size:.65rem;font-weight:800;color:var(--vecchio);text-transform:uppercase;letter-spacing:.1em;margin-bottom:8px;display:flex;align-items:center;gap:5px;}
 
-  /* ─── SUBMIT BUTTON ─── */
-  .btn-primary {
-    width:100%;
-    background:linear-gradient(135deg, var(--red) 0%, var(--wine) 100%);
-    color:white;
-    border:none; border-radius:16px;
-    padding:16px;
-    font-family:'Outfit',sans-serif;
-    font-size:1rem; font-weight:800;
-    letter-spacing:0.04em; text-transform:uppercase;
-    cursor:pointer;
-    box-shadow:0 8px 24px rgba(139,0,0,0.3);
-    transition:all 0.2s;
-    display:flex; align-items:center; justify-content:center; gap:8px;
-    margin-bottom:0.5rem;
-  }
-  .btn-primary:hover { transform:translateY(-1px); box-shadow:0 12px 28px rgba(139,0,0,0.35); }
-  .btn-primary:active { transform:translateY(0); }
-  .btn-primary:disabled { opacity:0.6; cursor:not-allowed; transform:none; }
+  /* TEXTAREA */
+  .ta{width:100%;padding:12px 14px;background:var(--rose-soft);border:1.5px solid var(--border);border-radius:12px;font-family:'Outfit',sans-serif;font-size:.8rem;font-weight:500;color:var(--dark);outline:none;resize:vertical;min-height:75px;transition:all .2s;}
+  .ta:focus{border-color:var(--red);background:white;box-shadow:0 0 0 3px rgba(198,40,40,.08);}
+  .ta-vc{background:white;border-color:var(--vecchio-border);min-height:65px;}
+  .ta-vc:focus{border-color:var(--vecchio);box-shadow:0 0 0 3px rgba(78,52,46,.08);}
 
-  .btn-reset {
-    width:100%; background:transparent;
-    border:none; color:var(--gray);
-    font-family:'Outfit',sans-serif;
-    font-size:0.7rem; font-weight:700;
-    letter-spacing:0.1em; text-transform:uppercase;
-    cursor:pointer; padding:8px;
-    text-decoration:underline;
-  }
+  /* DIVIDER */
+  .divider{display:flex;align-items:center;gap:8px;margin:1rem 0 .75rem;font-size:.6rem;font-weight:800;text-transform:uppercase;letter-spacing:.15em;color:var(--gray);}
+  .divider::before,.divider::after{content:'';flex:1;height:1px;background:var(--border);}
 
-  /* ─── LOCATION CHIP ─── */
-  .loc-chip {
-    display:inline-flex; align-items:center; gap:5px;
-    background:rgba(198,40,40,0.06);
-    border:1px solid var(--border);
-    border-radius:20px;
-    padding:5px 10px;
-    font-size:0.65rem; font-weight:600; color:var(--wine);
-    margin-top:6px;
-  }
-  .loc-chip.success { background:rgba(0,150,50,0.06); border-color:rgba(0,150,50,0.2); color:#2e7d32; }
-  .loc-chip.error   { background:rgba(198,40,40,0.06); border-color:var(--border); color:var(--red); }
+  /* BOTONES */
+  .btn-primary{width:100%;background:linear-gradient(135deg,var(--red),var(--wine));color:white;border:none;border-radius:16px;padding:16px;font-family:'Outfit',sans-serif;font-size:1rem;font-weight:800;letter-spacing:.04em;text-transform:uppercase;cursor:pointer;box-shadow:0 8px 24px rgba(139,0,0,.3);transition:all .2s;display:flex;align-items:center;justify-content:center;gap:8px;margin-bottom:.5rem;}
+  .btn-primary:hover{transform:translateY(-1px);box-shadow:0 12px 28px rgba(139,0,0,.35);}
+  .btn-primary:active{transform:translateY(0);}
+  .btn-primary:disabled{opacity:.6;cursor:not-allowed;transform:none;}
+  .btn-reset{width:100%;background:transparent;border:none;color:var(--gray);font-family:'Outfit',sans-serif;font-size:.7rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;cursor:pointer;padding:8px;text-decoration:underline;}
 
-  /* ─── MODAL ─── */
-  .modal-overlay {
-    position:fixed; inset:0;
-    background:rgba(26,10,13,0.85);
-    backdrop-filter:blur(12px);
-    display:none; align-items:center; justify-content:center;
-    padding:1rem; z-index:100;
-  }
-  .modal-overlay.show { display:flex; }
-  .modal-box {
-    background:white;
-    border-radius:28px;
-    padding:1.5rem;
-    width:100%; max-width:420px;
-    border-top:4px solid var(--red);
-    box-shadow:0 24px 80px rgba(0,0,0,0.4);
-    animation:slideUp 0.3s ease;
-  }
-  @keyframes slideUp {
-    from { opacity:0; transform:translateY(30px); }
-    to   { opacity:1; transform:translateY(0); }
-  }
-  .modal-title {
-    font-size:1.1rem; font-weight:900;
-    color:var(--dark); margin-bottom:2px;
-    display:flex; align-items:center; gap:8px;
-  }
-  .modal-sub { font-size:0.65rem; color:var(--gray); font-weight:600; text-transform:uppercase; letter-spacing:0.1em; margin-bottom:1rem; }
-  .preview-box {
-    background:var(--rose-soft);
-    border:1.5px solid var(--border);
-    border-radius:14px;
-    padding:12px;
-    font-family:'DM Mono',monospace;
-    font-size:0.7rem; line-height:1.7;
-    color:var(--dark);
-    max-height:280px; overflow-y:auto;
-    margin-bottom:1rem;
-    white-space:pre-wrap;
-  }
-  .btn-copy {
-    width:100%;
-    background:linear-gradient(135deg, #25d366 0%, #128c7e 100%);
-    color:white; border:none; border-radius:14px;
-    padding:14px;
-    font-family:'Outfit',sans-serif;
-    font-size:0.9rem; font-weight:800;
-    cursor:pointer; letter-spacing:0.04em;
-    display:flex; align-items:center; justify-content:center; gap:8px;
-    box-shadow:0 6px 20px rgba(37,211,102,0.3);
-    margin-bottom:8px;
-  }
-  .btn-close {
-    width:100%; background:transparent; border:none;
-    color:var(--gray); font-family:'Outfit',sans-serif;
-    font-size:0.7rem; font-weight:700;
-    cursor:pointer; padding:8px;
-    text-transform:uppercase; letter-spacing:0.1em;
-    text-decoration:underline;
-  }
+  /* LOC */
+  .loc-chip{display:inline-flex;align-items:center;gap:5px;background:rgba(198,40,40,.06);border:1px solid var(--border);border-radius:20px;padding:5px 10px;font-size:.65rem;font-weight:600;color:var(--wine);margin-top:6px;}
+  .loc-chip.ok{background:rgba(0,150,50,.06);border-color:rgba(0,150,50,.2);color:#2e7d32;}
+  .loc-chip.err{background:rgba(198,40,40,.06);border-color:var(--border);color:var(--red);}
 
-  /* ─── SPINNER ─── */
-  .spinner {
-    width:14px; height:14px;
-    border:2px solid rgba(255,255,255,0.4);
-    border-top-color:white;
-    border-radius:50%;
-    animation:spin 0.7s linear infinite;
-    display:inline-block;
-  }
-  @keyframes spin { to { transform:rotate(360deg); } }
+  /* MODAL */
+  .modal-overlay{position:fixed;inset:0;background:rgba(26,10,13,.88);backdrop-filter:blur(14px);display:none;align-items:center;justify-content:center;padding:1rem;z-index:100;}
+  .modal-overlay.show{display:flex;}
+  .modal-box{background:white;border-radius:28px;padding:1.5rem;width:100%;max-width:420px;border-top:4px solid var(--red);box-shadow:0 24px 80px rgba(0,0,0,.4);animation:slideUp .3s ease;}
+  @keyframes slideUp{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:translateY(0)}}
+  .modal-title{font-size:1.1rem;font-weight:900;color:var(--dark);margin-bottom:2px;display:flex;align-items:center;gap:8px;}
+  .modal-sub{font-size:.65rem;color:var(--gray);font-weight:600;text-transform:uppercase;letter-spacing:.1em;margin-bottom:1rem;}
+  .preview-box{background:var(--rose-soft);border:1.5px solid var(--border);border-radius:14px;padding:12px;font-family:'DM Mono',monospace;font-size:.68rem;line-height:1.75;color:var(--dark);max-height:260px;overflow-y:auto;margin-bottom:1rem;white-space:pre-wrap;}
+  .btn-copy{width:100%;background:linear-gradient(135deg,#25d366,#128c7e);color:white;border:none;border-radius:14px;padding:14px;font-family:'Outfit',sans-serif;font-size:.9rem;font-weight:800;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;box-shadow:0 6px 20px rgba(37,211,102,.3);margin-bottom:8px;}
+  .btn-close{width:100%;background:transparent;border:1.5px solid var(--border);color:var(--gray);border-radius:12px;font-family:'Outfit',sans-serif;font-size:.75rem;font-weight:700;cursor:pointer;padding:10px;text-transform:uppercase;letter-spacing:.1em;transition:all .2s;}
+  .btn-close:hover{background:var(--rose-soft);}
 
-  @media(max-width:360px) {
-    .header { padding:1.5rem 1rem 1rem; }
-    .main { padding:0.75rem; }
-  }
+  /* SPINNER */
+  .spinner{width:14px;height:14px;border:2px solid rgba(255,255,255,.4);border-top-color:white;border-radius:50%;animation:spin .7s linear infinite;display:inline-block;}
+  @keyframes spin{to{transform:rotate(360deg)}}
+  @media(max-width:360px){.header{padding:1.5rem 1rem 1rem;}.main{padding:.75rem;}}
 </style>
 </head>
 <body>
 
-<!-- HEADER -->
 <div class="header">
   <div class="header-inner">
     <div class="logo-wrap">
@@ -385,183 +219,216 @@
         <svg width="26" height="26" viewBox="0 0 24 24" fill="none">
           <path d="M12 2C9 2 6 4 5 7L3 18h18l-2-11c-1-3-4-5-7-5z" stroke="white" stroke-width="1.5" fill="rgba(255,255,255,0.2)"/>
           <path d="M8 18v2a2 2 0 004 0v-2" stroke="white" stroke-width="1.5" stroke-linecap="round"/>
-          <circle cx="9" cy="10" r="1.5" fill="white" opacity="0.7"/>
-          <circle cx="15" cy="10" r="1.5" fill="white" opacity="0.7"/>
+          <circle cx="9" cy="10" r="1.5" fill="white" opacity=".7"/><circle cx="15" cy="10" r="1.5" fill="white" opacity=".7"/>
         </svg>
       </div>
-      <div class="logo-text">
-        <h1>Alquería</h1>
-        <p>Gestión de Campo · Colombia</p>
-      </div>
+      <div class="logo-text"><h1>Alquería</h1><p>Gestión de Campo · Colombia</p></div>
     </div>
-    <div class="header-subtitle">
+    <div class="header-sub">
       <svg width="12" height="12" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" stroke="rgba(255,255,255,0.8)" stroke-width="2"/><path d="M12 6v6l4 2" stroke="rgba(255,255,255,0.8)" stroke-width="2" stroke-linecap="round"/></svg>
-      Reportes en tiempo real · Sincronizado con Google Sheets
+      Tres marcas · Reportes en tiempo real
+    </div>
+    <div class="brand-chips">
+      <span class="brand-chip">🥛 Alquería</span>
+      <span class="brand-chip">🌾 Vitad</span>
+      <span class="brand-chip">🧀 Del Vecchio</span>
     </div>
   </div>
 </div>
 
-<!-- TAB SWITCHER -->
 <div class="tab-bar">
   <div class="tab-pills">
     <button class="tab-btn active" id="tab-ingreso" onclick="switchTab('ingreso')">
-      <span class="tab-icon">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M12 2L2 7l10 5 10-5-10-5z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><path d="M2 17l10 5 10-5" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><path d="M2 12l10 5 10-5" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>
-      </span>
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M12 2L2 7l10 5 10-5-10-5z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><path d="M2 17l10 5 10-5M2 12l10 5 10-5" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>
       Reporte Ingreso
     </button>
     <button class="tab-btn" id="tab-gestion" onclick="switchTab('gestion')">
-      <span class="tab-icon">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><rect x="3" y="3" width="7" height="7" rx="1" stroke="currentColor" stroke-width="2"/><rect x="14" y="3" width="7" height="7" rx="1" stroke="currentColor" stroke-width="2"/><rect x="3" y="14" width="7" height="7" rx="1" stroke="currentColor" stroke-width="2"/><rect x="14" y="14" width="7" height="7" rx="1" stroke="currentColor" stroke-width="2"/></svg>
-      </span>
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><rect x="3" y="3" width="7" height="7" rx="1" stroke="currentColor" stroke-width="2"/><rect x="14" y="3" width="7" height="7" rx="1" stroke="currentColor" stroke-width="2"/><rect x="3" y="14" width="7" height="7" rx="1" stroke="currentColor" stroke-width="2"/><rect x="14" y="14" width="7" height="7" rx="1" stroke="currentColor" stroke-width="2"/></svg>
       Inventario &amp; Venta
     </button>
   </div>
 </div>
 
-<!-- MAIN -->
 <div class="main">
 
-  <!-- ═══ FORM INGRESO ═══ -->
-  <form id="form-ingreso" onsubmit="submitForm(event,'ingreso')">
+<!-- ████ FORM INGRESO ████ -->
+<form id="form-ingreso" onsubmit="submitForm(event,'ingreso')">
+  <div class="card">
+    <div class="card-label">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2" stroke="var(--red)" stroke-width="2" stroke-linecap="round"/><circle cx="12" cy="7" r="4" stroke="var(--red)" stroke-width="2"/></svg>
+      Datos del Impulsador
+    </div>
+    <div class="field">
+      <label class="field-label">Nombre completo</label>
+      <input class="inp" id="i-nombre" placeholder="Ej: Robinson Esneyder Zapata" required>
+    </div>
+    <div class="field">
+      <label class="field-label">Ciudad</label>
+      <div class="sel-wrap">
+        <select class="sel loading" id="i-ciudad" onchange="onCiudad('i')" required>
+          <option value="">Cargando ciudades...</option>
+        </select>
+      </div>
+    </div>
+    <div class="field">
+      <label class="field-label">Punto de Venta</label>
+      <div class="pdv-search-box" id="i-sb">
+        <span class="pdv-si">🔍</span>
+        <input type="text" class="pdv-search" id="i-ss" placeholder="Buscar PDV..." oninput="filterPDV('i')">
+      </div>
+      <div class="sel-wrap">
+        <select class="sel" id="i-pdv" required><option value="">Selecciona ciudad primero</option></select>
+      </div>
+      <div class="pdv-count" id="i-pc"></div>
+    </div>
+    <div id="i-loc"></div>
+  </div>
+  <div class="card">
+    <div class="card-label">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" stroke="var(--red)" stroke-width="2" stroke-linejoin="round"/></svg>
+      Observación de Ingreso
+    </div>
+    <textarea class="ta" id="i-obs" placeholder="Novedades al inicio del turno, estado de la nevera, surtido..."></textarea>
+  </div>
+  <button class="btn-primary" type="submit" id="btn-ingreso">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M22 2L11 13" stroke="white" stroke-width="2" stroke-linecap="round"/><path d="M22 2L15 22l-4-9-9-4 20-7z" stroke="white" stroke-width="2" stroke-linejoin="round"/></svg>
+    Enviar Reporte de Ingreso
+  </button>
+  <button type="button" class="btn-reset" onclick="resetForm('ingreso')">↺ Reiniciar</button>
+</form>
 
-    <div class="card">
-      <div class="card-label">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2" stroke="var(--red)" stroke-width="2" stroke-linecap="round"/><circle cx="12" cy="7" r="4" stroke="var(--red)" stroke-width="2"/></svg>
-        Datos del Impulsador
+<!-- ████ FORM GESTIÓN ████ -->
+<form id="form-gestion" style="display:none" onsubmit="submitForm(event,'gestion')">
+
+  <!-- DATOS -->
+  <div class="card">
+    <div class="card-label">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2" stroke="var(--red)" stroke-width="2" stroke-linecap="round"/><circle cx="12" cy="7" r="4" stroke="var(--red)" stroke-width="2"/></svg>
+      Datos del Impulsador
+    </div>
+    <div class="field">
+      <label class="field-label">Nombre completo</label>
+      <input class="inp" id="g-nombre" placeholder="Ej: Robinson Esneyder Zapata" required>
+    </div>
+    <div class="field">
+      <label class="field-label">Ciudad</label>
+      <div class="sel-wrap">
+        <select class="sel loading" id="g-ciudad" onchange="onCiudad('g')" required>
+          <option value="">Cargando ciudades...</option>
+        </select>
       </div>
-      <div class="field">
-        <label class="field-label">Nombre completo</label>
-        <input class="inp" id="i-nombre" placeholder="Ej: Robinson Esneyder Zapata" required>
+    </div>
+    <div class="field">
+      <label class="field-label">Punto de Venta</label>
+      <div class="pdv-search-box" id="g-sb">
+        <span class="pdv-si">🔍</span>
+        <input type="text" class="pdv-search" id="g-ss" placeholder="Buscar PDV..." oninput="filterPDV('g')">
       </div>
-      <div class="field">
-        <label class="field-label">Ciudad</label>
-        <div class="sel-wrap">
-          <select class="sel loading" id="i-ciudad" onchange="loadPDV('i-ciudad','i-pdv')" required>
-            <option value="">Cargando ciudades...</option>
-          </select>
+      <div class="sel-wrap">
+        <select class="sel" id="g-pdv" required><option value="">Selecciona ciudad primero</option></select>
+      </div>
+      <div class="pdv-count" id="g-pc"></div>
+    </div>
+    <div class="field">
+      <label class="field-label">¿Tiene Mueble Exhibidor?</label>
+      <div class="toggle-row">
+        <div>
+          <div class="toggle-label">Mueble en punto de venta</div>
+          <div class="toggle-sub">Activa si el PDV cuenta con mueble propio</div>
         </div>
-      </div>
-      <div class="field">
-        <label class="field-label">Punto de Venta</label>
-        <div class="sel-wrap">
-          <select class="sel" id="i-pdv" required>
-            <option value="">Selecciona ciudad primero</option>
-          </select>
-        </div>
-      </div>
-      <div id="i-loc-status"></div>
-    </div>
-
-    <div class="card">
-      <div class="card-label">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" stroke="var(--red)" stroke-width="2" stroke-linejoin="round"/></svg>
-        Observación de Ingreso
-      </div>
-      <textarea class="ta" id="i-obs" placeholder="Novedades al inicio del turno, estado de la nevera, surtido..."></textarea>
-    </div>
-
-    <button class="btn-primary" type="submit" id="btn-ingreso">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M22 2L11 13" stroke="white" stroke-width="2" stroke-linecap="round"/><path d="M22 2L15 22l-4-9-9-4 20-7z" stroke="white" stroke-width="2" stroke-linejoin="round"/></svg>
-      Generar Reporte de Ingreso
-    </button>
-    <button type="button" class="btn-reset" onclick="resetForm('ingreso')">↺ Reiniciar</button>
-
-  </form>
-
-  <!-- ═══ FORM GESTIÓN ═══ -->
-  <form id="form-gestion" style="display:none" onsubmit="submitForm(event,'gestion')">
-
-    <div class="card">
-      <div class="card-label">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2" stroke="var(--red)" stroke-width="2" stroke-linecap="round"/><circle cx="12" cy="7" r="4" stroke="var(--red)" stroke-width="2"/></svg>
-        Datos del Impulsador
-      </div>
-      <div class="field">
-        <label class="field-label">Nombre completo</label>
-        <input class="inp" id="g-nombre" placeholder="Ej: Robinson Esneyder Zapata" required>
-      </div>
-      <div class="field">
-        <label class="field-label">Ciudad</label>
-        <div class="sel-wrap">
-          <select class="sel loading" id="g-ciudad" onchange="loadPDV('g-ciudad','g-pdv')" required>
-            <option value="">Cargando ciudades...</option>
-          </select>
-        </div>
-      </div>
-      <div class="field">
-        <label class="field-label">Punto de Venta</label>
-        <div class="sel-wrap">
-          <select class="sel" id="g-pdv" required>
-            <option value="">Selecciona ciudad primero</option>
-          </select>
-        </div>
-      </div>
-      <div id="g-loc-status"></div>
-    </div>
-
-    <div class="card">
-      <div class="card-label">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M4 6h16M4 10h16M4 14h8M4 18h5" stroke="var(--red)" stroke-width="2" stroke-linecap="round"/></svg>
-        Inventario Inicial &amp; Venta
-      </div>
-      <p style="font-size:0.65rem;color:var(--gray);margin-bottom:12px;font-weight:500;">
-        Usa los botones o escribe directo la cantidad 👆
-      </p>
-      <div id="products-container"></div>
-    </div>
-
-    <div class="card">
-      <div class="card-label">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" stroke="var(--red)" stroke-width="2"/><path d="M12 8v4l3 3" stroke="var(--red)" stroke-width="2" stroke-linecap="round"/></svg>
-        Degustación &amp; Observaciones
-      </div>
-      <div class="field">
-        <label class="field-label">Observación general</label>
-        <textarea class="ta" id="g-obs" placeholder="Estado nevera, surtido, novedades del día..."></textarea>
-      </div>
-      <div class="field">
-        <label class="field-label">Degustación</label>
-        <textarea class="ta" id="g-deg" placeholder="Describe qué se degustó..."></textarea>
-      </div>
-      <div class="field">
-        <label class="field-label">Cant. que Dio — Copas</label>
-        <input class="inp" id="g-copas" type="number" min="0" placeholder="0" style="max-width:120px">
+        <label class="switch"><input type="checkbox" id="g-mueble"><span class="slider"></span></label>
       </div>
     </div>
+    <div id="g-loc"></div>
+  </div>
 
-    <div class="card">
-      <div class="card-label">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" stroke="var(--red)" stroke-width="2" stroke-linejoin="round"/></svg>
-        Premios &amp; Inventario Final
-      </div>
-      <div class="field">
-        <label class="field-label">Premios · Cucharones (Inventario Inicial)</label>
-        <input class="inp" id="g-cuch-ini" type="number" min="0" placeholder="0" style="max-width:120px">
-      </div>
-      <div class="field">
-        <label class="field-label">Cucharones Entregados</label>
-        <input class="inp" id="g-cuch-ent" type="number" min="0" placeholder="0" style="max-width:120px">
-      </div>
-      <div class="divider">Opiniones de Clientes</div>
-      <div class="field">
-        <label class="field-label">Opinión 1</label>
-        <input class="inp" id="g-op1" placeholder="¿Qué dijo el cliente?">
-      </div>
-      <div class="field">
-        <label class="field-label">Opinión 2</label>
-        <input class="inp" id="g-op2" placeholder="¿Qué dijo otro cliente?">
-      </div>
+  <!-- INVENTARIO & VENTA -->
+  <div class="card">
+    <div class="card-label">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M4 6h16M4 10h16M4 14h8M4 18h5" stroke="var(--red)" stroke-width="2" stroke-linecap="round"/></svg>
+      Inventario Inicial &amp; Venta — Por Marca
+    </div>
+    <p style="font-size:.65rem;color:var(--gray);margin-bottom:12px;font-weight:500;">Toca la categoría para expandir/colapsar 👇</p>
+    <div class="summary-bar">
+      <div class="summary-item"><div class="summary-val" id="sum-ini">0</div><div class="summary-lbl">Inv. Inicial</div></div>
+      <div class="summary-sep"></div>
+      <div class="summary-item"><div class="summary-val" id="sum-vta">0</div><div class="summary-lbl">Total Venta</div></div>
+      <div class="summary-sep"></div>
+      <div class="summary-item"><div class="summary-val" id="sum-red" style="color:var(--vecchio)">0</div><div class="summary-lbl">Redenciones</div></div>
+    </div>
+    <div id="products-container"></div>
+  </div>
+
+  <!-- DEGUSTACIONES -->
+  <div class="card">
+    <div class="card-label">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M18 8h1a4 4 0 010 8h-1M2 8h16v9a4 4 0 01-4 4H6a4 4 0 01-4-4V8z" stroke="var(--red)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M6 1v3M10 1v3M14 1v3" stroke="var(--red)" stroke-width="2" stroke-linecap="round"/></svg>
+      Degustaciones del Día
+    </div>
+    <p style="font-size:.65rem;color:var(--gray);margin-bottom:2px;font-weight:500;">Selecciona los productos que se están degustando 👇</p>
+    <div class="deg-grid" id="deg-container"></div>
+    <div class="deg-count-pill" id="deg-pill">
+      <svg width="11" height="11" viewBox="0 0 24 24" fill="none"><path d="M22 11.08V12a10 10 0 11-5.93-9.14" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M22 4L12 14.01l-3-3" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+      <span id="deg-n">0</span> seleccionado(s)
+    </div>
+    <div class="deg-selected-bar" id="deg-bar"></div>
+
+    <!-- BOCADILLO: aparece solo si se selecciona ese chip -->
+    <div class="bocadillo-box" id="bocadillo-box">
+      <div class="bocadillo-title">🍬 Degustación — Queso con Bocadillo</div>
+      <textarea class="ta ta-vc" id="g-deg-bocadillo" placeholder="Describe la experiencia, reacción del cliente, combinaciones..."></textarea>
     </div>
 
-    <button class="btn-primary" type="submit" id="btn-gestion">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M22 2L11 13" stroke="white" stroke-width="2" stroke-linecap="round"/><path d="M22 2L15 22l-4-9-9-4 20-7z" stroke="white" stroke-width="2" stroke-linejoin="round"/></svg>
-      Generar Reporte de Gestión
-    </button>
-    <button type="button" class="btn-reset" onclick="resetForm('gestion')">↺ Reiniciar</button>
+    <div class="field" style="margin-top:12px;">
+      <label class="field-label">Notas adicionales de degustación</label>
+      <textarea class="ta" id="g-deg-notas" placeholder="Comentarios extra, impresiones generales..."></textarea>
+    </div>
+    <div class="field">
+      <label class="field-label">Copas entregadas</label>
+      <input class="inp" id="g-copas" type="number" min="0" placeholder="0" style="max-width:120px">
+    </div>
+  </div>
 
-  </form>
+  <!-- OBSERVACIÓN GENERAL -->
+  <div class="card">
+    <div class="card-label">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z" stroke="var(--red)" stroke-width="2" stroke-linejoin="round"/><path d="M14 2v6h6M16 13H8M16 17H8M10 9H8" stroke="var(--red)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      Observación General &amp; Novedades
+    </div>
+    <textarea class="ta" id="g-obs" placeholder="Estado nevera, surtido, novedades del día, incidentes..."></textarea>
+  </div>
 
+  <!-- PREMIOS & OPINIONES -->
+  <div class="card">
+    <div class="card-label">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" stroke="var(--red)" stroke-width="2" stroke-linejoin="round"/></svg>
+      Premios Alquería &amp; Opiniones
+    </div>
+    <div class="field">
+      <label class="field-label">Cucharones · Inventario Inicial</label>
+      <input class="inp" id="g-cuch-ini" type="number" min="0" placeholder="0" style="max-width:120px">
+    </div>
+    <div class="field">
+      <label class="field-label">Cucharones Entregados</label>
+      <input class="inp" id="g-cuch-ent" type="number" min="0" placeholder="0" style="max-width:120px">
+    </div>
+    <div class="divider">Opiniones de Clientes</div>
+    <div class="field">
+      <label class="field-label">Opinión 1</label>
+      <input class="inp" id="g-op1" placeholder="¿Qué dijo el cliente?">
+    </div>
+    <div class="field">
+      <label class="field-label">Opinión 2</label>
+      <input class="inp" id="g-op2" placeholder="¿Qué dijo otro cliente?">
+    </div>
+  </div>
+
+  <button class="btn-primary" type="submit" id="btn-gestion">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M22 2L11 13" stroke="white" stroke-width="2" stroke-linecap="round"/><path d="M22 2L15 22l-4-9-9-4 20-7z" stroke="white" stroke-width="2" stroke-linejoin="round"/></svg>
+    Enviar Reporte de Gestión
+  </button>
+  <button type="button" class="btn-reset" onclick="resetForm('gestion')">↺ Reiniciar</button>
+</form>
 </div>
 
 <!-- MODAL -->
@@ -569,9 +436,9 @@
   <div class="modal-box">
     <div class="modal-title">
       <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M22 11.08V12a10 10 0 11-5.93-9.14" stroke="var(--red)" stroke-width="2" stroke-linecap="round"/><path d="M22 4L12 14.01l-3-3" stroke="var(--red)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-      ¡Reporte listo!
+      ¡Reporte generado!
     </div>
-    <div class="modal-sub">Datos guardados · Copia para WhatsApp</div>
+    <div class="modal-sub">Información procesada · Copia para WhatsApp</div>
     <div class="preview-box" id="modal-preview"></div>
     <button class="btn-copy" onclick="copyReport()">
       <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2v10z" stroke="white" stroke-width="2" stroke-linejoin="round"/></svg>
@@ -582,250 +449,520 @@
 </div>
 
 <script>
-  const SHEET_ID        = '1z5t2swVTq8IDN-1btvAvFDIHkkvwrSo78ShRqo9e87U';
-  const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxmJDp1MqP2LFqxC9YPUe8mLqkMk6p1dM9mQsLvsxEeRUl-Mm31BF7dlrK6nJnE0N1o/exec';
+/* ══════════════════════════════════════════
+   CONFIG
+══════════════════════════════════════════ */
+const SHEET_ID        = '1z5t2swVTq8IDN-1btvAvFDIHkkvwrSo78ShRqo9e87U';
+const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwnfasZtwMoN7yDUCp15uj2HlL8DgpPFkR9YOwSh2TnUflJCIJNBD1q0gV5gtGQuLlrlQ/exec';
 
-  const PRODUCTS = [
-    { id:'crl125', name:'Crema de Leche Tradicional Roja', size:'X 125', emoji:'🔴' },
-    { id:'crl180', name:'Crema de Leche Tradicional Roja', size:'X 180', emoji:'🔴' },
-    { id:'crl400', name:'Crema de Leche Tradicional Roja', size:'X 400', emoji:'🔴' },
-    { id:'crl900', name:'Crema de Leche Tradicional Roja', size:'X 900', emoji:'🔴' },
-    { id:'cc125',  name:'Crema Culinaria', size:'X 125', emoji:'🧋' },
-    { id:'cc170',  name:'Crema Culinaria', size:'X 170', emoji:'🧋' },
-    { id:'cc400',  name:'Crema Culinaria', size:'X 400', emoji:'🧋' },
-    { id:'sc200',  name:'Suero Costeño',   size:'X 200', emoji:'🥛' },
-    { id:'sc400',  name:'Suero Costeño',   size:'X 400', emoji:'🥛' },
-  ];
-
-  let sheetData = {};
-  let currentReport = '';
-  let userLocation = null;
-
-  /* ── SHEETS ── */
-  async function loadSheetData() {
-    const url = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json&sheet=Puntos%20de%20Venta`;
-    try {
-      const res  = await fetch(url);
-      const text = await res.text();
-      const json = JSON.parse(text.substring(47).slice(0,-2));
-      json.table.rows.forEach(r => {
-        if (!r.c[0] || !r.c[1]) return;
-        const ciudad = r.c[0].v?.trim();
-        const pdv    = r.c[1].v?.trim();
-        if (!ciudad || !pdv) return;
-        if (!sheetData[ciudad]) sheetData[ciudad] = [];
-        sheetData[ciudad][pdv] = true;
-      });
-      Object.keys(sheetData).forEach(c => { sheetData[c] = Object.keys(sheetData[c]); });
-      populateCities('i-ciudad');
-      populateCities('g-ciudad');
-    } catch(e) { fallbackCities(); }
+/* ══════════════════════════════════════════
+   CATÁLOGO
+══════════════════════════════════════════ */
+const CATS = [
+  { id:'alqueria', name:'Alquería', emoji:'🥛', cc:'alqueria',
+    prods:[
+      {id:'crl125',name:'Crema de Leche Roja',size:'X 125',e:'🔴'},
+      {id:'crl180',name:'Crema de Leche Roja',size:'X 180',e:'🔴'},
+      {id:'crl400',name:'Crema de Leche Roja',size:'X 400',e:'🔴'},
+      {id:'crl900',name:'Crema de Leche Roja',size:'X 900',e:'🔴'},
+      {id:'cc125', name:'Crema Culinaria',     size:'X 125',e:'🧋'},
+      {id:'cc170', name:'Crema Culinaria',     size:'X 170',e:'🧋'},
+      {id:'cc400', name:'Crema Culinaria',     size:'X 400',e:'🧋'},
+      {id:'sc200', name:'Suero Costeño',       size:'X 200',e:'🥛'},
+      {id:'sc400', name:'Suero Costeño',       size:'X 400',e:'🥛'},
+    ]
+  },
+  { id:'vitad', name:'Vitad', emoji:'🌾', cc:'vitad',
+    prods:[
+      {id:'vt_bbq',         name:'Mix BBQ',              size:'',e:'🔥'},
+      {id:'vt_papas',       name:'Papas',                size:'',e:'🥔'},
+      {id:'vt_papas_limon', name:'Papas Limón',          size:'',e:'🍋'},
+      {id:'vt_plat_v',      name:'Plátanos Verdes',      size:'',e:'🍌'},
+      {id:'vt_gall_avena',  name:'Galletas de Avena',    size:'',e:'🌾'},
+      {id:'vt_plat_m',      name:'Plátanos Maduros',     size:'',e:'🍌'},
+      {id:'vt_gall_choco',  name:'Galletas Chocolate',   size:'',e:'🍫'},
+      {id:'vt_brownies',    name:'Brownies',             size:'',e:'🍫'},
+      {id:'vt_yogourt',     name:'Yogourt',              size:'',e:'🥛'},
+      {id:'vt_otras',       name:'Otras Ref. Vitad',     size:'',e:'📦'},
+    ]
+  },
+  { id:'vecchio', name:'Del Vecchio', emoji:'🧀', cc:'vecchio', redenciones:true,
+    prods:[
+      {id:'vc_pera_snack',  name:'Queso Pera Snack',             size:'',     e:'🧀'},
+      {id:'vc_butirro',     name:'Queso Butirro',                size:'',     e:'🧀'},
+      {id:'vc_pera_trenz',  name:'Queso Pera Trenzado',          size:'',     e:'🧀'},
+      {id:'vc_pera_g400',   name:'Queso Pera Grande',            size:'X 400',e:'🧀'},
+      {id:'vc_pera_bloque', name:'Queso Pera Bloque',            size:'',     e:'🧀'},
+      {id:'vc_picolinos',   name:'Queso Pera Picolinos',         size:'',     e:'🧀'},
+      {id:'vc_ricotta',     name:'Queso Ricotta',                size:'',     e:'🧀'},
+      {id:'vc_bocconcini',  name:'Queso Bocconcini',             size:'',     e:'🧀'},
+      {id:'vc_provolone',   name:'Queso Madurado Provolone',     size:'',     e:'🧀'},
+      {id:'vc_prov_oreg',   name:'Queso Provolone Orégano',      size:'',     e:'🧀'},
+      {id:'vc_1923',        name:'Queso Madurado 1923',          size:'',     e:'🧀'},
+      {id:'vc_provoloncino',name:'Queso Madurado Provoloncino',  size:'',     e:'🧀'},
+      {id:'vc_fondue',      name:'Queso Fondue',                 size:'',     e:'🫕'},
+      {id:'vc_parmesano',   name:'Queso Parmesano Rallado',      size:'',     e:'🧀'},
+      {id:'vc_cachocavalo', name:'Queso Pera Cachocavalo',       size:'',     e:'🧀'},
+      {id:'vc_bocadillo',   name:'Queso con Bocadillo',          size:'',     e:'🍬'},
+    ]
   }
+];
+const ALL_PRODS = CATS.flatMap(c => c.prods);
 
-  function populateCities(selId) {
-    const sel = document.getElementById(selId);
-    sel.innerHTML = '<option value="">Selecciona ciudad</option>';
-    sel.classList.remove('loading');
-    Object.keys(sheetData).sort().forEach(c => sel.innerHTML += `<option value="${c}">${c}</option>`);
-  }
+/* Opciones de degustación por categoría */
+const DEG_OPTS = [
+  // Alquería
+  {id:'dg_crl',       lbl:'Crema de Leche',    cat:'alqueria', e:'🔴'},
+  {id:'dg_cc',        lbl:'Crema Culinaria',   cat:'alqueria', e:'🧋'},
+  {id:'dg_sc',        lbl:'Suero Costeño',     cat:'alqueria', e:'🥛'},
+  // Vitad
+  {id:'dg_bbq',       lbl:'Mix BBQ',           cat:'vitad', e:'🔥'},
+  {id:'dg_papas',     lbl:'Papas',             cat:'vitad', e:'🥔'},
+  {id:'dg_papas_lim', lbl:'Papas Limón',       cat:'vitad', e:'🍋'},
+  {id:'dg_plat_v',    lbl:'Plátanos Verdes',   cat:'vitad', e:'🍌'},
+  {id:'dg_gall_av',   lbl:'Galletas Avena',    cat:'vitad', e:'🌾'},
+  {id:'dg_plat_m',    lbl:'Plátanos Maduros',  cat:'vitad', e:'🍌'},
+  {id:'dg_gall_ch',   lbl:'Galletas Chocolate',cat:'vitad', e:'🍫'},
+  {id:'dg_brownies',  lbl:'Brownies',          cat:'vitad', e:'🍫'},
+  {id:'dg_yogourt',   lbl:'Yogourt',           cat:'vitad', e:'🥛'},
+  // Del Vecchio
+  {id:'dg_pera',      lbl:'Queso Pera',                  cat:'vecchio', e:'🧀'},
+  {id:'dg_butirro',   lbl:'Butirro',                     cat:'vecchio', e:'🧀'},
+  {id:'dg_trenz',     lbl:'Pera Trenzado',               cat:'vecchio', e:'🧀'},
+  {id:'dg_picolinos', lbl:'Picolinos',                   cat:'vecchio', e:'🧀'},
+  {id:'dg_ricotta',   lbl:'Ricotta',                     cat:'vecchio', e:'🧀'},
+  {id:'dg_bocconcini',lbl:'Bocconcini',                  cat:'vecchio', e:'🧀'},
+  {id:'dg_provolone', lbl:'Provolone',                   cat:'vecchio', e:'🧀'},
+  {id:'dg_fondue',    lbl:'Fondue',                      cat:'vecchio', e:'🫕'},
+  {id:'dg_parmesano', lbl:'Parmesano',                   cat:'vecchio', e:'🧀'},
+  {id:'dg_bocadillo', lbl:'Queso c/ Bocadillo',          cat:'vecchio', e:'🍬'},
+];
 
-  function fallbackCities() {
-    ['Bogotá','Medellín','Cali','Barranquilla','Pereira','Bucaramanga'].forEach(c => {
-      ['i-ciudad','g-ciudad'].forEach(id => {
-        const sel = document.getElementById(id);
-        sel.classList.remove('loading');
-        sel.innerHTML = sel.innerHTML.replace('Cargando ciudades...','Selecciona ciudad');
-        sel.innerHTML += `<option value="${c}">${c}</option>`;
-      });
+/* ══════════════════════════════════════════
+   ESTADO
+══════════════════════════════════════════ */
+let sheetData   = {};
+let pdvFull     = {};
+let selDegs     = new Set();
+let curReport   = '';
+let userLoc     = null;
+let catOpen     = {alqueria:true, vitad:false, vecchio:false};
+
+/* ══════════════════════════════════════════
+   SHEETS
+══════════════════════════════════════════ */
+async function loadSheetData() {
+  const url = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json&sheet=Puntos%20de%20Venta`;
+  try {
+    const r    = await fetch(url);
+    const txt  = await r.text();
+    const json = JSON.parse(txt.substring(47).slice(0,-2));
+    const tmp  = {};
+    json.table.rows.forEach(row => {
+      if (!row.c[0]||!row.c[1]) return;
+      const c = row.c[0].v?.trim(), p = row.c[1].v?.trim();
+      if (!c||!p) return;
+      if (!tmp[c]) tmp[c]={};
+      tmp[c][p]=true;
     });
-  }
+    Object.keys(tmp).forEach(c => { sheetData[c]=Object.keys(tmp[c]).sort(); pdvFull[c]=[...sheetData[c]]; });
+    fillCities('i'); fillCities('g');
+  } catch(e) { fallbackCities(); }
+}
 
-  function loadPDV(ciudadId, pdvId) {
-    const ciudad = document.getElementById(ciudadId).value;
-    const pdvSel = document.getElementById(pdvId);
-    pdvSel.innerHTML = '<option value="">Selecciona PDV</option>';
-    const list = sheetData[ciudad] || [];
-    if (!list.length) { pdvSel.innerHTML += '<option value="" disabled>Sin puntos registrados</option>'; return; }
-    list.forEach(p => pdvSel.innerHTML += `<option value="${p}">${p}</option>`);
-  }
+function fillCities(p) {
+  const sel = document.getElementById(`${p}-ciudad`);
+  sel.innerHTML = '<option value="">Selecciona ciudad</option>';
+  sel.classList.remove('loading');
+  Object.keys(sheetData).sort().forEach(c => sel.innerHTML += `<option value="${c}">${c}</option>`);
+}
 
-  /* ── GEOLOCATION ── */
-  function requestLocation(statusId) {
-    const el = document.getElementById(statusId);
-    if (!navigator.geolocation) { el.innerHTML = `<span class="loc-chip error">📍 Ubicación no disponible</span>`; return; }
-    el.innerHTML = `<span class="loc-chip">📍 Obteniendo ubicación...</span>`;
-    navigator.geolocation.getCurrentPosition(
-      pos => { userLocation = { lat: pos.coords.latitude, lng: pos.coords.longitude }; el.innerHTML = `<span class="loc-chip success">📍 Ubicación capturada ✓</span>`; },
-      ()  => { el.innerHTML = `<span class="loc-chip error">📍 Permiso denegado</span>`; }
-    );
-  }
-
-  /* ── RENDER PRODUCTS — input editable + botones ── */
-  function renderProducts() {
-    const c = document.getElementById('products-container');
-    c.innerHTML = PRODUCTS.map(p => `
-      <div class="product-block">
-        <div class="product-header">${p.emoji} ${p.name} ${p.size}</div>
-
-        <div class="product-row">
-          <div>
-            <div class="product-name">Inventario Inicial</div>
-            <div class="product-sub">Unidades al inicio</div>
-          </div>
-          <div class="qty-wrap">
-            <button type="button" class="qty-btn minus" onclick="adjustQty('ini-${p.id}',-1)">−</button>
-            <input class="qty-inp" id="ini-${p.id}"
-              type="number" inputmode="numeric" pattern="[0-9]*"
-              min="0" value="0"
-              onfocus="this.select()"
-              oninput="this.value=Math.max(0,parseInt(this.value)||0)">
-            <button type="button" class="qty-btn plus" onclick="adjustQty('ini-${p.id}',1)">+</button>
-          </div>
-        </div>
-
-        <div class="product-row">
-          <div>
-            <div class="product-name">👉 Venta</div>
-            <div class="product-sub">Unidades vendidas</div>
-          </div>
-          <div class="qty-wrap">
-            <button type="button" class="qty-btn minus" onclick="adjustQty('vta-${p.id}',-1)">−</button>
-            <input class="qty-inp" id="vta-${p.id}"
-              type="number" inputmode="numeric" pattern="[0-9]*"
-              min="0" value="0"
-              onfocus="this.select()"
-              oninput="this.value=Math.max(0,parseInt(this.value)||0)">
-            <button type="button" class="qty-btn plus" onclick="adjustQty('vta-${p.id}',1)">+</button>
-          </div>
-        </div>
-      </div>`).join('');
-  }
-
-  function adjustQty(id, delta) {
-    const el  = document.getElementById(id);
-    el.value  = Math.max(0, (parseInt(el.value) || 0) + delta);
-  }
-
-  function getQty(id) { return parseInt(document.getElementById(id).value) || 0; }
-
-  /* ── TABS ── */
-  function switchTab(tab) {
-    document.getElementById('form-ingreso').style.display = tab === 'ingreso' ? '' : 'none';
-    document.getElementById('form-gestion').style.display = tab === 'gestion'  ? '' : 'none';
-    document.getElementById('tab-ingreso').classList.toggle('active', tab === 'ingreso');
-    document.getElementById('tab-gestion').classList.toggle('active', tab === 'gestion');
-    if (tab === 'gestion') requestLocation('g-loc-status');
-    else requestLocation('i-loc-status');
-  }
-
-  /* ── DATE ── */
-  function formatDate() {
-    const now = new Date();
-    return now.toLocaleDateString('es-CO',{weekday:'long',year:'numeric',month:'long',day:'numeric'})
-         + ' · ' + now.toLocaleTimeString('es-CO',{hour:'2-digit',minute:'2-digit'});
-  }
-
-  /* ── REPORTS ── */
-  function buildIngresoReport() {
-    const loc = userLocation ? `📍 ${userLocation.lat.toFixed(5)}, ${userLocation.lng.toFixed(5)}` : '📍 Sin ubicación';
-    return `REPORTE INGRESO\nALQUERÍA 🥛🧋🥗\n${'─'.repeat(30)}\n\n📅 ${formatDate()}\n👤 NOMBRE: ${document.getElementById('i-nombre').value}\n🏙 CIUDAD: ${document.getElementById('i-ciudad').value}\n🏪 PDV: ${document.getElementById('i-pdv').value}\n\n📋 OBSERVACIÓN:\n${document.getElementById('i-obs').value||'(Sin novedad)'}\n\n${loc}\n${'─'.repeat(30)}\n#Alquería #ReporteIngreso`;
-  }
-
-  function buildGestionReport() {
-    const loc = userLocation ? `📍 ${userLocation.lat.toFixed(5)}, ${userLocation.lng.toFixed(5)}` : '📍 Sin ubicación';
-    let productsStr = '', totalVenta = 0;
-    PRODUCTS.forEach(p => {
-      const ini = getQty(`ini-${p.id}`);
-      const vta = getQty(`vta-${p.id}`);
-      totalVenta += vta;
-      productsStr += `\n   = ${p.name} ${p.size}\n   🔸 INV. INICIAL = ${ini}\n   👉 VENTA = ${vta}\n`;
+function fallbackCities() {
+  ['Bogotá','Medellín','Cali','Barranquilla','Pereira','Bucaramanga'].forEach(c => {
+    ['i','g'].forEach(p => {
+      const sel = document.getElementById(`${p}-ciudad`);
+      sel.classList.remove('loading');
+      sel.innerHTML = sel.innerHTML.replace('Cargando ciudades...','Selecciona ciudad');
+      sel.innerHTML += `<option value="${c}">${c}</option>`;
     });
-    return `REPORTE INVENTARIO INICIAL Y VENTA\nALQUERÍA 🥛🧋🥗🌈\n${'─'.repeat(30)}\n\n📅 ${formatDate()}\n👤 NOMBRE: ${document.getElementById('g-nombre').value}\n🏙 CIUDAD: ${document.getElementById('g-ciudad').value}\n🏪 PDV: ${document.getElementById('g-pdv').value}\n\n${'─'.repeat(30)}\n📦 PRODUCTOS\n${'─'.repeat(30)}\n${productsStr}\n${'─'.repeat(30)}\n🛒 TOTAL VENTA: ${totalVenta} unidades\n\n${'─'.repeat(30)}\n📋 OBSERVACIÓN:\n${document.getElementById('g-obs').value||'(Sin novedad)'}\n\n🍽 DEGUSTACIÓN:\n${document.getElementById('g-deg').value||'(Sin degustación)'}\nCANT QUE DIO · COPAS = ${document.getElementById('g-copas').value||'0'}\n\n${'─'.repeat(30)}\n🏆 PREMIOS\nCUCHARONES · INVENTARIO INICIAL: ${document.getElementById('g-cuch-ini').value||'0'}\nCUCHARONES ENTREGADOS: ${document.getElementById('g-cuch-ent').value||'0'}\n\n${'─'.repeat(30)}\n💬 OPINIONES:\n1. ${document.getElementById('g-op1').value||'—'}\n2. ${document.getElementById('g-op2').value||'—'}\n\n${loc}\n${'─'.repeat(30)}\n#Alquería #ReporteGestión`;
-  }
-
-  /* ── SUBMIT ── */
-  async function submitForm(e, type) {
-    e.preventDefault();
-    const btn = document.getElementById(`btn-${type}`);
-    btn.disabled = true;
-    btn.innerHTML = `<span class="spinner"></span> Guardando...`;
-
-    currentReport = type === 'ingreso' ? buildIngresoReport() : buildGestionReport();
-
-    const fd = new FormData();
-    fd.append('hoja', type === 'ingreso' ? 'Logs' : 'Gestion');
-    fd.append('fecha', new Date().toLocaleString('es-CO'));
-    fd.append('ubicacion', userLocation ? `${userLocation.lat},${userLocation.lng}` : '');
-    fd.append('reporte', currentReport);
-
-    if (type === 'ingreso') {
-      fd.append('nombre',      document.getElementById('i-nombre').value);
-      fd.append('ciudad',      document.getElementById('i-ciudad').value);
-      fd.append('pdv',         document.getElementById('i-pdv').value);
-      fd.append('observacion', document.getElementById('i-obs').value);
-    } else {
-      fd.append('nombre',      document.getElementById('g-nombre').value);
-      fd.append('ciudad',      document.getElementById('g-ciudad').value);
-      fd.append('pdv',         document.getElementById('g-pdv').value);
-      PRODUCTS.forEach(p => {
-        fd.append(`ini_${p.id}`, getQty(`ini-${p.id}`));
-        fd.append(`vta_${p.id}`, getQty(`vta-${p.id}`));
-      });
-      fd.append('observacion', document.getElementById('g-obs').value);
-      fd.append('degustacion', document.getElementById('g-deg').value);
-      fd.append('copas',       document.getElementById('g-copas').value||'0');
-      fd.append('cuch_ini',    document.getElementById('g-cuch-ini').value||'0');
-      fd.append('cuch_ent',    document.getElementById('g-cuch-ent').value||'0');
-      fd.append('op1',         document.getElementById('g-op1').value);
-      fd.append('op2',         document.getElementById('g-op2').value);
-    }
-
-    try { await fetch(APPS_SCRIPT_URL, { method:'POST', body:fd, mode:'no-cors' }); } catch(_) {}
-
-    document.getElementById('modal-preview').textContent = currentReport;
-    document.getElementById('modal').classList.add('show');
-    btn.disabled = false;
-    btn.innerHTML = `<svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M22 2L11 13" stroke="white" stroke-width="2" stroke-linecap="round"/><path d="M22 2L15 22l-4-9-9-4 20-7z" stroke="white" stroke-width="2" stroke-linejoin="round"/></svg> Generar Reporte`;
-  }
-
-  /* ── MODAL ── */
-  function copyReport() {
-    navigator.clipboard.writeText(currentReport).then(() => {
-      const btn = document.querySelector('.btn-copy');
-      btn.textContent = '✅ ¡Copiado! Pégalo en WhatsApp';
-      setTimeout(() => btn.innerHTML = `<svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2v10z" stroke="white" stroke-width="2" stroke-linejoin="round"/></svg> Copiar para WhatsApp`, 3000);
-    }).catch(() => {
-      const ta = document.createElement('textarea'); ta.value = currentReport;
-      document.body.appendChild(ta); ta.select(); document.execCommand('copy'); document.body.removeChild(ta);
-      alert('✅ ¡Copiado! Pégalo en el grupo de WhatsApp.');
-    });
-  }
-
-  function closeModal() { document.getElementById('modal').classList.remove('show'); }
-
-  /* ── RESET ── */
-  function resetForm(type) {
-    if (!confirm('¿Seguro que deseas reiniciar el formulario?')) return;
-    if (type === 'ingreso') {
-      document.getElementById('form-ingreso').reset();
-      document.getElementById('i-loc-status').innerHTML = '';
-    } else {
-      document.getElementById('form-gestion').reset();
-      PRODUCTS.forEach(p => {
-        document.getElementById(`ini-${p.id}`).value = '0';
-        document.getElementById(`vta-${p.id}`).value = '0';
-      });
-      document.getElementById('g-loc-status').innerHTML = '';
-    }
-    userLocation = null;
-  }
-
-  /* ── INIT ── */
-  document.addEventListener('DOMContentLoaded', () => {
-    renderProducts();
-    loadSheetData();
-    requestLocation('i-loc-status');
   });
+}
+
+function onCiudad(p) {
+  const ciudad = document.getElementById(`${p}-ciudad`).value;
+  const sb     = document.getElementById(`${p}-sb`);
+  const ss     = document.getElementById(`${p}-ss`);
+  const list   = sheetData[ciudad] || [];
+  pdvFull[ciudad] = [...list];
+  ss.value = '';
+  sb.classList.toggle('visible', list.length > 0);
+  fillPDVSel(p, list);
+}
+
+function filterPDV(p) {
+  const ciudad = document.getElementById(`${p}-ciudad`).value;
+  const q      = document.getElementById(`${p}-ss`).value.toLowerCase().trim();
+  const all    = pdvFull[ciudad] || [];
+  fillPDVSel(p, q ? all.filter(x => x.toLowerCase().includes(q)) : all);
+}
+
+function fillPDVSel(p, list) {
+  const sel = document.getElementById(`${p}-pdv`);
+  const cnt = document.getElementById(`${p}-pc`);
+  sel.innerHTML = '<option value="">Selecciona PDV</option>';
+  if (!list.length) { sel.innerHTML += '<option disabled>Sin resultados</option>'; cnt.textContent=''; return; }
+  list.forEach(x => sel.innerHTML += `<option value="${x}">${x}</option>`);
+  cnt.textContent = `${list.length} punto${list.length!==1?'s':''} disponible${list.length!==1?'s':''}`;
+}
+
+/* ══════════════════════════════════════════
+   GEOLOCALIZACIÓN
+══════════════════════════════════════════ */
+function reqLoc(elId) {
+  const el = document.getElementById(elId);
+  if (!navigator.geolocation) { el.innerHTML='<span class="loc-chip err">📍 No disponible</span>'; return; }
+  el.innerHTML = '<span class="loc-chip">📍 Obteniendo ubicación...</span>';
+  navigator.geolocation.getCurrentPosition(
+    pos => { userLoc={lat:pos.coords.latitude,lng:pos.coords.longitude}; el.innerHTML='<span class="loc-chip ok">📍 Ubicación capturada ✓</span>'; },
+    ()  => { el.innerHTML='<span class="loc-chip err">📍 Permiso denegado</span>'; }
+  );
+}
+
+/* ══════════════════════════════════════════
+   RENDER PRODUCTOS
+══════════════════════════════════════════ */
+function renderProds() {
+  document.getElementById('products-container').innerHTML = CATS.map(cat => {
+    const cc = cat.cc, op = catOpen[cat.id];
+    return `
+    <div class="cat-section">
+      <div class="cat-header cat-${cc} ${op?'':'cat-collapsed'}" onclick="toggleCat('${cat.id}')">
+        <div class="cat-header-left">
+          <div class="cat-badge cat-badge-${cc}">${cat.emoji}</div>
+          <div>
+            <div class="cat-title cat-title-${cc}">${cat.name}</div>
+            <div class="cat-count cat-count-${cc}">${cat.prods.length} productos</div>
+          </div>
+        </div>
+        <span class="cat-chev ${op?'open':''}" id="chev-${cat.id}">▾</span>
+      </div>
+      <div class="cat-body cat-body-${cc} ${op?'':'collapsed'}" id="cbody-${cat.id}">
+        ${cat.prods.map(p => `
+          <div class="product-block">
+            <div class="product-header product-header-${cc}">${p.e} ${p.name}${p.size?' '+p.size:''}</div>
+            <div class="product-row product-row-${cc}">
+              <div><div class="product-name">Inventario Inicial</div><div class="product-sub">Unidades al inicio</div></div>
+              <div class="qty-wrap">
+                <button type="button" class="qty-btn qty-btn-${cc}-minus" onclick="adj('ini-${p.id}',-1)">−</button>
+                <input class="qty-inp" id="ini-${p.id}" type="number" inputmode="numeric" min="0" value="0"
+                  onfocus="this.select()" oninput="this.value=Math.max(0,parseInt(this.value)||0);updSum()">
+                <button type="button" class="qty-btn qty-btn-${cc}-plus" onclick="adj('ini-${p.id}',1)">+</button>
+              </div>
+            </div>
+            <div class="product-row product-row-${cc}">
+              <div><div class="product-name">👉 Venta</div><div class="product-sub">Unidades vendidas</div></div>
+              <div class="qty-wrap">
+                <button type="button" class="qty-btn qty-btn-${cc}-minus" onclick="adj('vta-${p.id}',-1)">−</button>
+                <input class="qty-inp" id="vta-${p.id}" type="number" inputmode="numeric" min="0" value="0"
+                  onfocus="this.select()" oninput="this.value=Math.max(0,parseInt(this.value)||0);updSum()">
+                <button type="button" class="qty-btn qty-btn-${cc}-plus" onclick="adj('vta-${p.id}',1)">+</button>
+              </div>
+            </div>
+          </div>
+        `).join('')}
+        ${cat.redenciones ? `
+          <div class="product-block">
+            <div class="redencion-box">
+              <div>
+                <div class="redencion-title">🏆 Redenciones Generadas</div>
+                <div class="redencion-sub">Cucharas entregadas por compras ≥ $15.000</div>
+              </div>
+              <input type="number" inputmode="numeric" min="0" value="0" class="redencion-input" id="vc-red"
+                onfocus="this.select()" oninput="this.value=Math.max(0,parseInt(this.value)||0);updSum()">
+            </div>
+          </div>
+        ` : ''}
+      </div>
+    </div>`;
+  }).join('');
+  updSum();
+}
+
+function toggleCat(id) {
+  catOpen[id] = !catOpen[id];
+  document.getElementById(`cbody-${id}`).classList.toggle('collapsed', !catOpen[id]);
+  document.getElementById(`chev-${id}`).classList.toggle('open', catOpen[id]);
+  document.querySelector(`#cbody-${id}`).previousElementSibling.classList.toggle('cat-collapsed', !catOpen[id]);
+}
+
+function adj(id, d) {
+  const el = document.getElementById(id);
+  el.value = Math.max(0,(parseInt(el.value)||0)+d);
+  updSum();
+}
+
+function gq(id) { const el=document.getElementById(id); return el?(parseInt(el.value)||0):0; }
+
+function updSum() {
+  let ini=0,vta=0;
+  ALL_PRODS.forEach(p => { ini+=gq(`ini-${p.id}`); vta+=gq(`vta-${p.id}`); });
+  document.getElementById('sum-ini').textContent = ini;
+  document.getElementById('sum-vta').textContent = vta;
+  document.getElementById('sum-red').textContent = gq('vc-red');
+}
+
+/* ══════════════════════════════════════════
+   RENDER DEGUSTACIONES
+══════════════════════════════════════════ */
+function renderDegs() {
+  const cont = document.getElementById('deg-container');
+  const cats = ['alqueria','vitad','vecchio'];
+  const catNames = {alqueria:'🥛 Alquería', vitad:'🌾 Vitad', vecchio:'🧀 Del Vecchio'};
+  let html = '';
+  cats.forEach(cat => {
+    html += `<div class="deg-section-lbl">${catNames[cat]}</div>`;
+    DEG_OPTS.filter(o => o.cat===cat).forEach(o => {
+      html += `<div class="deg-chip deg-chip-${cat}" id="dchip-${o.id}" onclick="toggleDeg('${o.id}','${cat}')">${o.e} ${o.lbl}</div>`;
+    });
+  });
+  cont.innerHTML = html;
+}
+
+function toggleDeg(id, cat) {
+  if (selDegs.has(id)) { selDegs.delete(id); document.getElementById(`dchip-${id}`).classList.remove('on'); }
+  else                 { selDegs.add(id);    document.getElementById(`dchip-${id}`).classList.add('on'); }
+  updDegUI();
+}
+
+function updDegUI() {
+  const n    = selDegs.size;
+  const pill = document.getElementById('deg-pill');
+  const bar  = document.getElementById('deg-bar');
+  const bbox = document.getElementById('bocadillo-box');
+  pill.classList.toggle('show', n>0);
+  bar.classList.toggle('show', n>0);
+  document.getElementById('deg-n').textContent = n;
+  if (n>0) {
+    bar.textContent = Array.from(selDegs).map(id => {
+      const o = DEG_OPTS.find(x => x.id===id);
+      return o ? `${o.e} ${o.lbl}` : id;
+    }).join('  ·  ');
+  }
+  bbox.classList.toggle('show', selDegs.has('dg_bocadillo'));
+}
+
+/* ══════════════════════════════════════════
+   TABS
+══════════════════════════════════════════ */
+function switchTab(tab) {
+  document.getElementById('form-ingreso').style.display = tab==='ingreso' ? '' : 'none';
+  document.getElementById('form-gestion').style.display = tab==='gestion' ? '' : 'none';
+  document.getElementById('tab-ingreso').classList.toggle('active', tab==='ingreso');
+  document.getElementById('tab-gestion').classList.toggle('active', tab==='gestion');
+  if (tab==='gestion') reqLoc('g-loc');
+  else reqLoc('i-loc');
+}
+
+/* ══════════════════════════════════════════
+   FECHA
+══════════════════════════════════════════ */
+function fDate() {
+  const n=new Date();
+  return n.toLocaleDateString('es-CO',{weekday:'long',year:'numeric',month:'long',day:'numeric'})+' · '+n.toLocaleTimeString('es-CO',{hour:'2-digit',minute:'2-digit'});
+}
+
+/* ══════════════════════════════════════════
+   REPORTES
+══════════════════════════════════════════ */
+function buildIngreso() {
+  const loc = userLoc ? `📍 ${userLoc.lat.toFixed(5)}, ${userLoc.lng.toFixed(5)}` : '📍 Sin ubicación';
+  return [
+    `REPORTE DE INGRESO`,
+    `ALQUERÍA · VITAD · DEL VECCHIO`,
+    `${'─'.repeat(32)}`,
+    ``,
+    `📅 ${fDate()}`,
+    `👤 NOMBRE: ${document.getElementById('i-nombre').value}`,
+    `🏙 CIUDAD: ${document.getElementById('i-ciudad').value}`,
+    `🏪 PDV: ${document.getElementById('i-pdv').value}`,
+    ``,
+    `📋 OBSERVACIÓN:`,
+    document.getElementById('i-obs').value || '(Sin novedad)',
+    ``,
+    loc,
+    `${'─'.repeat(32)}`,
+    `#Alquería #Vitad #DelVecchio`
+  ].join('\n');
+}
+
+function buildGestion() {
+  const loc    = userLoc ? `📍 ${userLoc.lat.toFixed(5)}, ${userLoc.lng.toFixed(5)}` : '📍 Sin ubicación';
+  const mueble = document.getElementById('g-mueble').checked ? '✅ SÍ' : '❌ NO';
+  let totalVta = 0;
+
+  const catBlock = CATS.map(cat => {
+    const rows = cat.prods.map(p => {
+      const ini=gq(`ini-${p.id}`), vta=gq(`vta-${p.id}`);
+      totalVta += vta;
+      return `   ${p.e} ${p.name}${p.size?' '+p.size:''}\n      🔸 INI: ${ini}  ·  👉 VTA: ${vta}`;
+    }).join('\n');
+    const redLine = cat.redenciones ? `\n   🏆 Redenciones (cucharas ≥$15k): ${gq('vc-red')}` : '';
+    return `\n${'─'.repeat(32)}\n${cat.emoji} ${cat.name.toUpperCase()}\n${'─'.repeat(32)}\n${rows}${redLine}`;
+  }).join('');
+
+  const degNames = Array.from(selDegs).map(id => {
+    const o=DEG_OPTS.find(x=>x.id===id); return o?`   ${o.e} ${o.lbl}`:`   ${id}`;
+  });
+  const degStr = degNames.length ? degNames.join('\n') : '   (Ninguna seleccionada)';
+
+  const bocVal = document.getElementById('g-deg-bocadillo').value;
+  const bocLine = selDegs.has('dg_bocadillo') && bocVal
+    ? `\n🍬 DEG. BOCADILLO:\n${bocVal}` : '';
+
+  return [
+    `REPORTE DE GESTIÓN`,
+    `ALQUERÍA · VITAD · DEL VECCHIO`,
+    `${'─'.repeat(32)}`,
+    ``,
+    `📅 ${fDate()}`,
+    `👤 NOMBRE: ${document.getElementById('g-nombre').value}`,
+    `🏙 CIUDAD: ${document.getElementById('g-ciudad').value}`,
+    `🏪 PDV: ${document.getElementById('g-pdv').value}`,
+    `🪑 MUEBLE: ${mueble}`,
+    catBlock,
+    ``,
+    `${'─'.repeat(32)}`,
+    `🛒 TOTAL VENTA: ${totalVta} uds`,
+    ``,
+    `${'─'.repeat(32)}`,
+    `🍽 DEGUSTACIONES:`,
+    degStr,
+    bocLine,
+    ``,
+    `📝 Notas degustación:`,
+    document.getElementById('g-deg-notas').value || '(Sin notas)',
+    `🥤 Copas entregadas: ${document.getElementById('g-copas').value||'0'}`,
+    ``,
+    `${'─'.repeat(32)}`,
+    `📋 OBSERVACIÓN GENERAL:`,
+    document.getElementById('g-obs').value || '(Sin novedad)',
+    ``,
+    `${'─'.repeat(32)}`,
+    `🏆 PREMIOS ALQUERÍA`,
+    `Cucharones INI: ${document.getElementById('g-cuch-ini').value||'0'}`,
+    `Cucharones Entregados: ${document.getElementById('g-cuch-ent').value||'0'}`,
+    ``,
+    `${'─'.repeat(32)}`,
+    `💬 OPINIONES:`,
+    `1. ${document.getElementById('g-op1').value||'—'}`,
+    `2. ${document.getElementById('g-op2').value||'—'}`,
+    ``,
+    loc,
+    `${'─'.repeat(32)}`,
+    `#Alquería #Vitad #DelVecchio`
+  ].join('\n');
+}
+
+/* ══════════════════════════════════════════
+   SUBMIT
+══════════════════════════════════════════ */
+async function submitForm(e, type) {
+  e.preventDefault();
+  const btn = document.getElementById(`btn-${type}`);
+  btn.disabled=true;
+  btn.innerHTML=`<span class="spinner"></span> Procesando...`;
+  curReport = type==='ingreso' ? buildIngreso() : buildGestion();
+
+  const fd = new FormData();
+  fd.append('hoja',      type==='ingreso'?'Logs':'Gestion');
+  fd.append('fecha',     new Date().toLocaleString('es-CO'));
+  fd.append('ubicacion', userLoc?`${userLoc.lat},${userLoc.lng}`:'');
+  fd.append('reporte',   curReport);
+
+  if (type==='ingreso') {
+    fd.append('nombre',      document.getElementById('i-nombre').value);
+    fd.append('ciudad',      document.getElementById('i-ciudad').value);
+    fd.append('pdv',         document.getElementById('i-pdv').value);
+    fd.append('observacion', document.getElementById('i-obs').value);
+  } else {
+    fd.append('nombre',  document.getElementById('g-nombre').value);
+    fd.append('ciudad',  document.getElementById('g-ciudad').value);
+    fd.append('pdv',     document.getElementById('g-pdv').value);
+    fd.append('mueble',  document.getElementById('g-mueble').checked?'Sí':'No');
+    ALL_PRODS.forEach(p => { fd.append(`ini_${p.id}`,gq(`ini-${p.id}`)); fd.append(`vta_${p.id}`,gq(`vta-${p.id}`)); });
+    fd.append('vc_redenciones', gq('vc-red'));
+    fd.append('degustaciones',  Array.from(selDegs).map(id=>{const o=DEG_OPTS.find(x=>x.id===id);return o?o.lbl:id;}).join(', '));
+    fd.append('deg_bocadillo',  document.getElementById('g-deg-bocadillo').value);
+    fd.append('deg_notas',      document.getElementById('g-deg-notas').value);
+    fd.append('copas',          document.getElementById('g-copas').value||'0');
+    fd.append('observacion',    document.getElementById('g-obs').value);
+    fd.append('cuch_ini',       document.getElementById('g-cuch-ini').value||'0');
+    fd.append('cuch_ent',       document.getElementById('g-cuch-ent').value||'0');
+    fd.append('op1',            document.getElementById('g-op1').value);
+    fd.append('op2',            document.getElementById('g-op2').value);
+  }
+
+  try { await fetch(APPS_SCRIPT_URL,{method:'POST',body:fd,mode:'no-cors'}); } catch(_){}
+  document.getElementById('modal-preview').textContent = curReport;
+  document.getElementById('modal').classList.add('show');
+  btn.disabled=false;
+  const ico=`<svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M22 2L11 13" stroke="white" stroke-width="2" stroke-linecap="round"/><path d="M22 2L15 22l-4-9-9-4 20-7z" stroke="white" stroke-width="2" stroke-linejoin="round"/></svg>`;
+  btn.innerHTML=`${ico} Enviar Reporte`;
+}
+
+/* ══════════════════════════════════════════
+   MODAL
+══════════════════════════════════════════ */
+function copyReport() {
+  navigator.clipboard.writeText(curReport).then(() => {
+    const b=document.querySelector('.btn-copy');
+    b.textContent='✅ ¡Copiado! Pégalo en WhatsApp';
+    setTimeout(()=>{ b.innerHTML=`<svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2v10z" stroke="white" stroke-width="2" stroke-linejoin="round"/></svg> Copiar para WhatsApp`; },3000);
+  }).catch(()=>{
+    const ta=document.createElement('textarea');ta.value=curReport;
+    document.body.appendChild(ta);ta.select();document.execCommand('copy');document.body.removeChild(ta);
+    alert('✅ ¡Copiado! Pégalo en el grupo de WhatsApp.');
+  });
+}
+function closeModal(){document.getElementById('modal').classList.remove('show');}
+
+/* ══════════════════════════════════════════
+   RESET
+══════════════════════════════════════════ */
+function resetForm(type) {
+  if (!confirm('¿Seguro que deseas reiniciar?')) return;
+  if (type==='ingreso') {
+    document.getElementById('form-ingreso').reset();
+    document.getElementById('i-loc').innerHTML='';
+    document.getElementById('i-sb').classList.remove('visible');
+    document.getElementById('i-pc').textContent='';
+  } else {
+    document.getElementById('form-gestion').reset();
+    ALL_PRODS.forEach(p => {
+      const a=document.getElementById(`ini-${p.id}`), b=document.getElementById(`vta-${p.id}`);
+      if(a)a.value='0'; if(b)b.value='0';
+    });
+    const r=document.getElementById('vc-red'); if(r) r.value='0';
+    selDegs.clear();
+    document.querySelectorAll('.deg-chip').forEach(c=>c.classList.remove('on'));
+    updDegUI();
+    document.getElementById('g-loc').innerHTML='';
+    document.getElementById('g-sb').classList.remove('visible');
+    document.getElementById('g-pc').textContent='';
+    updSum();
+  }
+  userLoc=null;
+}
+
+/* ══════════════════════════════════════════
+   INIT
+══════════════════════════════════════════ */
+document.addEventListener('DOMContentLoaded', () => {
+  renderProds();
+  renderDegs();
+  loadSheetData();
+  reqLoc('i-loc');
+});
 </script>
 </body>
 </html>
