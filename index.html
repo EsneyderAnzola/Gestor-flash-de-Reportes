@@ -149,9 +149,9 @@
   .summary-lbl{font-size:.52rem;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--gray);margin-top:2px;}
   .summary-sep{width:1px;background:var(--border);align-self:stretch;}
 
-  /* DEGUSTACIONES — CHIPS */
+  /* DEGUSTACIONES — CHIPS Y CANTIDADES */
   .deg-section-lbl{font-size:.58rem;font-weight:800;text-transform:uppercase;letter-spacing:.12em;color:var(--gray);padding:6px 2px 2px;width:100%;}
-  .deg-grid{display:flex;flex-wrap:wrap;gap:6px;margin-top:4px;}
+  .deg-grid{display:flex;flex-wrap:wrap;gap:6px;margin-top:4px;margin-bottom:10px;}
   .deg-chip{display:flex;align-items:center;gap:5px;padding:6px 11px;border-radius:20px;cursor:pointer;font-size:.7rem;font-weight:700;transition:all .18s;border:1.5px solid;user-select:none;}
   .deg-chip:active{transform:scale(.93);}
   .deg-chip-alqueria{background:var(--rose-soft);border-color:var(--border);color:var(--wine);}
@@ -160,6 +160,17 @@
   .deg-chip-vitad.on{background:var(--vitad);border-color:var(--vitad);color:white;box-shadow:0 2px 8px rgba(230,81,0,.3);}
   .deg-chip-vecchio{background:var(--vecchio-soft);border-color:var(--vecchio-border);color:var(--vecchio);}
   .deg-chip-vecchio.on{background:var(--vecchio);border-color:var(--vecchio);color:white;box-shadow:0 2px 8px rgba(78,52,46,.3);}
+  
+  /* Campos de cantidad para degustaciones */
+  .deg-qty-item{display:flex;align-items:center;justify-content:space-between;background:var(--rose-soft);border:1px solid var(--border);border-radius:10px;padding:8px 12px;margin-bottom:6px;}
+  .deg-qty-label{font-size:.75rem;font-weight:700;color:var(--dark);display:flex;align-items:center;gap:5px;}
+  .deg-qty-label span{font-size:.85rem;}
+  .deg-qty-controls{display:flex;align-items:center;gap:6px;}
+  .deg-qty-btn{width:28px;height:28px;border-radius:6px;border:none;background:var(--red);color:white;font-size:16px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;}
+  .deg-qty-btn.minus{background:var(--rose);color:var(--red);}
+  .deg-qty-inp{width:45px;height:30px;text-align:center;font-family:'DM Mono',monospace;font-weight:600;font-size:.8rem;border:1.5px solid var(--border);border-radius:6px;outline:none;}
+  .deg-qty-inp:focus{border-color:var(--red);}
+  
   .deg-selected-bar{background:var(--rose-soft);border:1px dashed var(--border);border-radius:10px;padding:8px 12px;margin-top:8px;font-size:.68rem;color:var(--dark);font-weight:600;line-height:1.7;display:none;}
   .deg-selected-bar.show{display:block;}
   .deg-count-pill{display:inline-flex;align-items:center;gap:4px;background:rgba(198,40,40,.08);border-radius:20px;padding:3px 10px;font-size:.62rem;font-weight:700;color:var(--red);margin-top:6px;display:none;}
@@ -359,21 +370,24 @@
     <div id="products-container"></div>
   </div>
 
-  <!-- DEGUSTACIONES -->
+  <!-- DEGUSTACIONES CON CANTIDADES -->
   <div class="card">
     <div class="card-label">
       <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M18 8h1a4 4 0 010 8h-1M2 8h16v9a4 4 0 01-4 4H6a4 4 0 01-4-4V8z" stroke="var(--red)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M6 1v3M10 1v3M14 1v3" stroke="var(--red)" stroke-width="2" stroke-linecap="round"/></svg>
       Degustaciones del Día
     </div>
-    <p style="font-size:.65rem;color:var(--gray);margin-bottom:2px;font-weight:500;">Selecciona los productos que se están degustando 👇</p>
+    <p style="font-size:.65rem;color:var(--gray);margin-bottom:2px;font-weight:500;">Selecciona y asigna cantidad a cada producto 👇</p>
+    
+    <!-- Grid de chips de degustación -->
     <div class="deg-grid" id="deg-container"></div>
-    <div class="deg-count-pill" id="deg-pill">
-      <svg width="11" height="11" viewBox="0 0 24 24" fill="none"><path d="M22 11.08V12a10 10 0 11-5.93-9.14" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M22 4L12 14.01l-3-3" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
-      <span id="deg-n">0</span> seleccionado(s)
-    </div>
-    <div class="deg-selected-bar" id="deg-bar"></div>
-
-    <!-- BOCADILLO: aparece solo si se selecciona ese chip -->
+    
+    <!-- Contenedor dinámico para los campos de cantidad -->
+    <div id="deg-quantities-container" style="margin-top: 15px;"></div>
+    
+    <!-- Resumen de degustaciones seleccionadas -->
+    <div class="deg-selected-bar" id="deg-bar" style="display: none;"></div>
+    
+    <!-- Bocadillo especial (aparece solo si se selecciona) -->
     <div class="bocadillo-box" id="bocadillo-box">
       <div class="bocadillo-title">🍬 Degustación — Queso con Bocadillo</div>
       <textarea class="ta ta-vc" id="g-deg-bocadillo" placeholder="Describe la experiencia, reacción del cliente, combinaciones..."></textarea>
@@ -453,7 +467,7 @@
    CONFIG
 ══════════════════════════════════════════ */
 const SHEET_ID        = '1z5t2swVTq8IDN-1btvAvFDIHkkvwrSo78ShRqo9e87U';
-const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwnfasZtwMoN7yDUCp15uj2HlL8DgpPFkR9YOwSh2TnUflJCIJNBD1q0gV5gtGQuLlrlQ/exec';
+const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxVklIkqVhjnyRIZ9GJoVKpkc7Bd3LztI4X9zBi0d6MYvWdJeG8JGUl0nzkK6ArVGqWFw/exec';
 
 /* ══════════════════════════════════════════
    CATÁLOGO
@@ -509,7 +523,7 @@ const CATS = [
 ];
 const ALL_PRODS = CATS.flatMap(c => c.prods);
 
-/* Opciones de degustación por categoría */
+/* Opciones de degustación por categoría - CON IDs ÚNICOS */
 const DEG_OPTS = [
   // Alquería
   {id:'dg_crl',       lbl:'Crema de Leche',    cat:'alqueria', e:'🔴'},
@@ -543,7 +557,8 @@ const DEG_OPTS = [
 ══════════════════════════════════════════ */
 let sheetData   = {};
 let pdvFull     = {};
-let selDegs     = new Set();
+let selDegs     = new Set();           // Productos seleccionados
+let degQtys     = {};                  // Cantidades por producto { id: cantidad }
 let curReport   = '';
 let userLoc     = null;
 let catOpen     = {alqueria:true, vitad:false, vecchio:false};
@@ -712,7 +727,7 @@ function updSum() {
 }
 
 /* ══════════════════════════════════════════
-   RENDER DEGUSTACIONES
+   RENDER DEGUSTACIONES (chips y cantidades)
 ══════════════════════════════════════════ */
 function renderDegs() {
   const cont = document.getElementById('deg-container');
@@ -729,8 +744,63 @@ function renderDegs() {
 }
 
 function toggleDeg(id, cat) {
-  if (selDegs.has(id)) { selDegs.delete(id); document.getElementById(`dchip-${id}`).classList.remove('on'); }
-  else                 { selDegs.add(id);    document.getElementById(`dchip-${id}`).classList.add('on'); }
+  if (selDegs.has(id)) {
+    selDegs.delete(id);
+    delete degQtys[id];
+    document.getElementById(`dchip-${id}`).classList.remove('on');
+  } else {
+    selDegs.add(id);
+    degQtys[id] = 1; // Cantidad inicial por defecto
+    document.getElementById(`dchip-${id}`).classList.add('on');
+  }
+  renderDegQtys();
+  updDegUI();
+}
+
+function renderDegQtys() {
+  const container = document.getElementById('deg-quantities-container');
+  if (selDegs.size === 0) {
+    container.innerHTML = '';
+    return;
+  }
+  
+  let html = '<div style="margin-top:5px;"><p style="font-size:.65rem;font-weight:600;color:var(--gray);margin-bottom:8px;">✏️ Asigna cantidades a cada producto:</p>';
+  
+  selDegs.forEach(id => {
+    const opt = DEG_OPTS.find(d => d.id === id);
+    if (!opt) return;
+    const qty = degQtys[id] || 1;
+    html += `
+      <div class="deg-qty-item">
+        <div class="deg-qty-label">
+          <span>${opt.e}</span> ${opt.lbl}
+        </div>
+        <div class="deg-qty-controls">
+          <button type="button" class="deg-qty-btn minus" onclick="adjDegQty('${id}', -1)">−</button>
+          <input type="number" class="deg-qty-inp" id="deg-qty-${id}" value="${qty}" min="0" 
+                 onchange="setDegQty('${id}', this.value)" onfocus="this.select()">
+          <button type="button" class="deg-qty-btn plus" onclick="adjDegQty('${id}', 1)">+</button>
+        </div>
+      </div>
+    `;
+  });
+  
+  html += '</div>';
+  container.innerHTML = html;
+}
+
+function adjDegQty(id, delta) {
+  const current = degQtys[id] || 0;
+  const newVal = Math.max(0, current + delta);
+  degQtys[id] = newVal;
+  const input = document.getElementById(`deg-qty-${id}`);
+  if (input) input.value = newVal;
+  updDegUI();
+}
+
+function setDegQty(id, val) {
+  const num = parseInt(val) || 0;
+  degQtys[id] = Math.max(0, num);
   updDegUI();
 }
 
@@ -739,15 +809,36 @@ function updDegUI() {
   const pill = document.getElementById('deg-pill');
   const bar  = document.getElementById('deg-bar');
   const bbox = document.getElementById('bocadillo-box');
-  pill.classList.toggle('show', n>0);
-  bar.classList.toggle('show', n>0);
-  document.getElementById('deg-n').textContent = n;
-  if (n>0) {
-    bar.textContent = Array.from(selDegs).map(id => {
-      const o = DEG_OPTS.find(x => x.id===id);
-      return o ? `${o.e} ${o.lbl}` : id;
-    }).join('  ·  ');
+  
+  // Actualizar pill (si existe, si no lo creamos)
+  let pillEl = document.getElementById('deg-pill');
+  if (!pillEl) {
+    const degPill = document.createElement('div');
+    degPill.id = 'deg-pill';
+    degPill.className = 'deg-count-pill';
+    degPill.innerHTML = '<svg width="11" height="11" viewBox="0 0 24 24" fill="none"><path d="M22 11.08V12a10 10 0 11-5.93-9.14" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M22 4L12 14.01l-3-3" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg> <span id="deg-n">0</span> seleccionado(s)';
+    document.querySelector('.deg-grid').after(degPill);
+    pillEl = degPill;
   }
+  
+  const degN = document.getElementById('deg-n');
+  if (degN) degN.textContent = n;
+  pillEl.classList.toggle('show', n>0);
+  
+  // Actualizar barra de resumen
+  if (bar) {
+    bar.classList.toggle('show', n>0);
+    if (n>0) {
+      const degText = Array.from(selDegs).map(id => {
+        const o = DEG_OPTS.find(x => x.id===id);
+        const q = degQtys[id] || 1;
+        return o ? `${o.e} ${o.lbl}: ${q} und` : id;
+      }).join('  ·  ');
+      bar.textContent = degText;
+    }
+  }
+  
+  // Mostrar/ocultar bocadillo
   bbox.classList.toggle('show', selDegs.has('dg_bocadillo'));
 }
 
@@ -810,8 +901,11 @@ function buildGestion() {
     return `\n${'─'.repeat(32)}\n${cat.emoji} ${cat.name.toUpperCase()}\n${'─'.repeat(32)}\n${rows}${redLine}`;
   }).join('');
 
+  // Construir string de degustaciones CON CANTIDADES
   const degNames = Array.from(selDegs).map(id => {
-    const o=DEG_OPTS.find(x=>x.id===id); return o?`   ${o.e} ${o.lbl}`:`   ${id}`;
+    const o = DEG_OPTS.find(x => x.id===id);
+    const q = degQtys[id] || 1;
+    return o ? `   ${o.e} ${o.lbl}: ${q} und` : `   ${id}: ${q} und`;
   });
   const degStr = degNames.length ? degNames.join('\n') : '   (Ninguna seleccionada)';
 
@@ -835,7 +929,7 @@ function buildGestion() {
     `🛒 TOTAL VENTA: ${totalVta} uds`,
     ``,
     `${'─'.repeat(32)}`,
-    `🍽 DEGUSTACIONES:`,
+    `🍽 DEGUSTACIONES (con cantidades):`,
     degStr,
     bocLine,
     ``,
@@ -889,9 +983,23 @@ async function submitForm(e, type) {
     fd.append('ciudad',  document.getElementById('g-ciudad').value);
     fd.append('pdv',     document.getElementById('g-pdv').value);
     fd.append('mueble',  document.getElementById('g-mueble').checked?'Sí':'No');
-    ALL_PRODS.forEach(p => { fd.append(`ini_${p.id}`,gq(`ini-${p.id}`)); fd.append(`vta_${p.id}`,gq(`vta-${p.id}`)); });
+    
+    // Productos normales
+    ALL_PRODS.forEach(p => { 
+      fd.append(`ini_${p.id}`,gq(`ini-${p.id}`)); 
+      fd.append(`vta_${p.id}`,gq(`vta-${p.id}`)); 
+    });
+    
     fd.append('vc_redenciones', gq('vc-red'));
-    fd.append('degustaciones',  Array.from(selDegs).map(id=>{const o=DEG_OPTS.find(x=>x.id===id);return o?o.lbl:id;}).join(', '));
+    
+    // Degustaciones CON CANTIDADES - Formato: "Producto: X und, Producto2: Y und"
+    const degString = Array.from(selDegs).map(id => {
+      const o = DEG_OPTS.find(x => x.id===id);
+      const q = degQtys[id] || 1;
+      return o ? `${o.lbl}: ${q} und` : `${id}: ${q} und`;
+    }).join(', ');
+    
+    fd.append('degustaciones', degString);
     fd.append('deg_bocadillo',  document.getElementById('g-deg-bocadillo').value);
     fd.append('deg_notas',      document.getElementById('g-deg-notas').value);
     fd.append('copas',          document.getElementById('g-copas').value||'0');
@@ -943,9 +1051,23 @@ function resetForm(type) {
       if(a)a.value='0'; if(b)b.value='0';
     });
     const r=document.getElementById('vc-red'); if(r) r.value='0';
+    
+    // Reset degustaciones
     selDegs.clear();
+    degQtys = {};
     document.querySelectorAll('.deg-chip').forEach(c=>c.classList.remove('on'));
-    updDegUI();
+    document.getElementById('deg-quantities-container').innerHTML = '';
+    
+    const pill = document.getElementById('deg-pill');
+    if (pill) pill.classList.remove('show');
+    
+    const bar = document.getElementById('deg-bar');
+    if (bar) {
+      bar.classList.remove('show');
+      bar.textContent = '';
+    }
+    
+    document.getElementById('bocadillo-box').classList.remove('show');
     document.getElementById('g-loc').innerHTML='';
     document.getElementById('g-sb').classList.remove('visible');
     document.getElementById('g-pc').textContent='';
@@ -962,7 +1084,21 @@ document.addEventListener('DOMContentLoaded', () => {
   renderDegs();
   loadSheetData();
   reqLoc('i-loc');
+  
+  // Crear elemento pill si no existe
+  setTimeout(() => {
+    if (!document.getElementById('deg-pill')) {
+      const degPill = document.createElement('div');
+      degPill.id = 'deg-pill';
+      degPill.className = 'deg-count-pill';
+      degPill.innerHTML = '<svg width="11" height="11" viewBox="0 0 24 24" fill="none"><path d="M22 11.08V12a10 10 0 11-5.93-9.14" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M22 4L12 14.01l-3-3" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg> <span id="deg-n">0</span> seleccionado(s)';
+      document.querySelector('.deg-grid').after(degPill);
+    }
+  }, 100);
 });
+</script>
+</body>
+</html>
 </script>
 </body>
 </html>
