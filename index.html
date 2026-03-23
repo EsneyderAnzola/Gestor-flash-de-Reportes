@@ -168,7 +168,7 @@
   .summary-lbl{font-size:.52rem;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--gray);margin-top:2px;}
   .summary-sep{width:1px;background:var(--border);align-self:stretch;}
 
-  /* DEGUSTACIONES — CHIPS Y CANTIDADES */
+  /* DEGUSTACIONES */
   .deg-section-lbl{font-size:.58rem;font-weight:800;text-transform:uppercase;letter-spacing:.12em;color:var(--gray);padding:6px 2px 2px;width:100%;}
   .deg-grid{display:flex;flex-wrap:wrap;gap:6px;margin-top:4px;margin-bottom:10px;}
   .deg-chip{display:flex;align-items:center;gap:5px;padding:6px 11px;border-radius:20px;cursor:pointer;font-size:.7rem;font-weight:700;transition:all .18s;border:1.5px solid;user-select:none;}
@@ -182,7 +182,6 @@
   .deg-chip-mug{background:var(--mug-soft);border-color:var(--mug-border);color:var(--mug);}
   .deg-chip-mug.on{background:var(--mug);border-color:var(--mug);color:white;box-shadow:0 2px 8px rgba(42,92,138,.3);}
   
-  /* Campos de cantidad para degustaciones */
   .deg-qty-item{display:flex;align-items:center;justify-content:space-between;background:var(--rose-soft);border:1px solid var(--border);border-radius:10px;padding:8px 12px;margin-bottom:6px;}
   .deg-qty-label{font-size:.75rem;font-weight:700;color:var(--dark);display:flex;align-items:center;gap:5px;}
   .deg-qty-label span{font-size:.85rem;}
@@ -197,34 +196,28 @@
   .deg-count-pill{display:inline-flex;align-items:center;gap:4px;background:rgba(198,40,40,.08);border-radius:20px;padding:3px 10px;font-size:.62rem;font-weight:700;color:var(--red);margin-top:6px;display:none;}
   .deg-count-pill.show{display:inline-flex;}
 
-  /* BOCADILLO */
   .bocadillo-box{background:linear-gradient(135deg,rgba(78,52,46,.07),rgba(78,52,46,.02));border:1.5px solid var(--vecchio-border);border-radius:12px;padding:12px 14px;margin-top:10px;display:none;}
   .bocadillo-box.show{display:block;}
   .bocadillo-title{font-size:.65rem;font-weight:800;color:var(--vecchio);text-transform:uppercase;letter-spacing:.1em;margin-bottom:8px;display:flex;align-items:center;gap:5px;}
 
-  /* TEXTAREA */
   .ta{width:100%;padding:12px 14px;background:var(--rose-soft);border:1.5px solid var(--border);border-radius:12px;font-family:'Outfit',sans-serif;font-size:.8rem;font-weight:500;color:var(--dark);outline:none;resize:vertical;min-height:75px;transition:all .2s;}
   .ta:focus{border-color:var(--red);background:white;box-shadow:0 0 0 3px rgba(198,40,40,.08);}
   .ta-vc{background:white;border-color:var(--vecchio-border);min-height:65px;}
   .ta-vc:focus{border-color:var(--vecchio);box-shadow:0 0 0 3px rgba(78,52,46,.08);}
 
-  /* DIVIDER */
   .divider{display:flex;align-items:center;gap:8px;margin:1rem 0 .75rem;font-size:.6rem;font-weight:800;text-transform:uppercase;letter-spacing:.15em;color:var(--gray);}
   .divider::before,.divider::after{content:'';flex:1;height:1px;background:var(--border);}
 
-  /* BOTONES */
   .btn-primary{width:100%;background:linear-gradient(135deg,var(--red),var(--wine));color:white;border:none;border-radius:16px;padding:16px;font-family:'Outfit',sans-serif;font-size:1rem;font-weight:800;letter-spacing:.04em;text-transform:uppercase;cursor:pointer;box-shadow:0 8px 24px rgba(139,0,0,.3);transition:all .2s;display:flex;align-items:center;justify-content:center;gap:8px;margin-bottom:.5rem;}
   .btn-primary:hover{transform:translateY(-1px);box-shadow:0 12px 28px rgba(139,0,0,.35);}
   .btn-primary:active{transform:translateY(0);}
   .btn-primary:disabled{opacity:.6;cursor:not-allowed;transform:none;}
   .btn-reset{width:100%;background:transparent;border:none;color:var(--gray);font-family:'Outfit',sans-serif;font-size:.7rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;cursor:pointer;padding:8px;text-decoration:underline;}
 
-  /* LOC */
   .loc-chip{display:inline-flex;align-items:center;gap:5px;background:rgba(198,40,40,.06);border:1px solid var(--border);border-radius:20px;padding:5px 10px;font-size:.65rem;font-weight:600;color:var(--wine);margin-top:6px;}
   .loc-chip.ok{background:rgba(0,150,50,.06);border-color:rgba(0,150,50,.2);color:#2e7d32;}
   .loc-chip.err{background:rgba(198,40,40,.06);border-color:var(--border);color:var(--red);}
 
-  /* MODAL */
   .modal-overlay{position:fixed;inset:0;background:rgba(26,10,13,.88);backdrop-filter:blur(14px);display:none;align-items:center;justify-content:center;padding:1rem;z-index:100;}
   .modal-overlay.show{display:flex;}
   .modal-box{background:white;border-radius:28px;padding:1.5rem;width:100%;max-width:420px;border-top:4px solid var(--red);box-shadow:0 24px 80px rgba(0,0,0,.4);animation:slideUp .3s ease;}
@@ -236,7 +229,6 @@
   .btn-close{width:100%;background:transparent;border:1.5px solid var(--border);color:var(--gray);border-radius:12px;font-family:'Outfit',sans-serif;font-size:.75rem;font-weight:700;cursor:pointer;padding:10px;text-transform:uppercase;letter-spacing:.1em;transition:all .2s;}
   .btn-close:hover{background:var(--rose-soft);}
 
-  /* SPINNER */
   .spinner{width:14px;height:14px;border:2px solid rgba(255,255,255,.4);border-top-color:white;border-radius:50%;animation:spin .7s linear infinite;display:inline-block;}
   @keyframes spin{to{transform:rotate(360deg)}}
   @media(max-width:360px){.header{padding:1.5rem 1rem 1rem;}.main{padding:.75rem;}}
@@ -331,8 +323,6 @@
 
 <!-- ████ FORM GESTIÓN ████ -->
 <form id="form-gestion" style="display:none" onsubmit="submitForm(event,'gestion')">
-
-  <!-- DATOS -->
   <div class="card">
     <div class="card-label">
       <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2" stroke="var(--red)" stroke-width="2" stroke-linecap="round"/><circle cx="12" cy="7" r="4" stroke="var(--red)" stroke-width="2"/></svg>
@@ -374,7 +364,6 @@
     <div id="g-loc"></div>
   </div>
 
-  <!-- INVENTARIO & VENTA -->
   <div class="card">
     <div class="card-label">
       <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M4 6h16M4 10h16M4 14h8M4 18h5" stroke="var(--red)" stroke-width="2" stroke-linecap="round"/></svg>
@@ -393,14 +382,12 @@
     <div id="products-container"></div>
   </div>
 
-  <!-- PREMIOS ESPECIALES -->
   <div class="card">
     <div class="card-label">
       <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" stroke="var(--red)" stroke-width="2" stroke-linejoin="round"/></svg>
       Premios Especiales
     </div>
     <div class="premios-box">
-      <!-- Mug por $60k -->
       <div class="premio-item">
         <div class="premio-info">
           <div class="premio-title">☕ Mugs Entregados ($60.000)</div>
@@ -409,8 +396,6 @@
         <input type="number" inputmode="numeric" min="0" value="0" class="premio-input" id="mug-entregados"
           onfocus="this.select()" oninput="this.value=Math.max(0,parseInt(this.value)||0);updSum()">
       </div>
-      
-      <!-- Redenciones Del Vecchio ($15k) - Se mantiene -->
       <div class="redencion-box">
         <div>
           <div class="redencion-title">🏆 Redenciones Del Vecchio ($15.000)</div>
@@ -422,29 +407,19 @@
     </div>
   </div>
 
-  <!-- DEGUSTACIONES CON CANTIDADES (INCLUYE SUERO COSTEÑO) -->
   <div class="card">
     <div class="card-label">
       <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M18 8h1a4 4 0 010 8h-1M2 8h16v9a4 4 0 01-4 4H6a4 4 0 01-4-4V8z" stroke="var(--red)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M6 1v3M10 1v3M14 1v3" stroke="var(--red)" stroke-width="2" stroke-linecap="round"/></svg>
       Degustaciones del Día
     </div>
     <p style="font-size:.65rem;color:var(--gray);margin-bottom:2px;font-weight:500;">Selecciona y asigna cantidad a cada producto 👇</p>
-    
-    <!-- Grid de chips de degustación -->
     <div class="deg-grid" id="deg-container"></div>
-    
-    <!-- Contenedor dinámico para los campos de cantidad -->
     <div id="deg-quantities-container" style="margin-top: 15px;"></div>
-    
-    <!-- Resumen de degustaciones seleccionadas -->
     <div class="deg-selected-bar" id="deg-bar" style="display: none;"></div>
-    
-    <!-- Bocadillo especial (aparece solo si se selecciona) -->
     <div class="bocadillo-box" id="bocadillo-box">
       <div class="bocadillo-title">🍬 Degustación — Queso con Bocadillo</div>
       <textarea class="ta ta-vc" id="g-deg-bocadillo" placeholder="Describe la experiencia, reacción del cliente, combinaciones..."></textarea>
     </div>
-
     <div class="field" style="margin-top:12px;">
       <label class="field-label">Notas adicionales de degustación</label>
       <textarea class="ta" id="g-deg-notas" placeholder="Comentarios extra, impresiones generales..."></textarea>
@@ -455,7 +430,6 @@
     </div>
   </div>
 
-  <!-- OBSERVACIÓN GENERAL -->
   <div class="card">
     <div class="card-label">
       <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z" stroke="var(--red)" stroke-width="2" stroke-linejoin="round"/><path d="M14 2v6h6M16 13H8M16 17H8M10 9H8" stroke="var(--red)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
@@ -464,7 +438,6 @@
     <textarea class="ta" id="g-obs" placeholder="Estado nevera, surtido, novedades del día, incidentes..."></textarea>
   </div>
 
-  <!-- PREMIOS ALQUERÍA & OPINIONES -->
   <div class="card">
     <div class="card-label">
       <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" stroke="var(--red)" stroke-width="2" stroke-linejoin="round"/></svg>
@@ -497,7 +470,6 @@
 </form>
 </div>
 
-<!-- MODAL -->
 <div class="modal-overlay" id="modal">
   <div class="modal-box">
     <div class="modal-title">
@@ -515,11 +487,41 @@
 </div>
 
 <script>
-/* ══════════════════════════════════════════
-   CONFIG
-══════════════════════════════════════════ */
 const SHEET_ID        = '1z5t2swVTq8IDN-1btvAvFDIHkkvwrSo78ShRqo9e87U';
 const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyf6qkoeNwKbuQ5MRQv0f1yPjp9bLHtR2QdTQGAeJJ5l6sLb-eFue6PZdZsltBAmdo-uQ/exec';
+
+/* ══════════════════════════════════════════
+   🔒 SISTEMA DE CÓDIGO DE VALIDACIÓN ÚNICO
+══════════════════════════════════════════ */
+
+// Generar código de verificación único de 6 caracteres
+function genValidationCode() {
+  const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
+  let code = '';
+  for (let i = 0; i < 6; i++) {
+    code += chars.charAt(Math.floor(Math.random() * chars.length));
+  }
+  return code;
+}
+
+// Insertar marca de agua invisible usando caracteres Unicode
+function insertInvisibleWatermark(text, code) {
+  // Caracteres Unicode invisibles
+  const invisibles = ['\u200B', '\u200C', '\u200D', '\uFEFF'];
+  let watermark = '';
+  
+  // Codificar el código en binario usando caracteres invisibles
+  for (let i = 0; i < code.length; i++) {
+    const charCode = code.charCodeAt(i);
+    const binary = charCode.toString(2).padStart(8, '0');
+    for (let bit of binary) {
+      watermark += bit === '1' ? invisibles[0] : invisibles[1];
+    }
+  }
+  
+  // Insertar al final del texto de forma imperceptible
+  return text + watermark + invisibles[2];
+}
 
 /* ══════════════════════════════════════════
    CATÁLOGO
@@ -575,13 +577,10 @@ const CATS = [
 ];
 const ALL_PRODS = CATS.flatMap(c => c.prods);
 
-/* Opciones de degustación por categoría - CON IDs ÚNICOS */
 const DEG_OPTS = [
-  // Alquería
   {id:'dg_crl',       lbl:'Crema de Leche',    cat:'alqueria', e:'🔴'},
   {id:'dg_cc',        lbl:'Crema Culinaria',   cat:'alqueria', e:'🧋'},
   {id:'dg_sc',        lbl:'Suero Costeño',     cat:'alqueria', e:'🥛'},
-  // Vitad
   {id:'dg_bbq',       lbl:'Mix BBQ',           cat:'vitad', e:'🔥'},
   {id:'dg_papas',     lbl:'Papas',             cat:'vitad', e:'🥔'},
   {id:'dg_papas_lim', lbl:'Papas Limón',       cat:'vitad', e:'🍋'},
@@ -591,7 +590,6 @@ const DEG_OPTS = [
   {id:'dg_gall_ch',   lbl:'Galletas Chocolate',cat:'vitad', e:'🍫'},
   {id:'dg_brownies',  lbl:'Brownies',          cat:'vitad', e:'🍫'},
   {id:'dg_yogourt',   lbl:'Yogourt',           cat:'vitad', e:'🥛'},
-  // Del Vecchio
   {id:'dg_pera',      lbl:'Queso Pera',                  cat:'vecchio', e:'🧀'},
   {id:'dg_butirro',   lbl:'Butirro',                     cat:'vecchio', e:'🧀'},
   {id:'dg_trenz',     lbl:'Pera Trenzado',               cat:'vecchio', e:'🧀'},
@@ -604,13 +602,10 @@ const DEG_OPTS = [
   {id:'dg_bocadillo', lbl:'Queso c/ Bocadillo',          cat:'vecchio', e:'🍬'},
 ];
 
-/* ══════════════════════════════════════════
-   ESTADO
-══════════════════════════════════════════ */
 let sheetData   = {};
 let pdvFull     = {};
-let selDegs     = new Set();           // Productos seleccionados
-let degQtys     = {};                  // Cantidades por producto { id: cantidad }
+let selDegs     = new Set();
+let degQtys     = {};
 let curReport   = '';
 let userLoc     = null;
 let catOpen     = {alqueria:true, vitad:false, vecchio:false};
@@ -682,9 +677,6 @@ function fillPDVSel(p, list) {
   cnt.textContent = `${list.length} punto${list.length!==1?'s':''} disponible${list.length!==1?'s':''}`;
 }
 
-/* ══════════════════════════════════════════
-   GEOLOCALIZACIÓN
-══════════════════════════════════════════ */
 function reqLoc(elId) {
   const el = document.getElementById(elId);
   if (!navigator.geolocation) { el.innerHTML='<span class="loc-chip err">📍 No disponible</span>'; return; }
@@ -695,9 +687,6 @@ function reqLoc(elId) {
   );
 }
 
-/* ══════════════════════════════════════════
-   RENDER PRODUCTOS
-══════════════════════════════════════════ */
 function renderProds() {
   document.getElementById('products-container').innerHTML = CATS.map(cat => {
     const cc = cat.cc, op = catOpen[cat.id];
@@ -767,9 +756,6 @@ function updSum() {
   document.getElementById('sum-mug').textContent = gq('mug-entregados');
 }
 
-/* ══════════════════════════════════════════
-   RENDER DEGUSTACIONES (chips y cantidades)
-══════════════════════════════════════════ */
 function renderDegs() {
   const cont = document.getElementById('deg-container');
   const cats = ['alqueria','vitad','vecchio'];
@@ -791,7 +777,7 @@ function toggleDeg(id, cat) {
     document.getElementById(`dchip-${id}`).classList.remove('on');
   } else {
     selDegs.add(id);
-    degQtys[id] = 1; // Cantidad inicial por defecto
+    degQtys[id] = 1;
     document.getElementById(`dchip-${id}`).classList.add('on');
   }
   renderDegQtys();
@@ -851,7 +837,6 @@ function updDegUI() {
   const bar  = document.getElementById('deg-bar');
   const bbox = document.getElementById('bocadillo-box');
   
-  // Actualizar pill (si existe, si no lo creamos)
   let pillEl = document.getElementById('deg-pill');
   if (!pillEl) {
     const degPill = document.createElement('div');
@@ -866,7 +851,6 @@ function updDegUI() {
   if (degN) degN.textContent = n;
   pillEl.classList.toggle('show', n>0);
   
-  // Actualizar barra de resumen
   if (bar) {
     bar.classList.toggle('show', n>0);
     if (n>0) {
@@ -879,13 +863,9 @@ function updDegUI() {
     }
   }
   
-  // Mostrar/ocultar bocadillo
   bbox.classList.toggle('show', selDegs.has('dg_bocadillo'));
 }
 
-/* ══════════════════════════════════════════
-   TABS
-══════════════════════════════════════════ */
 function switchTab(tab) {
   document.getElementById('form-ingreso').style.display = tab==='ingreso' ? '' : 'none';
   document.getElementById('form-gestion').style.display = tab==='gestion' ? '' : 'none';
@@ -895,20 +875,20 @@ function switchTab(tab) {
   else reqLoc('i-loc');
 }
 
-/* ══════════════════════════════════════════
-   FECHA
-══════════════════════════════════════════ */
 function fDate() {
   const n=new Date();
   return n.toLocaleDateString('es-CO',{weekday:'long',year:'numeric',month:'long',day:'numeric'})+' · '+n.toLocaleTimeString('es-CO',{hour:'2-digit',minute:'2-digit'});
 }
 
 /* ══════════════════════════════════════════
-   REPORTES
+   REPORTES CON CÓDIGO DE VALIDACIÓN
 ══════════════════════════════════════════ */
+
 function buildIngreso() {
   const loc = userLoc ? `📍 ${userLoc.lat.toFixed(5)}, ${userLoc.lng.toFixed(5)}` : '📍 Sin ubicación';
-  return [
+  const validationCode = genValidationCode();
+  
+  const reportText = [
     `REPORTE DE INGRESO`,
     `ALQUERÍA · VITAD · DEL VECCHIO`,
     `${'─'.repeat(32)}`,
@@ -922,14 +902,23 @@ function buildIngreso() {
     document.getElementById('i-obs').value || '(Sin novedad)',
     ``,
     loc,
+    ``,
+    `🔒 Código: ${validationCode}`,
     `${'─'.repeat(32)}`,
     `#Alquería #Vitad #DelVecchio`
   ].join('\n');
+  
+  // Insertar marca de agua invisible
+  return {
+    text: insertInvisibleWatermark(reportText, validationCode),
+    code: validationCode
+  };
 }
 
 function buildGestion() {
   const loc    = userLoc ? `📍 ${userLoc.lat.toFixed(5)}, ${userLoc.lng.toFixed(5)}` : '📍 Sin ubicación';
   const mueble = document.getElementById('g-mueble').checked ? '✅ SÍ' : '❌ NO';
+  const validationCode = genValidationCode();
   let totalVta = 0;
 
   const catBlock = CATS.map(cat => {
@@ -941,7 +930,6 @@ function buildGestion() {
     return `\n${'─'.repeat(32)}\n${cat.emoji} ${cat.name.toUpperCase()}\n${'─'.repeat(32)}\n${rows}`;
   }).join('');
 
-  // Construir string de degustaciones CON CANTIDADES
   const degNames = Array.from(selDegs).map(id => {
     const o = DEG_OPTS.find(x => x.id===id);
     const q = degQtys[id] || 1;
@@ -953,7 +941,7 @@ function buildGestion() {
   const bocLine = selDegs.has('dg_bocadillo') && bocVal
     ? `\n🍬 DEG. BOCADILLO:\n${bocVal}` : '';
 
-  return [
+  const reportText = [
     `REPORTE DE GESTIÓN`,
     `ALQUERÍA · VITAD · DEL VECCHIO`,
     `${'─'.repeat(32)}`,
@@ -997,26 +985,33 @@ function buildGestion() {
     `2. ${document.getElementById('g-op2').value||'—'}`,
     ``,
     loc,
+    ``,
+    `🔒 Código: ${validationCode}`,
     `${'─'.repeat(32)}`,
     `#Alquería #Vitad #DelVecchio`
   ].join('\n');
+  
+  return {
+    text: insertInvisibleWatermark(reportText, validationCode),
+    code: validationCode
+  };
 }
 
-/* ══════════════════════════════════════════
-   SUBMIT
-══════════════════════════════════════════ */
 async function submitForm(e, type) {
   e.preventDefault();
   const btn = document.getElementById(`btn-${type}`);
   btn.disabled=true;
   btn.innerHTML=`<span class="spinner"></span> Procesando...`;
-  curReport = type==='ingreso' ? buildIngreso() : buildGestion();
+  
+  const report = type==='ingreso' ? buildIngreso() : buildGestion();
+  curReport = report.text;
 
   const fd = new FormData();
   fd.append('hoja',      type==='ingreso'?'Logs':'Gestion');
   fd.append('fecha',     new Date().toLocaleString('es-CO'));
   fd.append('ubicacion', userLoc?`${userLoc.lat},${userLoc.lng}`:'');
   fd.append('reporte',   curReport);
+  fd.append('validation_code', report.code);
 
   if (type==='ingreso') {
     fd.append('nombre',      document.getElementById('i-nombre').value);
@@ -1029,17 +1024,14 @@ async function submitForm(e, type) {
     fd.append('pdv',     document.getElementById('g-pdv').value);
     fd.append('mueble',  document.getElementById('g-mueble').checked?'Sí':'No');
     
-    // Productos normales
     ALL_PRODS.forEach(p => { 
       fd.append(`ini_${p.id}`,gq(`ini-${p.id}`)); 
       fd.append(`vta_${p.id}`,gq(`vta-${p.id}`)); 
     });
     
-    // Premios especiales
     fd.append('vc_redenciones', gq('vc-red'));
     fd.append('mug_entregados', gq('mug-entregados'));
     
-    // Degustaciones CON CANTIDADES - Formato: "Producto: X und, Producto2: Y und"
     const degString = Array.from(selDegs).map(id => {
       const o = DEG_OPTS.find(x => x.id===id);
       const q = degQtys[id] || 1;
@@ -1065,9 +1057,6 @@ async function submitForm(e, type) {
   btn.innerHTML=`${ico} Enviar Reporte`;
 }
 
-/* ══════════════════════════════════════════
-   MODAL
-══════════════════════════════════════════ */
 function copyReport() {
   navigator.clipboard.writeText(curReport).then(() => {
     const b=document.querySelector('.btn-copy');
@@ -1081,9 +1070,6 @@ function copyReport() {
 }
 function closeModal(){document.getElementById('modal').classList.remove('show');}
 
-/* ══════════════════════════════════════════
-   RESET
-══════════════════════════════════════════ */
 function resetForm(type) {
   if (!confirm('¿Seguro que deseas reiniciar?')) return;
   if (type==='ingreso') {
@@ -1100,7 +1086,6 @@ function resetForm(type) {
     const r=document.getElementById('vc-red'); if(r) r.value='0';
     const m=document.getElementById('mug-entregados'); if(m) m.value='0';
     
-    // Reset degustaciones
     selDegs.clear();
     degQtys = {};
     document.querySelectorAll('.deg-chip').forEach(c=>c.classList.remove('on'));
@@ -1124,16 +1109,12 @@ function resetForm(type) {
   userLoc=null;
 }
 
-/* ══════════════════════════════════════════
-   INIT
-══════════════════════════════════════════ */
 document.addEventListener('DOMContentLoaded', () => {
   renderProds();
   renderDegs();
   loadSheetData();
   reqLoc('i-loc');
   
-  // Crear elemento pill si no existe
   setTimeout(() => {
     if (!document.getElementById('deg-pill')) {
       const degPill = document.createElement('div');
@@ -1146,4 +1127,5 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 </script>
 </body>
+</html>
 </html>
